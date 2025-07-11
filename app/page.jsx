@@ -12,16 +12,16 @@ import InsiderBuzz from "@/components/InsiderBuzz";
 export default function Home() {
   return (
     <>
-     {/* <HeroSlider/> */}
-     {/* <PromoCards/> */}
-     {/* <AesturaSection/> */}
-     {/* <ProductSlider/> */}
-     {/* <BrandCards/> */}
-     {/* <NykaaTrendingSlider/> */}
-     {/* <NykaaOffersSlider/> */}
-     {/* <GiftCardSection/> */}
-     {/* <InsiderBuzz/> */}
-     {/* <LingerieSection/> */}
+     <HeroSlider/>
+     <PromoCards/>
+     <AesturaSection/>
+     <ProductSlider/>
+     <BrandCards/>
+     <NykaaTrendingSlider/>
+     <NykaaOffersSlider/>
+     <GiftCardSection/>
+     <InsiderBuzz/>
+     <LingerieSection/>
     
     </>
   );
