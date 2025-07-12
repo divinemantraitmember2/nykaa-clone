@@ -50,9 +50,9 @@ export default function Navbar() {
       
       <div className="hidden md:flex items-center justify-between px-6 py-3">
         <div className="flex items-center space-x-6">
-          <div className="text-3xl font-black text-pink-600 cursor-pointer">
+          {/* <div className="text-3xl font-black text-pink-600 cursor-pointer">
             NYKAA
-          </div>
+          </div> */}
           <nav className="flex space-x-6 text-sm font-semibold text-gray-700">
             {navbarLinks.map((link, i) => (
               <a key={i} href={link.href} className="hover:text-pink-600">
@@ -65,7 +65,7 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="Search on Nykaa"
-            className="border px-3 py-1 rounded-full text-sm w-56"
+            className="border px-3 py-1 rounded text-sm w-56"
           />
           <button className="bg-pink-600 text-white px-4 py-1 text-sm rounded-full">
             Sign in

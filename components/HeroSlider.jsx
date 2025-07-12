@@ -18,7 +18,7 @@ export default function HeroSlider() {
       >
         {heroData.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="relative w-full h-[330px] rounded-lg overflow-hidden group shadow-md">
+            <div className="relative w-full h-[400px] md:h-[400px] sm:h-[300px] rounded-lg overflow-hidden group shadow-md">
               {/* Optimized Image */}
               <Image
                 src={item.image}

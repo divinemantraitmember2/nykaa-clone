@@ -149,3 +149,30 @@ export const categoryData = [
     image: "https://images-static.nykaa.com/uploads/844c2a89-2ae5-4e29-a1f8-6dad808da1d4.jpg?tr=cm-pad_resize,w-225",
   },
 ];
+
+
+export const ExclusiveData = [
+  {
+    id: 1,
+    title: "For a Lucky Few Flat 10% Off",
+    image: "https://images-static.nykaa.com/uploads/27a6eb44-efc6-4e67-9401-6fad015f78e6.jpg?tr=cm-pad_resize,w-450",
+  },
+  {
+    id: 2,
+    title: "Our #1 Bestseller Chai",
+    image: "https://images-static.nykaa.com/uploads/190b82d7-c79b-411f-8dd9-d0b67fb081d1.jpg?tr=cm-pad_resize,w-450",
+  },
+  {
+    id: 3,
+    title: "25 Shades for Indian Skin Tones",
+    image: "https://images-static.nykaa.com/uploads/df4b5b2f-82e3-48f7-aabd-9a41d3407c05.jpg?tr=cm-pad_resize,w-450",
+  },
+  {
+    id: 4,
+    title: "Also In Liquid Lipstick!",
+    image: "https://images-static.nykaa.com/uploads/00b82045-f5c9-4197-8ca2-8be25c52c1db.jpg?tr=cm-pad_resize,w-450",
+  },
+  
+  
+  
+];

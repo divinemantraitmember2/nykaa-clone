@@ -21,7 +21,7 @@ export const productData = [
     discount: "15%",
   },
   {
-    id: 2,
+    id: 6,
     image: "https://images-static.nykaa.com/media/catalog/product/a/9/a97bc81EUCER00000001_1.jpg?tr=cm-pad_resize,w-500,h-500",
     brand: "Eucerin",
     name: "Pigment Control...",
@@ -31,7 +31,7 @@ export const productData = [
     discount: "15%",
   },
   {
-    id: 2,
+    id: 7,
     image: "https://images-static.nykaa.com/media/catalog/product/a/9/a97bc81EUCER00000007_1.jpg?tr=cm-pad_resize,w-500,h-500",
     brand: "Eucerin",
     name: "Pigment Control...",
@@ -41,7 +41,7 @@ export const productData = [
     discount: "15%",
   },
   {
-    id: 2,
+    id: 3,
     image: "https://images-static.nykaa.com/media/catalog/product/a/9/a97bc81EUCER00000008_1.jpg?tr=cm-pad_resize,w-500,h-500",
     brand: "Eucerin",
     name: "Pigment Control...",
@@ -51,7 +51,7 @@ export const productData = [
     discount: "15%",
   },
   {
-    id: 2,
+    id: 4,
     image: "https://images-static.nykaa.com/media/catalog/product/a/9/a97bc81EUCER00000009_1.jpg?tr=cm-pad_resize,w-500,h-500",
     brand: "Eucerin",
     name: "Pigment Control...",
@@ -61,7 +61,7 @@ export const productData = [
     discount: "15%",
   },
   {
-    id: 2,
+    id: 5,
     image: "https://images-static.nykaa.com/media/catalog/product/a/9/a97bc81EUCER00000006_1.jpg?tr=cm-pad_resize,w-500,h-500",
     brand: "Eucerin",
     name: "Pigment Control...",
@@ -70,5 +70,5 @@ export const productData = [
     originalPrice: 1800,
     discount: "15%",
   },
-  // Add more items...
+ 
 ];

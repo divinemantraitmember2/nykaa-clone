@@ -43,7 +43,7 @@ export const promoSliders = [
   {
     id: 1,
     image:
-      "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c910642d-b9b7-4b24-bf11-839372052b28.png",
+      "https://images-static.nykaa.com/uploads/27eaa4c8-31ad-4c24-8c81-95d151a4de5d.jpg?tr=cm-pad_resize,w-450",
     discount: "Up to 70% OFF",
   },
   {

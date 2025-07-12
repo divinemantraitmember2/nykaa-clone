@@ -8,11 +8,13 @@ import NykaaTrendingSlider from "@/components/NykaaTrendingSlider";
 import NykaaOffersSlider from "@/components/NykaaOffersSlider";
 import GiftCardSection from "@/components/GiftCardSection";
 import InsiderBuzz from "@/components/InsiderBuzz";
+import Exclusive from "@/components/Exclusive";
 
 export default function Home() {
   return (
     <>
      <HeroSlider/>
+     <Exclusive/>
      <PromoCards/>
      <AesturaSection/>
      <ProductSlider/>

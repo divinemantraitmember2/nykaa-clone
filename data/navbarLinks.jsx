@@ -5,3 +5,4 @@ export const navbarLinks = [
   { title: "Nykaa Fashion", href: "#" },
   { title: "Beauty Advice", href: "#" },
 ];
+

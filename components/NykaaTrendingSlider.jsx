@@ -17,7 +17,7 @@ export default function NykaaTrendingSlider() {
       
 
       {/* Swiper Slider */}
-      <div className="bg-pink-50 px-4 py-4">
+      <div className="bg-pink-50 px-4 py-6">
         <Swiper
           spaceBetween={12}
           slidesPerView={"auto"}
@@ -37,9 +37,9 @@ export default function NykaaTrendingSlider() {
                   className="object-cover"
                 />
               </div>
-              <div className="bg-pink-300 text-white text-xs sm:text-sm font-medium py-2 px-1 rounded-b-2xl">
+              {/* <div className="bg-pink-300 text-white text-xs sm:text-sm font-medium py-2 px-1 rounded-b-2xl">
                 {item.title}
-              </div>
+              </div> */}
             </SwiperSlide>
           ))}
         </Swiper>
