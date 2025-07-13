@@ -1,3 +1,16 @@
 @import "tailwindcss";
 
-
+@media screen and (max-width: 768px) {
+  .AesturaSection {
+    margin-top: -55px;
+  }
+  .AesturaSection_item{
+margin-top: -70px;
+  }
+  .category_banner{
+    display: inline-block;
+    width: 100%;
+    vertical-align: bottom;
+    min-height: 120px;
+  }
+}

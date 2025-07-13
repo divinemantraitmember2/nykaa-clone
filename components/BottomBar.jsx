@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 export default function BottomBar() {
   const [hovered, setHovered] = useState(false);
-  const [showBar, setShowBar] = useState(true);
+  
 
   const links = [
     { title: "Makeup", slug: "makeup" },
@@ -64,26 +64,10 @@ export default function BottomBar() {
     },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const scrollHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollPercent = (scrollY / scrollHeight) * 100;
-
-      setShowBar(scrollPercent < 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <section>
-      <div
-        className={`relative z-50 hidden md:block transition-transform duration-300 ${
-          showBar ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
+      <div className={`relative z-50 hidden md:block transition-transform duration-300`}>
         {/* Top Link Bar */}
         <div
           className="bg-white shadow overflow-x-auto whitespace-nowrap px-6 py-4 border-t text-center text-sm font-medium text-gray-700"

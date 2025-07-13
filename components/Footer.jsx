@@ -5,7 +5,7 @@ import { footerData } from "@/data/footerData";
 export default function Footer() {
   return (
     <footer className="  text-white mt-14"  style={{backgroundColor:"#8c8d94"}}>
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-5 gap-8 text-sm font-medium">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm font-medium">
         {footerData.map((section, i) => (
           <div key={i}>
             <h3 className="font-extrabold  mb-3">{section.title}</h3>
