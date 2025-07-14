@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         <Header />
         <UserAuthModal/>
         {children}
-         {/* <Footer /> */}
+         <Footer />
         </Providers>
        
       </body>
