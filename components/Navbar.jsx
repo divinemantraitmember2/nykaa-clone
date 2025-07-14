@@ -83,22 +83,22 @@ export default function Navbar() {
       <div className="hidden md:flex items-center justify-between px-6 py-3">
         <div className="flex items-center space-x-6">
           <div className="text-3xl font-black text-pink-600 cursor-pointer">
-          {/* <Link href="/"> NYKAA</Link> */}
+          <Link href="/"> NYKAA</Link>
           </div>
-          {/* <nav className="flex space-x-6 text-md font-semibold text-gray-700">
+          <nav className="flex space-x-6 text-md font-semibold text-gray-700">
             {navbarLinks.map((link, i) => (
               <a key={i} href={link.href} className="hover:text-pink-600">
                 {link.title}
               </a>
             ))}
-          </nav> */}
+          </nav>
         </div>
         <div className="flex items-center space-x-4">
-          {/* <input
+          <input
             type="text"
             placeholder="Search on Nykaa"
             className="border px-3 py-2 rounded text-sm w-56"
-          /> */}
+          />
           <button className="bg-pink-600 text-white px-4 py-2 text-sm rounded-full" onClick={() => dispatch(openLoginModal())}>
             Sign in
           </button>

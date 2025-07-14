@@ -13,7 +13,7 @@ import Exclusive from "../components/Exclusive";
 export default function Home() {
   return (
     <>
-     {/* <HeroSlider/>
+     <HeroSlider/>
      <Exclusive/>
      <PromoCards/>
      <AesturaSection/>
@@ -24,7 +24,7 @@ export default function Home() {
      <GiftCardSection/>
      <InsiderBuzz/>
      <LingerieSection/>
-     */}
+    
     </>
   );
 }
