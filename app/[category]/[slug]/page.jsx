@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import ClientProductDetails from "../../../components/product/ClientProductDetails"; // import client component
+import ProductDescription from "../../../components/product/ProductDescription";
 
 const products = [
   {
@@ -28,8 +29,12 @@ export default function ProductDetails({ params }) {
   if (!product) return notFound();
 
   return (
-    <div className="p-2 lg:p-8">
-        <ClientProductDetails product={product} />
+    <div className="bg-[#f3f3f3] py-10 lg:px-20 px-2">
+    <div className="">
+     <ClientProductDetails product={product} />
+     </div>
+       <ProductDescription/>
+     
     </div>
   );
 }

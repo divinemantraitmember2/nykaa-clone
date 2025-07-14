@@ -1,19 +1,19 @@
 import HeroSlider from "../components/HeroSlider";
 import PromoCards from "../components/PromoCards";
-import AesturaSection from "@/components/AesturaSection";
-import LingerieSection from "@/components/LingerieSection";
-import ProductSlider from "@/components/ProductSlider";
-import BrandCards from "@/components/BrandCards";
-import NykaaTrendingSlider from "@/components/NykaaTrendingSlider";
-import NykaaOffersSlider from "@/components/NykaaOffersSlider";
-import GiftCardSection from "@/components/GiftCardSection";
-import InsiderBuzz from "@/components/InsiderBuzz";
-import Exclusive from "@/components/Exclusive";
+import AesturaSection from "../components/AesturaSection";
+import LingerieSection from "../components/LingerieSection";
+import ProductSlider from "../components/ProductSlider";
+import BrandCards from "../components/BrandCards";
+import NykaaTrendingSlider from "../components/NykaaTrendingSlider";
+import NykaaOffersSlider from "../components/NykaaOffersSlider";
+import GiftCardSection from "../components/GiftCardSection";
+import InsiderBuzz from "../components/InsiderBuzz";
+import Exclusive from "../components/Exclusive";
 
 export default function Home() {
   return (
     <>
-     <HeroSlider/>
+     {/* <HeroSlider/>
      <Exclusive/>
      <PromoCards/>
      <AesturaSection/>
@@ -24,7 +24,7 @@ export default function Home() {
      <GiftCardSection/>
      <InsiderBuzz/>
      <LingerieSection/>
-    
+     */}
     </>
   );
 }

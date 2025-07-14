@@ -1,8 +1,25 @@
 "use client";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function BottomBar() {
   const [hovered, setHovered] = useState(false);
+   const [scrollDir, setScrollDir] = useState("up");
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const updateScrollDir = () => {
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) < 15) return;
+
+      setScrollDir(currentScrollY > lastScrollY ? "down" : "up");
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", updateScrollDir);
+    return () => window.removeEventListener("scroll", updateScrollDir);
+  }, []);
+      
   
 
   const links = [
@@ -67,10 +84,14 @@ export default function BottomBar() {
 
   return (
     <section>
-      <div className={`relative z-50 hidden md:block transition-transform duration-300`}>
+     <div
+  className={`sticky top-[65px] z-20 hidden md:block transition-transform duration-300 ${
+    scrollDir === "down" ? "-translate-y-full" : "translate-y-0"
+  }`}
+>
         {/* Top Link Bar */}
         <div
-          className="bg-white shadow overflow-x-auto whitespace-nowrap px-6 py-4 border-t text-center text-sm font-medium text-gray-700"
+          className="bg-white shadow overflow-x-auto whitespace-nowrap px-6 py-4  text-center text-sm font-medium text-gray-700"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >

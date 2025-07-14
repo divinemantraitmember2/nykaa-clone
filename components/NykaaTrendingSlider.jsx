@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { nykaaTrendingData } from "../data/nykaaTrendingData";
 import Image from "next/image";
-import ResponsiveBanner from "@/components/ResponsiveBanner";
+import ResponsiveBanner from "../components/ResponsiveBanner";
 
 export default function NykaaTrendingSlider() {
   return (

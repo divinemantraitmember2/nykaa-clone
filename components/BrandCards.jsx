@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { brandCards } from "../data/brandData";
-import ResponsiveBanner from "@/components/ResponsiveBanner";
+import ResponsiveBanner from "../components/ResponsiveBanner";
 
 export default function BrandCards() {
   return (

@@ -1,4 +1,4 @@
-import CartSidebar from "../../components/cartDeatails/CartSidebar";
+import CartSidebar from "../../components/cartDeatails/CartPage";
 
 export default function HomePage() {
   return (

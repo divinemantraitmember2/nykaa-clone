@@ -19,7 +19,7 @@ export default function Topbar() {
   }, []);
 
   return (
-    <section className="px-4 bg-pink-200">
+    <section className="px-4  bg-pink-200">
       <div className="relative h-10 overflow-hidden  text-pink-900 text-sm flex items-center justify-start">
       <div className="absolute transition-opacity duration-300">
         <div className="font-semibold text-center">

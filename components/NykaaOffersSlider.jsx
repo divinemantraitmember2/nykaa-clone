@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import { nykaaOffersData } from "../data/aesturaData";
-import ResponsiveBanner from "@/components/ResponsiveBanner";
+
 
 export default function NykaaOffersSlider() {
   return (

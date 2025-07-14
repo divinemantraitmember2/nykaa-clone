@@ -1,6 +1,6 @@
 // components/Footer.jsx
 "use client";
-import { footerData } from "@/data/footerData";
+import { footerData } from "../data/footerData";
 
 export default function Footer() {
   return (

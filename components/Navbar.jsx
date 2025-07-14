@@ -1,17 +1,37 @@
 "use client";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect,useState } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import { navbarLinks } from "../data/navbarLinks";
+import { openLoginModal, openRegisterModal } from "../slices/userSlice";
 import { FaShoppingBag, FaUser, FaBars, FaSearch } from "react-icons/fa";
 import Link from "next/link"
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+   const [scrollDir, setScrollDir] = useState("up");
+   const dispatch = useDispatch();
   // 👇 Get cart count from Redux
   const cartCount = useSelector((state) => state.cart.items.length);
+  
+   
+  useEffect(() => {
+      let lastScrollY = window.scrollY;
+  
+      const updateScrollDir = () => {
+        const currentScrollY = window.scrollY;
+        if (Math.abs(currentScrollY - lastScrollY) < 10) return;
+  
+        setScrollDir(currentScrollY > lastScrollY ? "down" : "up");
+        lastScrollY = currentScrollY;
+      };
+  
+      window.addEventListener("scroll", updateScrollDir);
+      return () => window.removeEventListener("scroll", updateScrollDir);
+    }, []);
 
   return (
-    <div className="w-full bg-white shadow-md">
+    <div className={`"w-full bg-white"${
+    scrollDir === "down" ? "shadow" : ""
+  }`}>
       {/* Top Row - Logo + Icons (Mobile) */}
       <div className="flex items-center justify-between px-4 py-3 md:hidden">
         <div className="flex items-center space-x-3">
@@ -63,23 +83,23 @@ export default function Navbar() {
       <div className="hidden md:flex items-center justify-between px-6 py-3">
         <div className="flex items-center space-x-6">
           <div className="text-3xl font-black text-pink-600 cursor-pointer">
-          <Link href="/"> NYKAA</Link>
+          {/* <Link href="/"> NYKAA</Link> */}
           </div>
-          <nav className="flex space-x-6 text-md font-semibold text-gray-700">
+          {/* <nav className="flex space-x-6 text-md font-semibold text-gray-700">
             {navbarLinks.map((link, i) => (
               <a key={i} href={link.href} className="hover:text-pink-600">
                 {link.title}
               </a>
             ))}
-          </nav>
+          </nav> */}
         </div>
         <div className="flex items-center space-x-4">
-          <input
+          {/* <input
             type="text"
             placeholder="Search on Nykaa"
             className="border px-3 py-2 rounded text-sm w-56"
-          />
-          <button className="bg-pink-600 text-white px-4 py-2 text-sm rounded-full">
+          /> */}
+          <button className="bg-pink-600 text-white px-4 py-2 text-sm rounded-full" onClick={() => dispatch(openLoginModal())}>
             Sign in
           </button>
 
