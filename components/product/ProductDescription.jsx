@@ -15,7 +15,8 @@ export default function ProductDescription() {
     <section className="py-6">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
         {/* Left Section (Description) */}
-        <div className="w-full lg:w-[70%] bg-white p-3">
+        <div className="w-full lg:w-[70%] ">
+        <div className="w-full bg-white p-3 mb-3 lg:mb-5 ">
           <h2 className="text-xl font-semibold mb-3">Product Description</h2>
 
           <h3 className="font-semibold text-base text-gray-800 mb-3">
@@ -43,8 +44,25 @@ export default function ProductDescription() {
           </div>
         </div>
 
+            <div className=" mb-3 lg:mb-5">
+                <h3 className="text-xl font-semibold mb-3">Customers also Viewed</h3>
+                  <div className="w-full bg-white p-3  ">
+           
+                 </div>
+            </div>
+      
+
+        <div className=" mb-3 lg:mb-5">
+        <h3 className="text-xl font-semibold mb-3">Product Details</h3>
+        <div className="w-full bg-white p-3 ">
+        </div>
+        </div>
+
+
+        </div>
+
         {/* Right Section (optional - e.g., image, ad, offers) */}
-        <div className="w-full lg:w-[30%] bg-white p-3">
+        <div className="w-full lg:w-[30%] bg-white p-3 sticky top-24 self-start">
           {/* You can place image, offer box, etc. here */}
           <div className="p-4 ">
             <p className="text-gray-700 text-sm">Extra content here</p>

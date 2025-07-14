@@ -148,6 +148,7 @@ export default function CartPage() {
                   key={i}
                   className="flex items-center gap-4 border border-pink-600 rounded-lg p-3 bg-white"
                 >
+                   
                   <img
                     src={item.image}
                     alt={item.title}

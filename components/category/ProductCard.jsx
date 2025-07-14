@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
     dispatch(addToCart({
       ...product,
       id: product.slug,
-      image:product.image ,
+      image:product.image,
     }));
 
   };
