@@ -1,13 +1,21 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../../slices/cartSlice";
+import {
+  removeFromCart,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../../slices/cartSlice";
 
 export default function CartPage() {
   const { items } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+  const totalPrice = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -19,10 +27,7 @@ export default function CartPage() {
         <>
           <ul className="space-y-4">
             {items.map((item, i) => (
-              <li
-                key={i}
-                className="flex gap-4 items-start border-b pb-4"
-              >
+              <li key={i} className="flex gap-4 items-start border-b pb-4">
                 <img
                   src={item.image}
                   alt={item.title}
@@ -30,8 +35,29 @@ export default function CartPage() {
                 />
                 <div className="flex-1">
                   <p className="font-medium text-lg">{item.title}</p>
-                  <p className="text-sm text-gray-500">₹{item.price}</p>
+                  <p className="text-sm text-gray-500">
+                    ₹{item.price} × {item.quantity} = ₹
+                    {item.price * item.quantity}
+                  </p>
+
+                  {/* Quantity Controls */}
+                  <div className="flex items-center mt-2 gap-2">
+                    <button
+                      onClick={() => dispatch(decreaseQuantity(item.id))}
+                      className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 text-lg font-semibold"
+                    >
+                      −
+                    </button>
+                    <span className="min-w-[24px] text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => dispatch(increaseQuantity(item.id))}
+                      className="w-8 h-8 rounded bg-gray-200 hover:bg-gray-300 text-lg font-semibold"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
+
                 <button
                   onClick={() => dispatch(removeFromCart(item.id))}
                   className="text-sm text-red-500 hover:underline"
@@ -48,7 +74,7 @@ export default function CartPage() {
               onClick={() => dispatch(clearCart())}
               className="text-sm text-pink-600 hover:underline"
             >
-              Clear Cart
+              Clear Cart kk
             </button>
           </div>
         </>

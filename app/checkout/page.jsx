@@ -8,7 +8,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function ChooseAddressPage() {
    const { items } = useSelector((state) => state.cart);
-   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
+   const totalPrice = items.reduce(
+  (acc, item) => acc + item.price * item.quantity,
+  0
+);
 
   const [activeTab, setActiveTab] = useState("address");
   const [showForm, setShowForm] = useState(false);
@@ -333,14 +336,16 @@ export default function ChooseAddressPage() {
                         
                         <p className="text-sm mt-1">
                           Quantity:{" "}
-                          <span className="font-semibold">--</span>
+                          <span className="font-semibold mx-2">{item.quantity}</span>
+                          Price:{" "}
+                          <span className="font-semibold mx-2"> ₹ {item.price}</span>
                         </p>
                         <p className="text-sm">
                           <span className="line-through text-gray-400 text-xs">
-                            ₹ {item.price}
+                           ₹ {item.price * item.quantity}
                           </span>{" "}
                           <span className="font-medium text-gray-900">
-                            ₹ {item.price}
+                         Total Price:{" "}  ₹ {item.price * item.quantity}
                           </span>
                         </p>
                       </div>
@@ -365,7 +370,7 @@ export default function ChooseAddressPage() {
                     <span className="font-medium text-gray-700">₹ {totalPrice}</span>
                   </summary>
                   <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
-                    You are saving ₹202
+                    You are saving 
                   </div>
                 </details>
               </div>
