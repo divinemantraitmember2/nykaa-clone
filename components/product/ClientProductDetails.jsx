@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
+import SearchLocation from "../SearchLocation"
 
 
 export default function ClientProductDetails({ product }) {
@@ -97,34 +98,27 @@ export default function ClientProductDetails({ product }) {
           {/* Delivery Options */}
 
           
-          <div className="mb-6 lg:mb-25 border-t pt-6 lg:pt-10 max-w-7xl mx-auto px-4 lg:px-0">
-  <div className="flex flex-col lg:flex-row items-start lg:items-center justify-around gap-2">
+         <div className="mb-6 lg:mb-25 border-t pt-6 lg:pt-10 max-w-7xl mx-auto px-4 lg:px-0">
+  <div className="flex flex-col lg:flex-row items-start lg:items-center justify-around gap-4">
     
     {/* Add to Bag Button */}
     <div className="w-full lg:w-auto flex justify-center lg:justify-start">
       <button
         onClick={handleAddToCart}
-        className="bg-pink-600 text-white py-2 px-4 lg:py-4 lg:px-10  text-sm font-semibold hover:bg-pink-700 transition"
+        className="bg-pink-600 text-white rounded py-4 px-10 text-sm font-semibold hover:bg-pink-700 transition"
       >
         Add to Bag
       </button>
     </div>
-
+    
     {/* Delivery Options */}
-    <div className="relative w-full sm:w-[200px] ">
-  <input
-    type="text"
-    placeholder="Enter pincode"
-    className="border py-2 lg:py-3 px-4 pr-16 text-sm w-full "
-  />
-  <button className="absolute right-3 top-1/2 -translate-y-1/2 text-[#e80071] font-medium text-sm hover:underline"
-  >
-    Check
-  </button>
-</div>
+    <div className="relative w-full sm:w-[300px] lg:border-l lg:pl-6">
+      <SearchLocation />
+    </div>
 
   </div>
 </div>
+
 
           <div className="flex flex-wrap items-center justify-center gap-4 px-2 py-4 text-xs text-gray-600 bg-[#f4f4f5]  pt-4">
             <span className="flex items-center gap-1">

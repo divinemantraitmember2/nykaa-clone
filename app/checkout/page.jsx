@@ -1,148 +1,415 @@
 "use client";
+
 import { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function PayNow() {
-  const [loading, setLoading] = useState(false);
 
-  const giftCartID = "686f403fcb504395e91c4585";
-  const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRpdmluZW1hbnRyYWl0bWVtYmVyMkBnbWFpbC5jb20iLCJuYW1lIjoiUkFWSSIsImNhcnRpZCI6IiIsInBob25lIjo4ODY4ODAzMjg1LCJ1c2VyaWQiOiI2NmYxMTA4MzQ1YWM2MzIyYTgxNmE0MmIiLCJ1aWQiOiI5OWFhMjU2OC03OTc4LTExZWYtOThhYS0wYTNmNmNmMjJjOWQiLCJ0b2tlbiI6IiIsImlwIjoiMjIzLjE3Ny4xODIuMTEwIiwidXNlcmFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNy4wLjAuMCBTYWZhcmkvNTM3LjM2IiwidXNlcnR5cGUiOiJhZG1pbiIsInRva2VudHlwZSI6ImFjY2Vzc190b2tlbiIsImV4cCI6NTM1MDE0NjczNn0.DH6Nj6S1Undu5tDksgJMnt3n7Eg-gbCGenn_N6B4nKM"; // 🔐 Replace with real token
+export default function ChooseAddressPage() {
+   const { items } = useSelector((state) => state.cart);
+   const totalPrice = items.reduce((acc, item) => acc + item.price, 0);
 
-  const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
+  const [activeTab, setActiveTab] = useState("address");
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    pincode: "",
+    city: "",
+    state: "",
+    house: "",
+    road: "",
+    isDefault: false,
+    contactName: "",
+    contactPhone: "",
+    contactEmail: "",
+    phoneCode: "91",
+  });
+
+  const address = {
+    name: "Ravi",
+    address: "606 kasia kushinagar, Uttar Pradesh\nKushinagar-274402",
+    phone: "8840473290",
+    isDefault: true,
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  const initiatePayment = async () => {
-    const res = await fetch(
-      "http://localhost:8085/api/v1/gift-cart/paymentinit",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify({
-          GiftcartId: giftCartID,
-          paymentMethod: "razorpay",
-        }),
-      }
-    );
-    const data = await res.json();
-
-    const razorpayOrderId = data?.Cart?.paymentOrderID;
-    const itemName = data?.Cart?.items?.title;
-
-    if (!razorpayOrderId || !razorpayOrderId.startsWith("order_")) {
-      alert("Invalid Razorpay order ID");
-      throw new Error("Missing or invalid Razorpay orderID");
-    }
-
-    return { razorpayOrderId, title: itemName };
-  };
-
-  const handlePayment = async () => {
-    setLoading(true);
-    const isScriptLoaded = await loadRazorpayScript();
-
-    if (!isScriptLoaded) {
-      alert("Failed to load Razorpay script");
-      return;
-    }
-
-    try {
-      const { razorpayOrderId, title } = await initiatePayment();
-
-      const options = {
-        key: "rzp_test_caePuWgsv1T7Aq", // ✅ Replace with your Razorpay Key
-        amount: 2,
-        currency: "INR",
-        name: "TripToTemples",
-        description: title,
-        image: "https://yourwebsite.com/logo.png",
-        order_id: razorpayOrderId,
-        handler: function (response) {
-          fetch("http://localhost:8085/api/v1/gift-cart/success", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `${token}`,
-            },
-            body: JSON.stringify({
-              giftCartID: giftCartID,
-              paymentOrderID: response.razorpay_order_id,
-              paymentTransID: response.razorpay_payment_id,
-              paymentSignature: response.razorpay_signature,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log("Success response:", data);
-              alert("🎉 Payment Success!");
-            })
-            .catch((err) => {
-              console.error("Verification failed:", err);
-              alert("⚠️ Payment verification failed.");
-            });
-        },
-        modal: {
-          ondismiss: function () {
-            console.log("User exited the payment window.");
-            fetch("http://localhost:8085/api/v1/gift-cart/fail", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token}`,
-              },
-              body: JSON.stringify({
-                giftCartID: giftCartID,
-                paymentTransID: "",
-                errMessage: "User exited the payment window",
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                console.log("Exit log response:", data);
-              })
-              .catch((err) => {
-                console.error("Fail log error:", err);
-              });
-          },
-        },
-        prefill: {
-          name: "Ravi Kumar",
-          email: "ravi@example.com",
-          contact: "8868803285",
-        },
-        theme: {
-          color: "#F37254",
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err) {
-      console.error(err);
-      alert("Payment initialization failed.");
-    } finally {
-      setLoading(false);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data Submitted:", formData);
+    // Submit logic here
   };
 
   return (
-    <div className="text-center py-20">
-      <h1 className="text-3xl font-bold mb-6">TripToTemples Payment</h1>
-      <button
-        onClick={handlePayment}
-        disabled={loading}
-        className="bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded text-lg"
-      >
-        {loading ? "Processing..." : "Pay Now"}
-      </button>
+    <div className="bg-[#f3f3f3] min-h-screen px-4 md:px-12 py-4 lg:py-10">
+      {/* Stepper */}
+      <div className="flex items-center justify-center mb-8 gap-6">
+        {["address", "payment"].map((step, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => setActiveTab(step)}
+          >
+            <div
+              className={`w-8 h-8 flex items-center justify-center rounded-full text-white text-sm font-semibold ${
+                activeTab === step ? "bg-pink-600" : "bg-gray-300"
+              }`}
+            >
+              {i + 1}
+            </div>
+            <span
+              className={`text-sm font-medium ${
+                activeTab === step ? "text-pink-600" : "text-gray-600"
+              }`}
+            >
+              {step.charAt(0).toUpperCase() + step.slice(1)}
+            </span>
+            {i < 1 && <div className="border-t border-gray-300 w-8 sm:w-16" />}
+          </div>
+        ))}
+      </div>
+
+      {/* Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {/* Left Column */}
+        <div className=" bg-white p-2 lg:p-4 rounded-lg lg:w-[100%]">
+          {activeTab === "address" && (
+            <>
+              <h1 className="text-2xl font-bold text-gray-900 mb-1">
+                Choose Address
+              </h1>
+              <p className="text-gray-500 text-sm mb-6">
+                Detailed address will help our delivery partner reach your
+                doorstep quickly
+              </p>
+
+              <div
+                className="border-2 border-dashed border-pink-500 rounded-lg p-6 text-center text-pink-600 font-medium mb-4 cursor-pointer hover:bg-pink-50"
+                onClick={() => setShowForm(!showForm)}
+              >
+                <span className="text-3xl">+</span>
+                <p>Add New Address</p>
+              </div>
+
+              {/* Form */}
+              {showForm && (
+                <div className="relative border rounded-lg p-6 shadow-sm mb-6">
+  <span
+    onClick={() => setShowForm(false)}
+    className="absolute top-4 right-4 text-black hover:text-red-600 text-xl font-bold cursor-pointer"
+  >
+    ×
+  </span>
+
+  <h2 className="text-lg font-semibold mb-4">Add New Address</h2>
+                 
+                  <form className="space-y-3" onSubmit={handleSubmit}>
+
+                   <div className="w-full flex flex-col md:flex-row gap-3">
+  {/* Pincode */}
+  <div className="w-full md:w-1/3">
+    <label className="block text-sm mb-1">Pincode</label>
+    <input
+      type="text"
+      name="pincode"
+      value={formData.pincode}
+      onChange={handleChange}
+      className="w-full border px-3 py-2 rounded bg-gray-100"
+    />
+  </div>
+
+  {/* City */}
+  <div className="w-full md:w-1/3">
+    <label className="block text-sm mb-1">City</label>
+    <input
+      type="text"
+      name="city"
+      value={formData.city}
+      onChange={handleChange}
+      className="w-full border px-3 py-2 rounded bg-gray-100"
+    />
+  </div>
+
+  {/* State */}
+  <div className="w-full md:w-1/3">
+    <label className="block text-sm mb-1">State</label>
+    <input
+      type="text"
+      name="state"
+      value={formData.state}
+      onChange={handleChange}
+      className="w-full border px-3 py-2 rounded bg-gray-100"
+    />
+  </div>
+</div>
+
+
+                    <div>
+                      <label className="block text-sm mb-1">
+                        House/Flat/Office No.
+                      </label>
+                      <input
+                        type="text"
+                        name="house"
+                        value={formData.house}
+                        onChange={handleChange}
+                        className="w-full border px-3 py-2 rounded bg-gray-100"
+                      />
+                    </div>
+                     
+
+                    <div>
+                      <label className="block text-sm mb-1">
+                        Road Name/Area/Colony
+                      </label>
+                      <textarea
+                        name="road"
+                        value={formData.road}
+                        onChange={handleChange}
+                        rows={2}
+                        className="w-full border px-3 py-2 rounded bg-gray-100"
+                      />
+                      {formData.road.length < 5 && (
+                        <p className="text-red-500 text-xs mt-1">
+                          ⚠ Min. 5 characters
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <label className="text-sm">Use as default address</label>
+                      <input
+                        type="checkbox"
+                        name="isDefault"
+                        checked={formData.isDefault}
+                        onChange={handleChange}
+                        className="accent-pink-600 w-5 h-5"
+                      />
+                    </div>
+
+                    {/* Contact Info */}
+                    <div className="pt-4">
+                      <h3 className="text-lg font-semibold">Contact</h3>
+                      <p className="text-sm text-gray-500 mb-2">
+                        Information provided here will be used to contact you
+                        for delivery updates
+                      </p>
+
+                      <div className="mb-3">
+                        <label className="block text-sm mb-1">Name</label>
+                        <input
+                          type="text"
+                          name="contactName"
+                          value={formData.contactName}
+                          onChange={handleChange}
+                          className="w-full border px-3 py-2 rounded bg-gray-100"
+                        />
+                      </div>
+
+                      <div className="flex flex-col md:flex-row gap-3">
+                        <div className="flex-1">
+                          <label className="block text-sm mb-1">Phone</label>
+                          <PhoneInput
+                            country={"in"}
+                            value={formData.contactPhone}
+                            onChange={(value, data) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                contactPhone: value,
+                                phoneCode: data.dialCode,
+                              }))
+                            }
+                            inputStyle={{ width: "100%" }}
+                            inputProps={{ required: true }}
+                            enableSearch
+                          />
+                          {formData.contactPhone.length < 10 && (
+                            <p className="text-red-500 text-xs mt-1">
+                              ⚠ Enter a valid phone number
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex-1">
+                          <label className="block text-sm mb-1">
+                            Email ID (Optional)
+                          </label>
+                          <input
+                            type="email"
+                            name="contactEmail"
+                            value={formData.contactEmail}
+                            onChange={handleChange}
+                            className="w-full border px-3 py-2 rounded bg-gray-100"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-pink-600 text-white py-2 mt-4 rounded hover:bg-pink-700"
+                    >
+                      SHIP TO THIS ADDRESS
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {/* Saved Address */}
+              <div className="border rounded-lg p-4 shadow-sm mb-4">
+                <div className="flex justify-between items-center mb-2">
+                  <div className="text-base font-semibold">{address.name}</div>
+                  {address.isDefault && (
+                    <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full font-medium">
+                      DEFAULT
+                    </span>
+                  )}
+                </div>
+                <div className="text-sm text-gray-600 whitespace-pre-line mb-1">
+                  {address.address}
+                </div>
+                <div className="text-sm text-gray-600 mb-4">
+                  {address.phone}
+                </div>
+                <div className="flex gap-3 lg:w-[80%] mx-auto justify-center">
+                  <button className="border lg:w-[40%] border-gray-300 text-bold px-4 py-1 lg:py-3 rounded hover:bg-gray-50">
+                    Edit
+                  </button>
+                  <button
+                    className="bg-pink-600 text-white lg:w-[60%] lg:py-3 text-bold px-4 py-1 rounded hover:bg-pink-700"
+                    onClick={() => setActiveTab("payment")}
+                  >
+                    Deliver here
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeTab === "payment" && (
+            <div className="p-6 border rounded-lg shadow-sm text-center">
+              <h2 className="text-xl font-bold mb-4 text-gray-800">
+                Payment Page
+              </h2>
+              <p className="text-gray-600">Payment integration will go here.</p>
+            </div>
+          )}
+        </div>
+        {/* Right Sidebar */}
+        <div className="relative lg:w-[100%]">
+          <div className="sticky top-6">
+            <div className="space-y-4 bg-white p-2 lg:p-4 max-h-[90vh] overflow-y-auto rounded-lg shadow-sm">
+              <div className="border rounded-lg overflow-hidden shadow-sm">
+                <details className="group">
+                  <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
+                    <span>Bag</span>
+                    <div className="flex items-center gap-3 text-sm">
+                      <span>{items.length} Items</span>
+                      <span className="text-pink-600 font-medium">Edit</span>
+                    </div>
+                  </summary>
+                  <div className="px-4 py-3 bg-gray-50 space-y-3">
+                     {items.length === 0 ? (
+                      <p className="text-gray-500">Your cart is empty.</p>
+      ) : (
+        <>
+        {items.map((item, i) => (
+           <div className="flex gap-3" key={i}>
+                      <img
+                        src={item.image}
+                        alt="product"
+                        className="w-12 h-16 object-contain"
+                      />
+                      <div className="flex-1 text-sm">
+                        <p className="font-medium text-gray-700 line-clamp-2">
+                          {item.title}
+                        </p>
+                        
+                        <p className="text-sm mt-1">
+                          Quantity:{" "}
+                          <span className="font-semibold">--</span>
+                        </p>
+                        <p className="text-sm">
+                          <span className="line-through text-gray-400 text-xs">
+                            ₹ {item.price}
+                          </span>{" "}
+                          <span className="font-medium text-gray-900">
+                            ₹ {item.price}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+
+
+          ))}
+       
+        </>
+      )}
+                        
+                    
+
+                  </div>
+                </details>
+              </div>
+
+              <div className="border rounded-lg overflow-hidden shadow-sm">
+                <details className="group" open>
+                  <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
+                    <span>Price Details</span>
+                    <span className="font-medium text-gray-700">₹ {totalPrice}</span>
+                  </summary>
+                  <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
+                    You are saving ₹202
+                  </div>
+                </details>
+              </div>
+
+              {activeTab === "payment" && (
+                <div className="border rounded-lg overflow-hidden shadow-sm">
+                  <details className="group" open>
+                    <summary className="px-4 py-3 bg-white cursor-pointer text-sm font-medium text-gray-800">
+                      Deliver To
+                    </summary>
+                    <div className="bg-gray-50 px-4 py-3 text-sm text-gray-700">
+                      Ravi<br />
+                      606 kasia kushinagar, Uttar Pradesh<br />
+                      Kushinagar - 274402<br />
+                      Phone: 8840473290
+                    </div>
+                  </details>
+                </div>
+              )}
+
+              <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
+                <svg
+                  className="w-5 h-5 text-pink-600 mt-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 11c0-.35-.06-.68-.17-.99A4 4 0 0016 7V6a4 4 0 10-8 0v1a4 4 0 004.17 3.99c-.11.31-.17.64-.17.99m0 4h.01M12 15h.01M12 18h.01"
+                  />
+                </svg>
+                <p>
+                  Buy authentic products. Pay securely. Easy returns and
+                  exchange.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 }

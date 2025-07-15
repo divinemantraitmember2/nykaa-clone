@@ -4,6 +4,7 @@ import Providers from "./providers";
 import Header from '../components/Header'
 import UserAuthModal from '../components/userInfo/UserAuthModal'
 import Footer from '../components/Footer'
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,13 +21,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+   
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
         <Header />
         <UserAuthModal/>
-        {children}
+         {children}
          <Footer />
         </Providers>
       </body>

@@ -1,59 +1,59 @@
 "use client";
 
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../slices/cartSlice"; 
-import Link from "next/link"
+import { addToCart } from "../../slices/cartSlice";
+import Link from "next/link";
 
 export default function ProductCard({ product }) {
-     const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
   const handleAddToCart = () => {
-
-    dispatch(addToCart({
-      ...product,
-      id: product.slug,
-      image:product.image,
-    }));
-
+    dispatch(
+      addToCart({
+        ...product,
+        id: product.slug,
+        image: product.image,
+      })
+    );
   };
+
   return (
-    <div className="group relative bg-white border hover:shadow-xl transition duration-300 p-1 lg:p-4 rounded-md text-sm overflow-hidden min-h-[370px]">
-      {/* Badges */}
-      
-       <Link href={`/hair/argan-oil`}>
-      <div className="relative">
-        {product.badges?.map((badge, idx) => (
-          <span
-            key={idx}
-            className="absolute -top-5  left-[8px] text-xs bg-pink-100 text-pink-600 font-semibold px-2 py-0.5 rounded"
-          >
-            {badge}
-          </span>
-        ))}
-        <img
-          src={product.image}
-          alt={product.title}
-          className="mx-auto w-full h-40 object-contain mt-6"
-        />
-      </div>
+    <div className="group relative bg-white border hover:shadow-xl transition duration-300 p-2 lg:p-4 rounded-md text-sm overflow-hidden min-h-[370px]">
+      {/* Product Image and Link */}
+      <Link href={`/hair/argan-oil`}>
+        <div className="relative">
+          {/* Badges */}
+          {product.badges?.map((badge, idx) => (
+            <span
+              key={idx}
+              className="absolute -top-5 left-2 text-xs bg-pink-100 text-pink-600 font-semibold px-2 py-0.5 rounded"
+            >
+              {badge}
+            </span>
+          ))}
 
-      {/* Info */}
-      <h3 className="mt-1 lg:mt-2 font-semibold text-gray-800 leading-tight line-clamp-2">
-        {product.title}
-      </h3>
-      <div className="mt-1">
-        <span className="text-sm font-bold text-gray-800">₹{product.price}</span>
-        <span className="line-through ml-2 text-gray-500 text-xs">₹{product.mrp}</span>
-        <span className="text-pink-600 text-xs ml-2">{product.discount}</span>
-      </div>
-      <div className="text-gray-500 text-xs mt-1">★ {product.rating.toLocaleString()}</div>
-      <div className="text-gray-500 text-xs">{product.sizes}</div>
+          <img
+            src={product.image}
+            alt={product.title}
+            className="mx-auto w-full h-40 object-contain mt-6"
+          />
+        </div>
 
-</Link>
-  {/* Link Wrapper End */}
-      {/* Hover Action */}
-      <div
-        className="absolute bottom-2 left-0 w-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300"
-      >
+        {/* Info */}
+        <h3 className="mt-2 font-semibold text-gray-800 leading-tight line-clamp-2">
+          {product.title}
+        </h3>
+        <div className="mt-1">
+          <span className="text-sm font-bold text-gray-800">₹{product.price}</span>
+          <span className="line-through ml-2 text-gray-500 text-xs">₹{product.mrp}</span>
+          <span className="text-pink-600 text-xs ml-2">{product.discount}</span>
+        </div>
+        <div className="text-gray-500 text-xs mt-1">★ {product.rating?.toLocaleString()}</div>
+        <div className="text-gray-500 text-xs">{product.sizes}</div>
+      </Link>
+
+      {/* Hover Action - Wishlist + Add to Cart */}
+      <div className="absolute bottom-2 left-0 w-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex items-center justify-center gap-2 px-3">
           {/* Wishlist */}
           <button
@@ -79,7 +79,10 @@ export default function ProductCard({ product }) {
           </button>
 
           {/* Add to Bag */}
-          <button className="bg-pink-600 text-white px-4 py-1.5 text-sm rounded hover:bg-pink-700 w-full"  onClick={handleAddToCart}>
+          <button
+            className="bg-pink-600 text-white px-4 py-1.5 text-sm rounded hover:bg-pink-700 w-full"
+            onClick={handleAddToCart}
+          >
             Add to Bag
           </button>
         </div>

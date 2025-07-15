@@ -3,6 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../../slices/cartSlice";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function CartPage() {
   const { items } = useSelector((state) => state.cart);
@@ -197,14 +198,15 @@ export default function CartPage() {
               <span>Total</span>
               <span>₹{totalPrice}</span>
             </div>
+              
             <button
-              onClick={handleCheckout}
+            //   onClick={handleCheckout}
               disabled={loading}
               className={`w-full mt-6 bg-pink-600 text-white py-3 rounded hover:bg-pink-700 transition ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
             >
-              {loading ? "Processing..." : "Proceed to Checkout"}
+              {loading ? "Processing..." : <Link href="/checkout" >Proceed to Checkout</Link> }
             </button>
           </div>
         </div>
