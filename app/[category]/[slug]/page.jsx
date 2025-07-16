@@ -1,36 +1,29 @@
 import { notFound } from "next/navigation";
-import ClientProductDetails from "../../../components/product/ClientProductDetails"; // import client component
+import ClientProductDetails from "../../../components/product/ClientProductDetails";
 import ProductDescription from "../../../components/product/ProductDescription";
 import { Get_Product_details } from "../../../utils/api/Httproutes";
 
-
-
 export default async function ProductDetails({ params }) {
-  const category = params.category;
-  let products =null;
-  const slug = params.slug;
-  if(slug !="" ){
+  const awaitedParams = await params; 
+  const { category, slug } = awaitedParams;
 
-    try {
-        console.log("slug",slug)
-        const response = await Get_Product_details(slug);
-        products = response?.data ||null;
-        console.log("products",products)
-    
-      } catch (err) {
-        console.error("Fetch failed:", err);
-      }
-    
+  if (!slug) return notFound();
 
+  let product = null;
+
+  try {
+    const response = await Get_Product_details(slug);
+    product = response?.data || null;
+  } catch (error) {
+    console.error("Error fetching product:", error);
   }
+
   
+
   return (
     <div className="bg-[#f3f3f3] py-10 lg:px-20 px-2">
-    <div className="">
-     <ClientProductDetails product={products} />
-     </div>
-       <ProductDescription/>
-     
+      <ClientProductDetails product={product} />
+      <ProductDescription />
     </div>
   );
 }

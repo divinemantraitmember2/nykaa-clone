@@ -9,7 +9,7 @@ export default async function Header() {
   try {
     const res = await Get_Category_list();
     categories = res.data;
-    console.log("categories",categories)
+    
   } catch (err) {
     console.error("Failed to fetch categories:", err);
   }

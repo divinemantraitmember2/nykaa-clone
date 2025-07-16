@@ -3,14 +3,14 @@ import ProductGrid from "../../components/category/ProductGrid";
 import TopBanner from "../../components/category/TopBanner";
 import { Get_Product_of_category_list } from '../../utils/api/Httproutes';
 export default async function CategoryPage({ params }) {
-
-let slug = params.category;
+const awaitedParams = await params; 
+  const slug = awaitedParams.category;
   let products = [];
   try {
-    console.log("slug",slug)
+    
     const response = await Get_Product_of_category_list(slug);
     products = response?.data || [];
-    console.log("products",products)
+   
 
   } catch (err) {
     console.error("Fetch failed:", err);

@@ -10,7 +10,7 @@ export default function BottomBar({ categories = [], loading = false }) {
 
   useEffect(() => {
 setgetCategory(categories)
-    console.log("bbbbb",categories)
+   
     let lastScrollY = window.scrollY;
 
     const updateScrollDir = () => {
