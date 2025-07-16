@@ -4,7 +4,12 @@ import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useSelector, useDispatch } from "react-redux";
-
+import {
+  removeFromCart,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../../slices/cartSlice";
 
 export default function ChooseAddressPage() {
    const { items } = useSelector((state) => state.cart);
@@ -12,6 +17,7 @@ export default function ChooseAddressPage() {
   (acc, item) => acc + item.price * item.quantity,
   0
 );
+ const dispatch = useDispatch();
 
   const [activeTab, setActiveTab] = useState("address");
   const [showForm, setShowForm] = useState(false);
@@ -79,7 +85,7 @@ export default function ChooseAddressPage() {
       </div>
 
       {/* Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+     {activeTab === "address" && (  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Left Column */}
         <div className=" bg-white p-2 lg:p-4 rounded-lg lg:w-[100%]">
           {activeTab === "address" && (
@@ -294,15 +300,6 @@ export default function ChooseAddressPage() {
               </div>
             </>
           )}
-
-          {activeTab === "payment" && (
-            <div className="p-6 border rounded-lg shadow-sm text-center">
-              <h2 className="text-xl font-bold mb-4 text-gray-800">
-                Payment Page
-              </h2>
-              <p className="text-gray-600">Payment integration will go here.</p>
-            </div>
-          )}
         </div>
         {/* Right Sidebar */}
         <div className="relative lg:w-[100%]">
@@ -317,49 +314,65 @@ export default function ChooseAddressPage() {
                       <span className="text-pink-600 font-medium">Edit</span>
                     </div>
                   </summary>
-                  <div className="px-4 py-3 bg-gray-50 space-y-3">
-                     {items.length === 0 ? (
-                      <p className="text-gray-500">Your cart is empty.</p>
-      ) : (
-        <>
-        {items.map((item, i) => (
-           <div className="flex gap-3" key={i}>
-                      <img
-                        src={item.image}
-                        alt="product"
-                        className="w-12 h-16 object-contain"
-                      />
-                      <div className="flex-1 text-sm">
-                        <p className="font-medium text-gray-700 line-clamp-2">
-                          {item.title}
-                        </p>
-                        
-                        <p className="text-sm mt-1">
-                          Quantity:{" "}
-                          <span className="font-semibold mx-2">{item.quantity}</span>
-                          Price:{" "}
-                          <span className="font-semibold mx-2"> ₹ {item.price}</span>
-                        </p>
-                        <p className="text-sm">
-                          <span className="line-through text-gray-400 text-xs">
-                           ₹ {item.price * item.quantity}
-                          </span>{" "}
-                          <span className="font-medium text-gray-900">
-                         Total Price:{" "}  ₹ {item.price * item.quantity}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+                  <div className="px-4 py-3 bg-gray-50 space-y-4">
+  {items.length === 0 ? (
+    <p className="text-gray-500">Your cart is empty.</p>
+  ) : (
+    items.map((item, i) => (
+      <div
+        key={i}
+        className="flex items-start gap-4 border rounded-lg p-3 bg-white shadow-sm"
+      >
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-16 h-20 object-cover rounded-md border"
+        />
 
+        <div className="flex-1 text-sm">
+          <p className="font-semibold text-gray-800 line-clamp-2 mb-1">
+            {item.title}
+          </p>
 
-          ))}
-       
-        </>
-      )}
-                        
-                    
+          <div className="flex justify-between items-center text-gray-700">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span>Qty:</span>
+                <button
+                  onClick={() => dispatch(decreaseQuantity(item.id))}
+                  className="px-2 py-1 bg-gray-200 rounded text-sm font-semibold hover:bg-gray-300"
+                >
+                  −
+                </button>
+                <span className="px-2">{item.quantity}</span>
+                <button
+                  onClick={() => dispatch(increaseQuantity(item.id))}
+                  className="px-2 py-1 bg-gray-200 rounded text-sm font-semibold hover:bg-gray-300"
+                >
+                  +
+                </button>
+              </div>
+              <p>
+                Price: <span className="font-medium">₹{item.price}</span>
+              </p>
+            </div>
 
-                  </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-400 line-through">
+                ₹{item.price * item.quantity}
+              </p>
+              <p className="font-semibold text-gray-900">
+                ₹{item.price * item.quantity}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">Total</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
                 </details>
               </div>
 
@@ -374,10 +387,90 @@ export default function ChooseAddressPage() {
                   </div>
                 </details>
               </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+     )}
 
-              {activeTab === "payment" && (
+{activeTab === "payment" && (
+<div className="grid grid-cols-1 md:grid-cols-1 lg:w-[70%] mx-auto">
+<div className="px-2">
+
+   <div className="relative lg:w-[100%]">
+          <div className="sticky top-6">
+            <div className="space-y-4 bg-white p-2 lg:p-4 max-h-[90vh] overflow-y-auto rounded-lg shadow-sm">
+              <div className="border rounded-lg overflow-hidden shadow-sm">
+                <details className="group" open>
+                  <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
+                    <span>Bag</span>
+                    <div className="flex items-center gap-3 text-sm">
+                      <span>{items.length} Items</span>
+                      <span className="text-pink-600 font-medium">Edit</span>
+                    </div>
+                  </summary>
+                  <div className="px-4 py-3 bg-gray-50 space-y-4">
+  {items.length === 0 ? (
+    <p className="text-gray-500">Your cart is empty.</p>
+  ) : (
+    items.map((item, i) => (
+      <div
+        key={i}
+        className="flex items-start gap-4 border rounded-lg p-3 bg-white shadow-sm"
+      >
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-16 h-20 object-cover rounded-md border"
+        />
+        <div className="flex-1 text-sm">
+          <p className="font-semibold text-gray-800 line-clamp-2 mb-1">
+            {item.title}
+          </p>
+
+          <div className="flex justify-between text-gray-700">
+            <div>
+              <p>
+                Qty: <span className="font-medium">{item.quantity}</span>
+              </p>
+              <p>
+                Price: <span className="font-medium">₹{item.price}</span>
+              </p>
+            </div>
+
+            <div className="text-right">
+              <p className="text-xs text-gray-400 line-through">
+                ₹{item.price * item.quantity}
+              </p>
+              <p className="font-semibold text-gray-900">
+                ₹{item.price * item.quantity}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">Total</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
+                </details>
+              </div>
+
+              <div className="border rounded-lg overflow-hidden shadow-sm">
+                <details className="group" open>
+                  <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
+                    <span>Price Details</span>
+                    <span className="font-medium text-gray-700">₹ {totalPrice}</span>
+                  </summary>
+                  <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
+                    You are saving 
+                  </div>
+                </details>
+              </div>
                 <div className="border rounded-lg overflow-hidden shadow-sm">
-                  <details className="group" open>
+                  <details className="group" >
                     <summary className="px-4 py-3 bg-white cursor-pointer text-sm font-medium text-gray-800">
                       Deliver To
                     </summary>
@@ -389,32 +482,22 @@ export default function ChooseAddressPage() {
                     </div>
                   </details>
                 </div>
-              )}
-
-              <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
-                <svg
-                  className="w-5 h-5 text-pink-600 mt-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 11c0-.35-.06-.68-.17-.99A4 4 0 0016 7V6a4 4 0 10-8 0v1a4 4 0 004.17 3.99c-.11.31-.17.64-.17.99m0 4h.01M12 15h.01M12 18h.01"
-                  />
-                </svg>
-                <p>
-                  Buy authentic products. Pay securely. Easy returns and
-                  exchange.
-                </p>
+                <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
+                <button className="bg-pink-600 text-white lg:w-[40%] mx-auto lg:py-4 text-bold px-4 py-1 rounded hover:bg-pink-700"
+                    // onClick={() => setActiveTab("payment")}
+                  >
+                    Pay Now
+                  </button>
               </div>
+              
             </div>
           </div>
         </div>
+  
+</div>
+</div>
+ )}
 
-      </div>
     </div>
   );
 }
