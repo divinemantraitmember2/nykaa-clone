@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 const messages = [
-  "🎉 BEAUTY BONANZA – Get Your Amazing Deals!",
-  "🎉 BEAUTY BONANZA – Get One Buy One Amazing Deals!",
+  "  BEAUTY BONANZA – Get Your Amazing Deals!",
+  "  BEAUTY BONANZA – Get One Buy One Amazing Deals!",
 ];
 
 export default function Topbar() {
@@ -19,7 +19,7 @@ export default function Topbar() {
   }, []);
 
   return (
-    <section className="px-4  bg-pink-200">
+    <section className="px-6  bg-[#faf4ec]">
       <div className="relative h-10 overflow-hidden  text-pink-900 text-sm flex items-center justify-start">
       <div className="absolute transition-opacity duration-300">
         <div className="font-semibold text-center">

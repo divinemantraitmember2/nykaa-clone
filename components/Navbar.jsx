@@ -5,6 +5,7 @@ import { navbarLinks } from "../data/navbarLinks";
 import { openLoginModal, openRegisterModal } from "../slices/userSlice";
 import { FaShoppingBag, FaUser, FaBars, FaSearch } from "react-icons/fa";
 import Link from "next/link"
+import Image from "next/image";
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
    const [scrollDir, setScrollDir] = useState("up");
@@ -80,11 +81,22 @@ export default function Navbar() {
       )}
 
       {/* Desktop Navbar */}
-      <div className="hidden md:flex items-center justify-between px-6 py-3">
-        <div className="flex items-center space-x-6">
-          <div className="text-3xl font-black text-pink-600 cursor-pointer">
-          <Link href="/"> NYKAA</Link>
-          </div>
+      <div className="hidden md:flex items-center justify-between px-6">
+        <div className="flex items-center space-x-4">
+        <div className="text-3xl font-black text-pink-600 cursor-pointer">
+  <Link href="/">
+    <div className="w-[80px] h-[80px] relative"> {/* Controls size */}
+      <Image
+        src="/images/logo.jpeg"
+        alt="Logo"
+        fill
+        className="object-contain"
+        priority
+      />
+    </div>
+  </Link>
+</div>
+
           <nav className="flex space-x-6 text-md font-semibold text-gray-700">
             {navbarLinks.map((link, i) => (
               <a key={i} href={link.href} className="hover:text-pink-600">
@@ -99,7 +111,7 @@ export default function Navbar() {
             placeholder="Search on Nykaa"
             className="border px-3 py-2 rounded text-sm w-56"
           />
-          <button className="bg-pink-600 text-white px-4 py-2 text-sm rounded-full" onClick={() => dispatch(openLoginModal())}>
+          <button className="bg-[#cb3f61] text-white px-4 py-2 text-sm rounded" onClick={() => dispatch(openLoginModal())}>
             Sign in
           </button>
 
