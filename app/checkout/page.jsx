@@ -226,7 +226,7 @@ export default function ChooseAddressPage() {
 
    <div className="relative lg:w-[100%]">
           <div className="sticky top-6">
-            <div className="space-y-4 bg-white p-2 lg:p-4 max-h-[90vh] overflow-y-auto rounded-lg shadow-sm">
+            <div className="space-y-4 bg-white p-2 lg:p-4  rounded-lg shadow-sm">
               <div className="border rounded-lg overflow-hidden shadow-sm">
                 <details className="group" open>
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">

@@ -29,9 +29,9 @@ export default function CartPage() {
       {items.length === 0 ? (
         <p className="text-gray-500 text-center">Your cart is empty.</p>
       ) : (
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Cart Items */}
-          <div className="flex-1 max-h-[70vh] overflow-y-auto pr-1">
+          <div className="flex-1  pr-1">
             <ul className="space-y-5">
               {items.map((item, i) => (
                 <li
@@ -49,7 +49,7 @@ export default function CartPage() {
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                       ₹{item.price} × {item.quantity} = ₹
-                      {item.price * item.quantity}
+                      {(item.price * item.quantity).toFixed(2)}
                     </p>
 
                     {/* Quantity controls */}
@@ -90,11 +90,11 @@ export default function CartPage() {
           </div>
 
           {/* Price Summary */}
-          <div className="w-full lg:w-1/3 border rounded-lg p-6 shadow-md bg-gray-50">
+          <div className="w-full lg:w-1/3 self-start border rounded-lg p-6 shadow-md bg-gray-50">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <div className="flex justify-between text-gray-700 mb-2">
               <span>Subtotal</span>
-              <span>₹{totalPrice}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-gray-700 mb-2">
               <span>Shipping</span>
@@ -103,7 +103,7 @@ export default function CartPage() {
             <hr className="my-4" />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
-              <span>₹{totalPrice}</span>
+              <span>₹{totalPrice.toFixed(2)}</span>
             </div>
 
             <button

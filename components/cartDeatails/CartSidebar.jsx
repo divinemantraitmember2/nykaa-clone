@@ -69,7 +69,7 @@ export default function CartPage() {
           </ul>
 
           <div className="mt-6 flex justify-between items-center border-t pt-4">
-            <span className="text-lg font-bold">Total: ₹{totalPrice}</span>
+            <span className="text-lg font-bold">Total: ₹{totalPrice.toFixed(2)}</span>
             <button
               onClick={() => dispatch(clearCart())}
               className="text-sm text-pink-600 hover:underline"
