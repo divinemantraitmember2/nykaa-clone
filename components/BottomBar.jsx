@@ -1,11 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
 
-export default function BottomBar() {
+export default function BottomBar({ categories = [], loading = false }) {
+
   const [hovered, setHovered] = useState(false);
    const [scrollDir, setScrollDir] = useState("up");
+   const [getCategory, setgetCategory] = useState([]);
+
 
   useEffect(() => {
+setgetCategory(categories)
+    console.log("bbbbb",categories)
     let lastScrollY = window.scrollY;
 
     const updateScrollDir = () => {
@@ -92,16 +97,16 @@ export default function BottomBar() {
         {/* Top Link Bar */}
         <div
           className="bg-white shadow overflow-x-auto whitespace-nowrap px-6 py-4  text-center text-sm font-medium text-gray-700"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
+          // onMouseEnter={() => setHovered(true)}
+          // onMouseLeave={() => setHovered(false)}
         >
-          {links.map((link, index) => (
+          {getCategory && getCategory.slice(0, 10).map((link, index) => (
             <a
               key={index}
               href={`/${link.slug}`}
               className="inline-block mr-6 hover:text-pink-600 cursor-pointer"
             >
-              {link.title}
+              {link.name}
             </a>
           ))}
         </div>

@@ -11,8 +11,8 @@ export default function ProductCard({ product }) {
     dispatch(
       addToCart({
         ...product,
-        id: product.slug,
-        image: product.image,
+        id: product.id,
+        image: product.thumbnail,
       })
     );
   };
@@ -20,20 +20,21 @@ export default function ProductCard({ product }) {
   return (
     <div className="group relative bg-white border hover:shadow-xl transition duration-300 p-2 lg:p-4 rounded-md text-sm overflow-hidden min-h-[370px]">
       {/* Product Image and Link */}
-      <Link href={`/hair/argan-oil`}>
+      <Link href={`/${product.category}/${product.id}`}>
         <div className="relative">
           {/* Badges */}
-          {product.badges?.map((badge, idx) => (
+          
+          {product.tags?.map((badge, idx) => (
             <span
               key={idx}
-              className="absolute -top-5 left-2 text-xs bg-pink-100 text-pink-600 font-semibold px-2 py-0.5 rounded"
+              className="absolute -top-5 left-2  text-xs bg-pink-100 text-pink-600 font-semibold px-2 py-0.5 rounded"
             >
               {badge}
             </span>
           ))}
 
           <img
-            src={product.image}
+            src={product.thumbnail}
             alt={product.title}
             className="mx-auto w-full h-40 object-contain mt-6"
           />
@@ -44,12 +45,12 @@ export default function ProductCard({ product }) {
           {product.title}
         </h3>
         <div className="mt-1">
-          <span className="text-sm font-bold text-gray-800">₹{product.price}</span>
+          <span className="text-sm font-bold text-gray-800">Price ₹{product.price}</span>
           <span className="line-through ml-2 text-gray-500 text-xs">₹{product.mrp}</span>
-          <span className="text-pink-600 text-xs ml-2">{product.discount}</span>
+          <span className="text-pink-600 text-xs ml-2"> Discount {product.discountPercentage} %</span>
         </div>
-        <div className="text-gray-500 text-xs mt-1">★ {product.rating?.toLocaleString()}</div>
-        <div className="text-gray-500 text-xs">{product.sizes}</div>
+        <div className="text-gray-500 text-xs mt-1"> Rating★ {product.rating?.toLocaleString()}</div>
+        <div className="text-gray-500 text-xs"> Weight  {product.weight}</div>
       </Link>
 
       {/* Hover Action - Wishlist + Add to Cart */}
