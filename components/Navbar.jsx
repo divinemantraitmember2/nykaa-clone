@@ -87,12 +87,12 @@ export default function Navbar() {
   <Link href="/">
     <div className="w-[80px] h-[80px] relative"> {/* Controls size */}
       <Image
-        src="/images/logo.jpeg"
-        alt="Logo"
-        fill
-        className="object-contain"
-        priority
-      />
+  src="/images/logo.jpeg"
+  alt="Logo"
+  width={80}
+  height={80}
+  className="object-contain"
+/>
     </div>
   </Link>
 </div>

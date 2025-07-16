@@ -1,19 +1,12 @@
+
+"use client";
 import Topbar from "./Topbar";
 import Navbar from "./Navbar";
 import BottomBar from "./BottomBar";
-import { Get_Category_list } from "../utils/api/Httproutes";
 
-export default async function Header() {
-  let categories = [];
 
-  try {
-    const res = await Get_Category_list();
-    categories = res.data;
-    
-  } catch (err) {
-    console.error("Failed to fetch categories:", err);
-  }
-
+export default function Header({ categories }) {
+ 
   return (
     <>
       <header className="sticky top-0 z-50 bg-white">

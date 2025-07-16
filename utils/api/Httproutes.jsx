@@ -49,7 +49,6 @@ export const Get_Product_details = (payload) => {
 };
 
 export const Get_Product_of_category_list = (payload) => {
-  console.log("payload",payload)
   return api.get(`/products/category/${payload}`);
 };
 
