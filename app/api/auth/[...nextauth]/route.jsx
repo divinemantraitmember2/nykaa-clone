@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { loginuser } from "../../../../utils/api/Httproutes"; // ✅ Use alias path for App Router
+// import { loginuser } from "../../../../utils/api/Httproutes"; // ✅ Use alias path for App Router
 
 const authOptions = {
   providers: [
@@ -24,16 +24,16 @@ const authOptions = {
           };
         }
 
-        try {
-          const response = await loginuser(requestPayload);
-          if (response.status === 200 && response.data.StatusCode === 200) {
-            return response.data;
-          }
-          return null;
-        } catch (error) {
-          console.error("Auth error:", error);
-          return null;
-        }
+        // try {
+        //   const response = await loginuser(requestPayload);
+        //   if (response.status === 200 && response.data.StatusCode === 200) {
+        //     return response.data;
+        //   }
+        //   return null;
+        // } catch (error) {
+        //   console.error("Auth error:", error);
+        //   return null;
+        // }
       },
     }),
   ],
@@ -52,7 +52,6 @@ const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
-
 // ✅ This export format is required for App Router
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
