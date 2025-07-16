@@ -1,7 +1,7 @@
 // lib/apiClient.js
 import axios from "axios";
 
-const baseURL = "https://api3.triptotemples.com/";
+const baseURL = "https://dummyjson.com";
 
 const getToken = () => {
   if (typeof window !== "undefined") {
