@@ -68,6 +68,7 @@ export default function UserAuthModal() {
       alert("Login failed: " + result.error);
     } else {
       alert("Login success!");
+      closeModal();
       // Redirect manually if needed
       window.location.href = "/profile";
     }
