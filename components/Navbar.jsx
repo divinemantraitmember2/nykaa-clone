@@ -1,63 +1,90 @@
 "use client";
-import { useEffect,useState } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { navbarLinks } from "../data/navbarLinks";
-import { openLoginModal, openRegisterModal } from "../slices/userSlice";
+import { openLoginModal } from "../slices/userSlice";
 import { FaShoppingBag, FaUser, FaBars, FaSearch } from "react-icons/fa";
-import Link from "next/link"
+import Link from "next/link";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-   const [scrollDir, setScrollDir] = useState("up");
-   const dispatch = useDispatch();
-  // 👇 Get cart count from Redux
+  const [scrollDir, setScrollDir] = useState("up");
+  const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.items.length);
-  
-   
+  const { data: session, status } = useSession();
+
   useEffect(() => {
-      let lastScrollY = window.scrollY;
-  
-      const updateScrollDir = () => {
-        const currentScrollY = window.scrollY;
-        if (Math.abs(currentScrollY - lastScrollY) < 10) return;
-  
-        setScrollDir(currentScrollY > lastScrollY ? "down" : "up");
-        lastScrollY = currentScrollY;
-      };
-  
-      window.addEventListener("scroll", updateScrollDir);
-      return () => window.removeEventListener("scroll", updateScrollDir);
-    }, []);
+    let lastScrollY = window.scrollY;
+
+    const updateScrollDir = () => {
+      const currentScrollY = window.scrollY;
+      if (Math.abs(currentScrollY - lastScrollY) < 10) return;
+      setScrollDir(currentScrollY > lastScrollY ? "down" : "up");
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", updateScrollDir);
+    return () => window.removeEventListener("scroll", updateScrollDir);
+  }, []);
+
+  const userImage = session?.user?.image || "/images/default-user.png";
 
   return (
-    <div className={`"w-full bg-white"${
-    scrollDir === "down" ? "shadow" : ""
-  }`}>
-      {/* Top Row - Logo + Icons (Mobile) */}
-      <div className="flex items-center justify-between px-4 py-3 md:hidden">
+    <div className={`w-full bg-white ${scrollDir === "down" ? "shadow" : ""}`}>
+      {/* Mobile Header */}
+      <div className="flex items-center justify-between mb-1 px-4 md:hidden">
         <div className="flex items-center space-x-3">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             <FaBars className="text-xl" />
           </button>
-          <div className="text-2xl font-black text-pink-700">NYKAA</div>
-        </div>
-        <div className="flex items-center space-x-4 relative">
-          {/* Mobile Cart Icon */}
-          <div className="relative">
-            <FaShoppingBag className="text-xl" />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
+          <div className="text-3xl font-black text-pink-600 cursor-pointer">
+            <Link href="/">
+              <div className="w-[60px] h-[60px] relative">
+                <Image
+                  src="/images/logo.jpeg"
+                  alt="Logo"
+                  width={60}
+                  height={60}
+                  className="object-contain"
+                />
+              </div>
+            </Link>
           </div>
-          <FaUser className="text-xl" />
+        </div>
+
+        <div className="flex items-center space-x-8 relative">
+          <Link href="/cart" className="relative">
+            <div className="relative">
+              <FaShoppingBag className="text-xl" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          </Link>
+
+          {session?.user ? (
+            <Link href="/profile">
+              <Image
+                src={userImage}
+                alt="User"
+                width={30}
+                height={30}
+                className="rounded-full cursor-pointer"
+              />
+            </Link>
+          ) : (
+            <FaUser className="text-xl" onClick={() => dispatch(openLoginModal())} />
+          )}
         </div>
       </div>
 
-      {/* Search Input (Mobile) */}
+      {/* Mobile Search */}
       <div className="px-4 pb-3 md:hidden">
-        <div className="flex items-center bg-gray-100 px-4 py-2 rounded-full">
+        <div className="flex items-center bg-gray-100 px-4 py-3 rounded-full">
           <FaSearch className="text-pink-600 mr-2 text-sm" />
           <input
             type="text"
@@ -67,7 +94,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Nav Dropdown */}
       {isMobileMenuOpen && (
         <div className="px-4 pb-4 md:hidden">
           <nav className="flex flex-col gap-3 text-sm font-semibold text-gray-700">
@@ -83,19 +110,19 @@ export default function Navbar() {
       {/* Desktop Navbar */}
       <div className="hidden md:flex items-center justify-between px-6">
         <div className="flex items-center space-x-4">
-        <div className="text-3xl font-black text-pink-600 cursor-pointer">
-  <Link href="/">
-    <div className="w-[80px] h-[80px] relative"> 
-      <Image
-  src="/images/logo.jpeg"
-  alt="Logo"
-  width={80}
-  height={80}
-  className="object-contain"
-/>
-    </div>
-  </Link>
-</div>
+          <div className="text-3xl font-black text-pink-600 cursor-pointer">
+            <Link href="/">
+              <div className="w-[80px] h-[80px] relative">
+                <Image
+                  src="/images/logo.jpeg"
+                  alt="Logo"
+                  width={80}
+                  height={80}
+                  className="object-contain"
+                />
+              </div>
+            </Link>
+          </div>
 
           <nav className="flex space-x-6 text-md font-semibold text-gray-700">
             {navbarLinks.map((link, i) => (
@@ -105,29 +132,43 @@ export default function Navbar() {
             ))}
           </nav>
         </div>
+
         <div className="flex items-center space-x-4">
           <input
             type="text"
             placeholder="Search on Nykaa"
             className="border px-3 py-2 rounded text-sm w-56"
           />
-          <button className="bg-[#cb3f61] text-white px-4 py-2 text-sm rounded" onClick={() => dispatch(openLoginModal())}>
-            Sign in
-          </button>
 
-          {/* Desktop Cart Icon */}
-          <div className="relative">
-           <Link href="/cart" className="relative">
-      <div className="relative cursor-pointer">
-        <FaShoppingBag className="text-xl text-pink-600" />
-        {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-            {cartCount}
-          </span>
-        )}
-      </div>
-    </Link>
-          </div>
+          {session?.user ? (
+            <Link href="/profile">
+              <Image
+                src={userImage}
+                alt="User"
+                width={32}
+                height={32}
+                className="rounded-full cursor-pointer"
+              />
+            </Link>
+          ) : (
+            <button
+              className="bg-[#cb3f61] text-white px-4 py-2 text-sm rounded"
+              onClick={() => dispatch(openLoginModal())}
+            >
+              Sign in
+            </button>
+          )}
+
+          <Link href="/cart" className="relative">
+            <div className="relative cursor-pointer">
+              <FaShoppingBag className="text-xl text-pink-600" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </div>
+          </Link>
         </div>
       </div>
     </div>

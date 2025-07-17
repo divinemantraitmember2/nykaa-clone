@@ -21,7 +21,12 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-
+export const loginuser = (payload) => {
+  console.log("payload,,,,,,",payload)
+    let requestUrl = `https://dummyjson.com/auth/login`
+      return api.post(requestUrl,payload);
+    
+  }
 
 export const GetProductlist = () => {
   return api.get("/products");

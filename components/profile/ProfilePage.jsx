@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FiHeart, FiLogOut } from "react-icons/fi";
 import { FaRegCreditCard, FaPen } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+import { signOut } from "next-auth/react";
 import { MdOutlineLocationOn, MdOutlineShoppingBag } from "react-icons/md";
 
 export default function ProfilePage() {
@@ -22,7 +23,7 @@ export default function ProfilePage() {
     { label: "My Orders", icon: <MdOutlineShoppingBag size={18} /> },
     { label: "My Wishlist", icon: <FiHeart size={18} /> },
     { label: "My Saved Payment", icon: <FaRegCreditCard size={18} /> },
-    { label: "Log Out", icon: <FiLogOut size={18} /> },
+    { label: "Log Out", icon: <FiLogOut size={18}  /> },
   ];
 
   return (
@@ -35,7 +36,10 @@ export default function ProfilePage() {
             <div
               key={idx}
               className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 border hover:bg-gray-50 cursor-pointer rounded-md min-w-fit"
+              onClick={item.label === "Log Out"? () => signOut({ callbackUrl: "/" }): () => {} 
+          }
             >
+              
               {item.icon}
               {item.label}
             </div>

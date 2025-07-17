@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <>
     <section className="w-full bg-[#f3f3f3]">
- <CartSidebar />
+     <CartSidebar />
     </section>
      
      

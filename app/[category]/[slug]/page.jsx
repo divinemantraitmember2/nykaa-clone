@@ -10,7 +10,7 @@ export default async function ProductDetails({ params }) {
   let product = null;
   try {
     const response = await GetProductdetails(slug);
-    console.log("response",response)
+    
     product = response|| null;
   } catch (error) {
     console.error("Error fetching product:", error);

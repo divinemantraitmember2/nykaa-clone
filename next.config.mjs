@@ -7,6 +7,7 @@ const nextConfig = {
       'storage.googleapis.com',
       'images-static.nykaa.com',
       'cdn.dummyjson.com',
+      'dummyjson.com'
     ],
   },
 };

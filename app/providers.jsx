@@ -11,7 +11,6 @@ export default function Providers({ children, pageProps }) {
       <PersistGate loading={null} persistor={persistor}>
         <AuthProvider>
           <PagePropsProvider pageProps={pageProps}>
-            
             {children}
           </PagePropsProvider>
         </AuthProvider>

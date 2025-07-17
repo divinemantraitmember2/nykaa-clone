@@ -74,7 +74,7 @@ export default function CartPage() {
               onClick={() => dispatch(clearCart())}
               className="text-sm text-pink-600 hover:underline"
             >
-              Clear Cart kk
+              Clear Cart 
             </button>
           </div>
         </>
