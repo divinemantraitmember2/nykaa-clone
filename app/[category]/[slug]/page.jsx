@@ -1,19 +1,17 @@
 import { notFound } from "next/navigation";
 import ClientProductDetails from "../../../components/product/ClientProductDetails";
 import ProductDescription from "../../../components/product/ProductDescription";
-import { Get_Product_details } from "../../../utils/api/Httproutes";
+import { GetProductdetails } from "../../../utils/api/serverApi";
 
 export default async function ProductDetails({ params }) {
   const awaitedParams = await params; 
   const { category, slug } = awaitedParams;
-
   if (!slug) return notFound();
-
   let product = null;
-
   try {
-    const response = await Get_Product_details(slug);
-    product = response?.data || null;
+    const response = await GetProductdetails(slug);
+    console.log("response",response)
+    product = response|| null;
   } catch (error) {
     console.error("Error fetching product:", error);
   }

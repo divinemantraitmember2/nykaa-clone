@@ -4,7 +4,8 @@ import Providers from "./providers";
 import Header from '../components/Header'
 import UserAuthModal from '../components/userInfo/UserAuthModal'
 import Footer from '../components/Footer'
-import { Get_Category_list } from "../utils/api/Httproutes";
+import { getCategoryList } from "../utils/api/serverApi";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +27,8 @@ export default async function RootLayout({ children }) {
    let categories = [];
   
     try {
-      const res = await Get_Category_list();
-      categories = res.data;
-      
+      const ResData = await getCategoryList();
+      categories = ResData; 
     } catch (err) {
       console.error("Failed to fetch categories:", err);
     }

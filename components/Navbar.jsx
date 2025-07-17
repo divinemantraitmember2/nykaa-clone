@@ -85,7 +85,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
         <div className="text-3xl font-black text-pink-600 cursor-pointer">
   <Link href="/">
-    <div className="w-[80px] h-[80px] relative"> {/* Controls size */}
+    <div className="w-[80px] h-[80px] relative"> 
       <Image
   src="/images/logo.jpeg"
   alt="Logo"

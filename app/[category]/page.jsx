@@ -1,18 +1,15 @@
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
 import TopBanner from "../../components/category/TopBanner";
-import { Get_Product_of_category_list } from '../../utils/api/Httproutes';
+import { GetProductofcategorylist } from '../../utils/api/serverApi';
 
 export default async function CategoryPage({ params }) {
 const awaitedParams = await params; 
   const slug = awaitedParams.category;
   let products = [];
   try {
-    
-    const response = await Get_Product_of_category_list(slug);
-    products = response?.data || [];
-   
-
+    const response = await GetProductofcategorylist(slug);
+    products = response|| [];
   } catch (err) {
     console.error("Fetch failed:", err);
   }
