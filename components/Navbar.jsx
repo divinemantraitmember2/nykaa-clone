@@ -114,13 +114,13 @@ export default function Navbar() {
           <div className="text-3xl font-black text-pink-600 cursor-pointer">
             <Link href="/">
               <div className="w-[70px] h-[70px] relative">
-                {/* <Image
+                <Image
                   src="/images/logo.jpeg"
                   alt="Logo"
                   width={70}
                   height={70}
                   className="object-contain"
-                /> */}
+                />
               </div>
             </Link>
           </div>
@@ -137,7 +137,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
           <input
             type="text"
-            placeholder="Search on Pon"
+            placeholder="Search on Pondric"
             className="border px-3 py-2 rounded text-sm w-56"
           />
 

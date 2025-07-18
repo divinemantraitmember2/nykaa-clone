@@ -16,7 +16,7 @@ export default function ProfilePage() {
     email: "ravi@gmail.com",
     mobile: "8840473290",
     dob: "dd/mm/yyyy",
-    avatar: "https://www.nykaa.com/assets/mobile/images/my_profile/default_avatar.svg",
+    avatar: "/images/no-profile.jpeg",
   };
 
 const MyOrders = () => <div><h2 className="text-lg font-bold">My Orders</h2><p>No orders yet.</p></div>;
