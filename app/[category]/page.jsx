@@ -17,13 +17,14 @@ const awaitedParams = await params;
   return (
     <main className="min-h-scree bg-[#f3f3f3] px-1 lg:p-4 py-6">
       <TopBanner />
+
+      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center my-4">
+        Buy Herbal Essences Products Online 
+      </h1>
     
       <div className="flex gap-6 mt-3">
         <SidebarFilter />
-        <div className="flex-1">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center my-4">
-        Buy Herbal Essences Products Online 
-      </h1>
+        <div className="flex-1">    
           <ProductGrid
           productsData={products}
           />
