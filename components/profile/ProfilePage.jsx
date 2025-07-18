@@ -13,7 +13,7 @@ export default function ProfilePage() {
 
   const user = {
     name: "ravi",
-    email: "divinemantraitmember2@gmail.com",
+    email: "ravi@gmail.com",
     mobile: "8840473290",
     dob: "dd/mm/yyyy",
     avatar: "https://www.nykaa.com/assets/mobile/images/my_profile/default_avatar.svg",
