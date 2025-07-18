@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import UserAuthModal from '../components/userInfo/UserAuthModal'
 import Footer from '../components/Footer'
 import { getCategoryList } from "../utils/api/serverApi";
+import MobileFooter from '../components/MobileFooter';
 
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default async function RootLayout({ children }) {
         <UserAuthModal/>
          {children}
          <Footer />
+         <MobileFooter/>
         </Providers>
       </body>
     </html>

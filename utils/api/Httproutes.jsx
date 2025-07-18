@@ -4,7 +4,6 @@ import { getSession } from "next-auth/react";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  
 });
 
 
@@ -24,9 +23,8 @@ api.interceptors.request.use(
 export const loginuser = (payload) => {
   console.log("payload,,,,,,",payload)
     let requestUrl = `https://dummyjson.com/auth/login`
-      return api.post(requestUrl,payload);
-    
-  }
+    return api.post(requestUrl,payload);
+}
 
 export const GetProductlist = () => {
   return api.get("/products");

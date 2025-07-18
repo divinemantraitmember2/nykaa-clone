@@ -29,16 +29,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", updateScrollDir);
   }, []);
 
-  const userImage = session?.user?.image || "/images/default-user.png";
+  const userImage = session?.user?.image || "/images/no-profile.jpeg";
 
   return (
     <div className={`w-full bg-white ${scrollDir === "down" ? "shadow" : ""}`}>
       {/* Mobile Header */}
-      <div className="flex items-center justify-between mb-1 px-4 md:hidden">
+      <div className="flex items-center justify-between mb-1 px-4 md:hidden ">
         <div className="flex items-center space-x-3">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            <FaBars className="text-xl" />
-          </button>
+          
           <div className="text-3xl font-black text-pink-600 cursor-pointer">
             <Link href="/">
               <div className="w-[60px] h-[60px] relative">
@@ -55,7 +53,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center space-x-8 relative">
-          <Link href="/cart" className="relative">
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <FaBars className="text-xl" />
+          </button>
+          {/* <Link href="/cart" className="relative">
             <div className="relative">
               <FaShoppingBag className="text-xl" />
               {cartCount > 0 && (
@@ -64,9 +65,9 @@ export default function Navbar() {
                 </span>
               )}
             </div>
-          </Link>
+          </Link> */}
 
-          {session?.user ? (
+          {/* {session?.user ? (
             <Link href="/profile">
               <Image
                 src={userImage}
@@ -78,7 +79,7 @@ export default function Navbar() {
             </Link>
           ) : (
             <FaUser className="text-xl" onClick={() => dispatch(openLoginModal())} />
-          )}
+          )} */}
         </div>
       </div>
 
@@ -113,13 +114,13 @@ export default function Navbar() {
           <div className="text-3xl font-black text-pink-600 cursor-pointer">
             <Link href="/">
               <div className="w-[70px] h-[70px] relative">
-                <Image
+                {/* <Image
                   src="/images/logo.jpeg"
                   alt="Logo"
                   width={70}
                   height={70}
                   className="object-contain"
-                />
+                /> */}
               </div>
             </Link>
           </div>
@@ -136,7 +137,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
           <input
             type="text"
-            placeholder="Search on Nykaa"
+            placeholder="Search on Pon"
             className="border px-3 py-2 rounded text-sm w-56"
           />
 
