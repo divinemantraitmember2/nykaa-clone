@@ -9,6 +9,7 @@ import { MdOutlineLocationOn, MdOutlineShoppingBag } from "react-icons/md";
 
 export default function ProfilePage() {
   const [addresses] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("My Profile");
 
   const user = {
     name: "ravi",
@@ -18,6 +19,11 @@ export default function ProfilePage() {
     avatar: "https://www.nykaa.com/assets/mobile/images/my_profile/default_avatar.svg",
   };
 
+const MyOrders = () => <div><h2 className="text-lg font-bold">My Orders</h2><p>No orders yet.</p></div>;
+const MyWishlist = () => <div><h2 className="text-lg font-bold">My Wishlist</h2><p>No items in wishlist.</p></div>;
+const MyPayment = () => <div><h2 className="text-lg font-bold">Saved Payment Methods</h2><p>No saved cards.</p></div>;
+
+
   const sidebarItems = [
     { label: "My Profile", icon: <CgProfile size={18} /> },
     { label: "My Orders", icon: <MdOutlineShoppingBag size={18} /> },
@@ -25,6 +31,18 @@ export default function ProfilePage() {
     { label: "My Saved Payment", icon: <FaRegCreditCard size={18} /> },
     { label: "Log Out", icon: <FiLogOut size={18}  /> },
   ];
+
+  const renderContent = () => {
+    switch (selectedTab) {
+      case "My Wishlist":
+        return <MyWishlist />;
+      case "My Saved Payment":
+        return <MyPayment />;
+      case "My Orders":
+      default:
+        return <MyOrders Orders={"order"} />;
+    }
+  };
 
   return (
     <main className="bg-[#f4f4f4] min-h-screen">
@@ -35,11 +53,14 @@ export default function ProfilePage() {
           {sidebarItems.map((item, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 border hover:bg-gray-50 cursor-pointer rounded-md min-w-fit"
-              onClick={item.label === "Log Out"? () => signOut({ callbackUrl: "/" }): () => {} 
-          }
+              className={`flex items-center gap-2 px-4 py-3 text-sm border rounded-md cursor-pointer min-w-fit 
+                ${selectedTab === item.label ? "bg-pink-100 text-pink-700" : "text-gray-700 hover:bg-gray-50"}`}
+              onClick={
+                item.label === "Log Out"
+                  ? () => signOut({ callbackUrl: "/" })
+                  : () => setSelectedTab(item.label)
+              }   
             >
-              
               {item.icon}
               {item.label}
             </div>
@@ -47,7 +68,9 @@ export default function ProfilePage() {
         </aside>
 
         {/* Main Content */}
-        <section className="w-full bg-white rounded shadow-sm px-4 py-6">
+       
+        <section className=" w-full ">
+          <div className=" bg-white rounded shadow-sm mb-2 px-4 py-6">
           {/* User Details */}
           <div className="flex flex-col sm:flex-row items-start gap-4 mb-6 relative">
             <button className="absolute top-2 right-2 text-sm text-gray-600 flex items-center gap-1 hover:text-pink-600">
@@ -93,10 +116,21 @@ export default function ProfilePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Render address cards here */}
+             
             </div>
           )}
+        </div>
+
+        <div className=" bg-white rounded shadow-sm px-4 py-6">
+          {renderContent()}
+
+        </div>
+
         </section>
+        
+        
+          
+
       </div>
     </main>
   );

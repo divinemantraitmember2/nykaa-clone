@@ -2,6 +2,9 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { signIn, useSession } from 'next-auth/react';
+import ClientToastProvider from "../ClientToastProvider";
+import { toast } from "react-toastify";
+
 import {
   closeModals,
   openRegisterModal,
@@ -65,12 +68,15 @@ export default function UserAuthModal() {
     console.log("password",username)
     console.log("result",result)
      if (result?.error) {
-      alert("Login failed: " + result.error);
+      toast.error("Login Fail!");
+      
     } else {
-      alert("Login success!");
-      closeModal();
-      // Redirect manually if needed
-      window.location.href = "/profile";
+      toast.success("Welcome...")
+      
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+      
     }
 
   };
@@ -90,6 +96,8 @@ export default function UserAuthModal() {
   if (!isOpen) return null;
 
   return (
+    <>
+     {isOpen && (<>
     <div className="fixed inset-0 z-50 flex items-center px-4">
       <div className="bg-white w-full max-w-md mx-auto rounded-lg shadow-lg p-6 relative transition-all duration-300 ease-in-out">
 
@@ -215,5 +223,8 @@ export default function UserAuthModal() {
         </p>
       </div>
     </div>
+     </>)}
+    <ClientToastProvider/>
+    </>
   );
 }
