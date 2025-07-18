@@ -49,7 +49,7 @@ const MyPayment = () => <div><h2 className="text-lg font-bold">Saved Payment Met
       <div className="flex flex-col lg:flex-row max-w-7xl mx-auto px-4 py-6 gap-4">
         
         {/* Sidebar */}
-        <aside className="lg:w-[300px] w-full overflow-x-auto lg:overflow-visible whitespace-nowrap flex lg:flex-col gap-1 px-4 py-2 bg-white rounded shadow-sm">
+        <aside className="lg:w-[300px] w-full lg:sticky top-24 overflow-x-auto lg:overflow-visible whitespace-nowrap flex lg:flex-col gap-1 px-4 py-2 bg-white rounded shadow-sm">
           {sidebarItems.map((item, idx) => (
             <div
               key={idx}

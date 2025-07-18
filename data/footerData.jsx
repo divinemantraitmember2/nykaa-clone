@@ -2,14 +2,14 @@
 
 export const footerData = [
   {
-    title: "Nykaa",
+    title: "Pondric",
     links: [
       "About Us",
       "Careers",
-      "Nykaa CSR",
+      "Pondric CSR",
       "Responsible Disclosure Policy",
-      "Nykaa Marketplace",
-      "Nykaa Network",
+      "Pondric Marketplace",
+      "Pondric Network",
     ],
   },
   {
@@ -48,7 +48,7 @@ export const footerData = [
     title: "Business",
     links: [
       "Advertise with Us",
-      "Sell on Nykaa",
+      "Sell on Pondric",
       "Trends & Insights",
       "Offer Zone",
       "Affiliate Program",

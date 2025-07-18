@@ -20,7 +20,7 @@ export default function Footer() {
         ))}
       </div>
       <div className="border-t border-gray-700 text-center text-xs py-4 px-6  select-none">
-        © 2024 Nykaa E-Retail Pvt Ltd. All Rights Reserved.
+        © 2024 Pondric E-Retail Pvt Ltd. All Rights Reserved.
       </div>
     </footer>
   );
