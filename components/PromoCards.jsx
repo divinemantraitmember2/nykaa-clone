@@ -12,7 +12,7 @@ export default function PromoSlider() {
       <div className="">
         <Image
                   src="https://images-static.nykaa.com/uploads/9d100298-daa3-48bc-8df3-70cc0ffb9e72.jpg?tr=cm-pad_resize,w-1800"
-                  alt="Nykaa Banner"
+                  alt="PondricBanner"
                   width={1800}
                   height={400}
                   className="w-full h-auto rounded-lg object-cover"

@@ -151,7 +151,7 @@ export default function ClientProductDetails({ product }) {
       <img src="https://cdn-icons-png.flaticon.com/512/535/535234.png" alt="return" className="w-4 h-4" />
       Easy Return Policy
     </span>
-    <span className="truncate">Sold by: NYKAA E RETA...</span>
+    <span className="truncate">Sold by: Pondric E RETA...</span>
   </div>
 </div>
 

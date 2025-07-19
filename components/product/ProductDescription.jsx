@@ -7,7 +7,7 @@ export default function ProductDescription() {
   const productDescription2 = {
     title:
       "Herbal Essences Argan Oil Shampoo & Conditioner For Frizz - No Parabens, No Colourants Contains:",
-    short: `Explore the entire range of <span class='text-pink-600 underline cursor-pointer'>Hair Combos</span> available on Nykaa. Shop more <span class='text-pink-600 underline cursor-pointer'>Herbal Essences</span> products here. You can browse through the complete world of <span class='text-pink-600 underline cursor-pointer'>Herbal Essences Hair Combos</span>. <span class='text-red-600 font-medium'>Herbal Essences Argan Oil Shampoo For Frizz - No Colourants: (MRP: 659.00/-) | Quantity: 1 | Expiry Date: 15 June 2027</span>`,
+    short: `Explore the entire range of <span class='text-pink-600 underline cursor-pointer'>Hair Combos</span> available on Pondric. Shop more <span class='text-pink-600 underline cursor-pointer'>Herbal Essences</span> products here. You can browse through the complete world of <span class='text-pink-600 underline cursor-pointer'>Herbal Essences Hair Combos</span>. <span class='text-red-600 font-medium'>Herbal Essences Argan Oil Shampoo For Frizz - No Colourants: (MRP: 659.00/-) | Quantity: 1 | Expiry Date: 15 June 2027</span>`,
     long: `This shampoo & conditioner combo is infused with real argan oil of Morocco to help repair damage, tame frizz, and restore shine. It contains no parabens, no dyes, and is color-safe. Ideal for dry, damaged, or frizzy hair.`,
   };
 

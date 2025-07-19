@@ -14,7 +14,7 @@ export default function ProductSlider() {
         <div className="w-full relative h-[210px] md:h-[210px]">
   <Image
     src="https://images-static.nykaa.com/uploads/12d8a5aa-3f12-4418-9e84-a7081337be96.jpg?tr=cm-pad_resize,w-1800"
-    alt="Nykaa Banner"
+    alt="PondricBanner"
     fill
     className="object-cover"
   />

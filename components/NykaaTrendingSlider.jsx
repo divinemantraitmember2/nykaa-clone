@@ -11,7 +11,7 @@ export default function NykaaTrendingSlider() {
      
        <ResponsiveBanner
         imageUrl="https://images-static.nykaa.com/uploads/1e4f2bc2-b2f4-44a5-9ad9-6dbafae04578.jpg?tr=cm-pad_resize,w-1800"
-        altText="Nykaa Banner"
+        altText="PondricBanner"
         heightClasses="h-[180px] sm:h-[180px] md:h-[200px] lg:h-[200px]"
       />
       

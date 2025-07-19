@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 const filters = {
   "Sort By": [
@@ -26,24 +27,35 @@ const filters = {
 export default function SidebarFilter() {
   return (
     <aside className="hidden md:block">
-      {/* Sort By Section (Collapsible) */}
+      {/* Sort By (Static or First Accordion) */}
       <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
-        <details  className="mb-3">
-          <summary className="text-lg font-bold text-gray-800 cursor-pointer select-none">
-            Sort By
-          </summary>
-          <ul className="mt-3 space-y-2 pl-1">
-            {filters["Sort By"].map((option, i) => (
-              <li key={i} className="flex items-center gap-2 text-gray-800">
-                <input type="radio" name="sort" className="accent-pink-500" />
-                {option}
-              </li>
-            ))}
-          </ul>
-        </details>
+        <Disclosure defaultOpen>
+          {({ open }) => (
+            <>
+              <DisclosureButton className="flex justify-between items-center w-full text-lg font-bold text-gray-800 cursor-pointer">
+                Sort By
+                <ChevronDownIcon
+                  className={`w-5 h-5 transition-transform duration-200 ${
+                    open ? "rotate-180" : ""
+                  }`}
+                />
+              </DisclosureButton>
+              <DisclosurePanel>
+                <ul className="mt-3 space-y-2">
+                  {filters["Sort By"].map((option, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-800">
+                      <input type="radio" name="sort" className="accent-pink-500" />
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </DisclosurePanel>
+            </>
+          )}
+        </Disclosure>
       </div>
 
-      {/* Filter By Section */}
+      {/* Filter Section */}
       <div
         className="
           bg-white 
@@ -58,25 +70,38 @@ export default function SidebarFilter() {
         "
       >
         <h3 className="text-lg font-bold text-gray-800 mb-3">Filter By</h3>
-        {Object.entries(filters).map(([section, options]) => {
-          if (section === "Sort By") return null;
+        <div className="space-y-3">
+          {Object.entries(filters).map(([section, options]) => {
+            if (section === "Sort By") return null;
 
-          return (
-            <details key={section} className="mb-3">
-              <summary className="font-semibold text-gray-800 py-1 cursor-pointer select-none">
-                {section}
-              </summary>
-              <ul className="pl-4 mt-2 space-y-2">
-                {options.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-gray-700">
-                    <input type="checkbox" className="accent-pink-500" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </details>
-          );
-        })}
+            return (
+              <Disclosure key={section}>
+                {({ open }) => (
+                  <>
+                    <DisclosureButton className="flex justify-between items-center w-full font-semibold text-gray-800 cursor-pointer py-1">
+                      {section}
+                      <ChevronDownIcon
+                        className={`w-4 h-4 text-gray-500 transition-transform ${
+                          open ? "rotate-180" : ""
+                        }`}
+                      />
+                    </DisclosureButton>
+                    <DisclosurePanel>
+                      <ul className="mt-2 space-y-2 pl-2">
+                        {options.map((item, i) => (
+                          <li key={i} className="flex items-center gap-2 text-gray-700">
+                            <input type="checkbox" className="accent-pink-500" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </DisclosurePanel>
+                  </>
+                )}
+              </Disclosure>
+            );
+          })}
+        </div>
       </div>
     </aside>
   );

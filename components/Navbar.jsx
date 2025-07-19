@@ -7,6 +7,7 @@ import { FaShoppingBag, FaUser, FaBars, FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import MobileDrawer from "../components/MobileDrawer"
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -85,7 +86,7 @@ export default function Navbar() {
 
       {/* Mobile Search */}
       <div className="px-4 pb-3 md:hidden">
-        <div className="flex items-center bg-gray-100 px-4 py-3 rounded-full">
+        <div className="flex items-center bg-gray-100 px-4 py-3 border-1 border-pink-700 rounded-2xl">
           <FaSearch className="text-pink-600 mr-2 text-sm" />
           <input
             type="text"
@@ -97,15 +98,22 @@ export default function Navbar() {
 
       {/* Mobile Nav Dropdown */}
       {isMobileMenuOpen && (
-        <div className="px-4 pb-4 md:hidden">
-          <nav className="flex flex-col gap-3 text-sm font-semibold text-gray-700">
-            {navbarLinks.map((link, i) => (
-              <a key={i} href={link.href} className="hover:text-pink-600">
-                {link.title}
-              </a>
-            ))}
-          </nav>
-        </div>
+        <>
+        <MobileDrawer
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        links={navbarLinks}
+      />
+        </>
+        // <div className="px-4 pb-4 md:hidden">
+        //   <nav className="flex flex-col gap-3 text-sm font-semibold text-gray-700">
+        //     {navbarLinks.map((link, i) => (
+        //       <a key={i} href={link.href} className="hover:text-pink-600">
+        //         {link.title}
+        //       </a>
+        //     ))}
+        //   </nav>
+        // </div>
       )}
 
       {/* Desktop Navbar */}
