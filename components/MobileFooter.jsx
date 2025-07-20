@@ -53,13 +53,13 @@ export default function MobileFooter() {
   className="flex flex-col items-center justify-center"
 >
   <div
-    className={`relative w-10 h-10 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
-      isActive ? "bg-pink-100 text-pink-600" : "text-gray-600"
+    className={`relative  w-10 h-10 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
+      isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
     }`}
   >
     {item.icon}
     {item.label === "Cart" && cartCount > 0 && (
-      <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[10px] px-[10px] py-[8px] rounded-full leading-none">
+      <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
         {cartCount}
       </span>
     )}

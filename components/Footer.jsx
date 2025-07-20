@@ -53,7 +53,7 @@ export default function Footer() {
           // Desktop View: Grid
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm font-medium">
             {footerData.map((section, i) => (
-              <div key={i}>
+              <div key={i+1111}>
                 <h3 className="font-extrabold mb-3">{section.title}</h3>
                 <ul className="space-y-2">
                   {section.links.map((link, j) => (

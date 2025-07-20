@@ -9,7 +9,7 @@ export default function Header({ categories }) {
  
   return (
     <>
-      <header className="sticky top-0 z-50 bg-white border-b-1  border-pink-700 ">
+      <header className="sticky top-0 z-50 bg-[#faf4ec] border-b-1  border-pink-700 ">
         <Topbar />
         <Navbar categories={categories} loading={false} />
       </header>

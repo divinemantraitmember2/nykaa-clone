@@ -33,7 +33,7 @@ export default function Navbar() {
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
 
   return (
-    <div className={`w-full bg-white ${scrollDir === "down" ? "shadow" : ""}`}>
+    <div className={`w-full bg-[#faf4ec] ${scrollDir === "down" ? "shadow" : ""}`}>
       {/* Mobile Header */}
       <div className="flex items-center justify-between mb-1 px-4 md:hidden ">
         <div className="flex items-center space-x-3">
@@ -86,7 +86,7 @@ export default function Navbar() {
 
       {/* Mobile Search */}
       <div className="px-4 pb-3 md:hidden">
-        <div className="flex items-center bg-gray-100 px-4 py-3 border-1 border-pink-700 rounded-2xl">
+        <div className="flex items-center  bg-white px-4 py-3 border-1 border-pink-700 rounded-2xl">
           <FaSearch className="text-pink-600 mr-2 text-sm" />
           <input
             type="text"
