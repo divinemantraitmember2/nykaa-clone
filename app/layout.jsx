@@ -4,8 +4,9 @@ import Providers from "./providers";
 import Header from '../components/Header'
 import UserAuthModal from '../components/userInfo/UserAuthModal'
 import Footer from '../components/Footer'
-import { getCategoryList } from "../utils/api/serverApi";
+import { GetMenu } from "../utils/api/serverApi";
 import MobileFooter from '../components/MobileFooter';
+import ScrollToTop from "../components/homecomponent/ScrollToTop";
 
 
 const geistSans = Geist({
@@ -28,7 +29,7 @@ export default async function RootLayout({ children }) {
    let categories = [];
   
     try {
-      const ResData = await getCategoryList();
+      const ResData = await GetMenu();
       categories = ResData; 
     } catch (err) {
       console.error("Failed to fetch categories:", err);
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }) {
          <Footer />
          <MobileFooter/>
         </Providers>
+        <ScrollToTop/>
       </body>
     </html>
   );

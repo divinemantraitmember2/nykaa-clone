@@ -7,11 +7,12 @@ const api = axios.create({
 });
 
 
+
 api.interceptors.request.use(
   async (config) => {
     const session = await getSession();
-    if (session?.user?.account?.userdetail?.Token) {
-      config.headers.Authorization = session.user.account.userdetail.Token;
+    if (session?.accessToken) {
+      config.headers.Authorization = `Bearer ${session.accessToken}`;
     } else {
       config.headers.Authorization = process.env.NEXT_PUBLIC_GLOBAL_AUTH_TOKEN;
     }
@@ -21,26 +22,49 @@ api.interceptors.request.use(
 );
 
 export const loginuser = (payload) => {
-  console.log("payload,,,,,,",payload)
-    let requestUrl = `https://dummyjson.com/auth/login`
+    let requestUrl = `/api/v1/user/login/${payload.phone}`
+    return api.get(requestUrl);
+}
+
+export const Registeruser = (payload) => {
+    let requestUrl = `/api/v1/user/profile`
     return api.post(requestUrl,payload);
 }
 
-export const GetProductlist = () => {
-  return api.get("/products");
+export const AddToCart = async (actionPayload, payload) => {
+  const requestUrl = `/api/v1/user/add2bag`;
+  return api.post(requestUrl, payload, {
+    headers: {
+      action: `${actionPayload}`,
+    },
+    withCredentials: true, 
+    credentials:true
+  });
 };
 
-export const GetProductdetails = (payload) => {
-  return api.get(`/products/${payload}`);
+
+
+
+export async function GetProductofcategorylist (payload) {
+  try{ 
+    const response= await api.get(`/api/v1/products?${payload}`);
+    return response.data
+  }catch(error){
+  //  console.log("Error fetching category list:", error.message);
+    return [];
+  }
+}; 
+
+export async function GetProductFilters (payload) {
+  try{ 
+    const response= await api.get(`/api/v1/product/filters?${payload}`);
+    return response.data
+  }catch(error){
+  //  console.error("Error fetching category list:", error.message);
+    return [];
+  }
 };
 
-export const GetProductofcategorylist = (payload) => {
-  return api.get(`/products/category/${payload}`);
-};
-
-export const GetCategorylist = () => {
-  return api.get("/products/categories");
-};
 
 
 export default api;

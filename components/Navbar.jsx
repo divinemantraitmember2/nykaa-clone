@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { navbarLinks } from "../data/navbarLinks";
 import { openLoginModal } from "../slices/userSlice";
 import { FaShoppingBag, FaUser, FaBars, FaSearch } from "react-icons/fa";
 import Link from "next/link";
@@ -9,7 +8,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import MobileDrawer from "../components/MobileDrawer"
 
-export default function Navbar() {
+export default function Navbar({ categories = [], loading = false }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollDir, setScrollDir] = useState("up");
   const dispatch = useDispatch();
@@ -57,30 +56,7 @@ export default function Navbar() {
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             <FaBars className="text-xl" />
           </button>
-          {/* <Link href="/cart" className="relative">
-            <div className="relative">
-              <FaShoppingBag className="text-xl" />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </div>
-          </Link> */}
-
-          {/* {session?.user ? (
-            <Link href="/profile">
-              <Image
-                src={userImage}
-                alt="User"
-                width={30}
-                height={30}
-                className="rounded-full cursor-pointer"
-              />
-            </Link>
-          ) : (
-            <FaUser className="text-xl" onClick={() => dispatch(openLoginModal())} />
-          )} */}
+          
         </div>
       </div>
 
@@ -102,18 +78,10 @@ export default function Navbar() {
         <MobileDrawer
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
-        links={navbarLinks}
+        links={categories}
       />
         </>
-        // <div className="px-4 pb-4 md:hidden">
-        //   <nav className="flex flex-col gap-3 text-sm font-semibold text-gray-700">
-        //     {navbarLinks.map((link, i) => (
-        //       <a key={i} href={link.href} className="hover:text-pink-600">
-        //         {link.title}
-        //       </a>
-        //     ))}
-        //   </nav>
-        // </div>
+       
       )}
 
       {/* Desktop Navbar */}
@@ -134,9 +102,9 @@ export default function Navbar() {
           </div>
 
           <nav className="flex space-x-6 text-md font-semibold text-gray-700">
-            {navbarLinks.map((link, i) => (
-              <a key={i} href={link.href} className="hover:text-pink-600">
-                {link.title}
+            { categories && categories.map((link, i) => (
+              <a key={i} href={link.slug} className="hover:text-pink-600">
+                {link.label}
               </a>
             ))}
           </nav>
@@ -146,7 +114,7 @@ export default function Navbar() {
           <input
             type="text"
             placeholder="Search on Pondric"
-            className="border px-3 py-2 rounded text-sm w-56"
+            className="border px-3 py-2 bg-white rounded text-sm w-56"
           />
 
           {session?.user ? (

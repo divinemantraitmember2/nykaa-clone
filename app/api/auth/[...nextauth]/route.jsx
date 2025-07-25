@@ -7,22 +7,23 @@ const authOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text" },
+        phone: { label: "phone", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { username, password } = credentials;
+        const { phone, password } = credentials;
         try {
-          const response = await loginuser({ username, password });
+        
+          const response = await loginuser({ phone, password });
 
-          if (response.status === 200 && response.data.accessToken) {
+          if (response.status === 200 && response.data.token) {
             const user = response.data;
             return {
               id: user.id,
               name: `${user.firstName} ${user.lastName}`,
               email: user.email,
               image: user.image,
-              accessToken: user.accessToken,
+              accessToken: user.token,
               refreshToken: user.refreshToken,
             };
           }

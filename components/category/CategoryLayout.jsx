@@ -1,19 +1,17 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import SidebarFilter from "../../components/category/SidebarFilter";
-import ProductGrid from "../../components/category/ProductGrid";
-import TopBanner from "../../components/category/TopBanner";
+import SidebarFilter from "./SidebarFilter";
+import ProductGrid from "./ProductGrid";
+import TopBanner from "./TopBanner";
 import {
   GetProductofcategorylist,
   GetProductFilters,
 } from "../../utils/api/Httproutes";
 
-export default function CategoryPage({ params }) {
-  const slug = params.category;
-
+export default function CategoryLayout({ slug }) {
   const [filters, setFilters] = useState({});
   const [products, setProducts] = useState([]);
-  const [availableFilters, setAvailableFilters] = useState({}); // sidebar filters
+  const [availableFilters, setAvailableFilters] = useState({});
 
   const query = useMemo(() => {
     return new URLSearchParams({ category_slug: slug, ...filters }).toString();
@@ -38,11 +36,11 @@ export default function CategoryPage({ params }) {
   };
 
   useEffect(() => {
-    fetchInitialFilters(); // only runs once when slug changes
+    fetchInitialFilters();
   }, [slug]);
 
   useEffect(() => {
-    fetchProducts(); // re-runs on filters or slug change
+    fetchProducts();
   }, [query]);
 
   return (

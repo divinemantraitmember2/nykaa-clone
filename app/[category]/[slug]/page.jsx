@@ -9,9 +9,10 @@ export default async function ProductDetails({ params }) {
   if (!slug) return notFound();
   let product = null;
   try {
-    const response = await GetProductdetails(slug);
-    
-    product = response|| null;
+    const CatAndSlug=`category_slug=${category}&product_slug=${slug}`
+    const response = await GetProductdetails(CatAndSlug);
+    // console.log("response",response.products[0])
+    product = response.products[0]|| null;
   } catch (error) {
     console.error("Error fetching product:", error);
   }

@@ -15,12 +15,11 @@ export default function CartPage() {
   const { items } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  console.log("items",items)
 
-  const totalPrice = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+  
   return (
     <div className="max-w-7xl  mx-auto px-2 md:px-15 py-8">
       <h1 className="text-3xl  font-bold mb-6 text-pink-600 text-center md:text-left">
