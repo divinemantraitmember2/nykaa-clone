@@ -20,7 +20,7 @@ export default function ProductCard({ product,slug }) {
         {/* 🟣 Wishlist Icon - outside of Link */}
         <button
           type="button"
-          className="absolute top-2 right-2 p-2 border rounded-full bg-white hover:text-pink-600 z-10 hidden group-hover:block transition duration-200"
+          className="absolute top-2 right-2 p-2 border rounded-full bg-white hover:text-pink-600 z-10 lg:hidden group-hover:block transition duration-200"
           title="Add to Wishlist"
           onClick={handleWishlistClick}
         >
