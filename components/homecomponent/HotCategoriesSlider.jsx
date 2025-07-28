@@ -41,7 +41,7 @@ const hotCategories = [
 export default function HotCategoriesSlider() {
   return (
     <section className="bg-pink-100 py-6 px-4">
-      <h4 className="text-sm text-gray-600 font-semibold mb-1">HOT & HAPPENING CATEGORIES</h4>
+      <h4 className="text-sm text-gray-600 font-semibold mb-1">WESTRERN WEAR CATEGORIES</h4>
       <h2 className="text-2xl font-bold mb-4">Style steals you can’t resist</h2>
 
       <Swiper

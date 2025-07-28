@@ -7,21 +7,16 @@ import "swiper/css/navigation";
 import CategoryCard from "../homecomponent/CategoryCard";
 
 const categories = [
-  { image: "https://images-static.nykaa.com/uploads/b809f837-d0e9-4c22-b96b-78a1c98a81d4.jpg?tr=w-180,cm-pad_resize", label: "Kids" },
-  { image: "https://images-static.nykaa.com/uploads/4f26c3df-6260-48d6-a291-015c626d6226.jpg?tr=w-180,cm-pad_resize", label: "Home" },
-  { image: "https://images-static.nykaa.com/uploads/866fb490-2b3d-4546-a384-4bac61d5e482.jpg?tr=w-180,cm-pad_resize", label: "Footwear" },
-  { image: "https://images-static.nykaa.com/uploads/1cd1c639-85e5-4676-ae4f-75fb81dc1b6a.jpg?tr=w-180,cm-pad_resize", label: "Lingerie" },
-  { image: "https://images-static.nykaa.com/uploads/30e495b9-019b-41c0-99cc-56b1dfb99437.jpg?tr=w-180,cm-pad_resize", label: "Bags" },
-  { image: "https://images-static.nykaa.com/uploads/bb166244-dea0-4c9e-868a-1b758f7bb19d.jpg?tr=w-180,cm-pad_resize", label: "Jewellery" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Activewear" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Watch" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
-  { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Sunglasses" },
+    
+  //  { image: "https://images-static.nykaa.com/uploads/30e495b9-019b-41c0-99cc-56b1dfb99437.jpg?tr=w-180,cm-pad_resize", label: "Bags" },
+   { image: "https://images-static.nykaa.com/uploads/914f40e1-6ff2-4fa9-87f2-cd5150cb1e6f.jpg?tr=w-180,cm-pad_resize", label: "Men" },
+  { image: "https://images-static.nykaa.com/uploads/b00b19ca-81a7-42c1-93a6-c75dc687d468.jpg?tr=w-180,cm-pad_resize", label: "Women" },
+ { image: "https://images-static.nykaa.com/uploads/866fb490-2b3d-4546-a384-4bac61d5e482.jpg?tr=w-180,cm-pad_resize", label: "Footwear" },
+ { image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/c/4/c4f195f260837_1.jpg?rnd=20200526195200&tr=w-180,cm-pad_resize", label: "Shirt" },
+ { image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/a/2/a201f080421CPDNM04_1.jpg?rnd=20200526195200&tr=w-180,cm-pad_resize", label: "Jeens" },
+ { image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/category_information/4266437a982aba472023_04_13.jpg?rnd=20200526195200&tr=w-180,cm-pad_resize", label: "Kurta" },
+ { image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/1/8/186e540LIKBASKU04-PINK_1.jpg?rnd=20200526195200&tr=w-180,cm-pad_resize", label: "Kurti" },
+ { image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/0/3/03c4806ASS23LIKB006_1.jpg?rnd=20200526195200&tr=w-180,cm-pad_resize", label: "Blouse" },
 ];
 
 export default function CategorySlider() {
