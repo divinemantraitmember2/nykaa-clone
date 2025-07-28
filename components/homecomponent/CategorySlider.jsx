@@ -21,7 +21,7 @@ const categories = [
 
 export default function CategorySlider() {
   return (
-     <div className="p-2 py-10 lg:py-15 bg-white shadow-md">
+     <div className="p-2 py-12 lg:py-15 bg-white shadow-md">
       <Swiper
         spaceBetween={5}
         breakpoints={{
