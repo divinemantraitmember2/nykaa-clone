@@ -1,10 +1,9 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
 
 const categories = [
   { image: "https://images-static.nykaa.com/uploads/49e6ae70-6e96-44d6-8d56-a5359731b8ec.jpg?tr=w-180,cm-pad_resize", label: "Women" },
@@ -21,33 +20,18 @@ const categories = [
 ];
 
 export default function CategorySwiper() {
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
-
   return (
-    <div className="px-4 py-20  relative">
+    <div className="px-4 py-20 relative">
       <h3 className="text-sm text-gray-500 font-semibold uppercase">Our Stores</h3>
       <h2 className="text-2xl font-bold mb-10">Find everything for your every need</h2>
-          
+
       <Swiper
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Autoplay]}
         spaceBetween={16}
         slidesPerView={3.5}
-        pagination={{
-          clickable: true,
-          bulletClass: 'swiper-pagination-bullet',
-          bulletActiveClass: 'swiper-pagination-bullet-active transition-all duration-300 scale-125 bg-black',
-        }}
-        autoplay={
-          isMobile
-            ? {
-                delay: 2500,
-                disableOnInteraction: false,
-              }
-            : false
-        }
-        navigation={{
-          prevEl: ".swiper-button-prev",
-          nextEl: ".swiper-button-next",
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
         }}
         breakpoints={{
           640: { slidesPerView: 4.5 },
@@ -70,7 +54,6 @@ export default function CategorySwiper() {
           </SwiperSlide>
         ))}
       </Swiper>
-      </div>
-   
+    </div>
   );
 }

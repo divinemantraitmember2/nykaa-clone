@@ -4,10 +4,12 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
 import { AddToCart } from "../../utils/api/Httproutes";
 import SearchLocation from "../SearchLocation";
+import { useSession } from "next-auth/react";
+import { openLoginModal } from "../../slices/userSlice";
 
 export default function ClientProductDetails({ product }) {
   const dispatch = useDispatch();
-
+ const { data: session, status } = useSession();
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedImg, setSelectedImg] = useState("");
@@ -40,6 +42,10 @@ export default function ClientProductDetails({ product }) {
       : 0;
 
   const handleAddToCart = async() => {
+    
+    if (status === "unauthenticated") {
+      dispatch(openLoginModal())
+    }else{
     if (!selectedVariant || !selectedStock) return;
     dispatch(
       addToCart({
@@ -67,6 +73,8 @@ try{
   console.log("error",error)
 
 }
+  }
+
   };
 
   return (

@@ -1,9 +1,8 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 
 const brandData = [
   {
@@ -37,7 +36,8 @@ const brandData = [
     brand: "CAMPUS SUTRA",
     offer: "Min 60% off",
     extra: "Extra 20% off*",
-  },{
+  },
+  {
     image: "https://images-static.nykaa.com/uploads/8999b3b5-b639-425d-80bd-8e1a0edae9bd.jpg?tr=w-300,cm-pad_resize",
     brand: "CAMPUS SUTRA",
     offer: "Min 60% off",
@@ -54,8 +54,11 @@ export default function BrandCardSlider() {
       <Swiper
         spaceBetween={16}
         slidesPerView={2}
-        navigation
-        modules={[Navigation]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
         breakpoints={{
           640: { slidesPerView: 2.5 },
           768: { slidesPerView: 3.5 },

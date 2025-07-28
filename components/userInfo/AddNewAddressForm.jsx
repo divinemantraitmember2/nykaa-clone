@@ -1,22 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import { useDispatch } from "react-redux";
+import { UserAddreAddAndUpdate } from "../../utils/api/Httproutes";
+import { toggleRefetchUserAddress } from "../../slices/userSlice";
+
 
 export default function AddNewAddressForm({ onClose }) {
-   
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
-    pincode: "",
+    zipCode: "",
     city: "",
     state: "",
-    house: "",
-    road: "",
+    country: "IN",
+    addressLine1: "",
+    landMark: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
     isDefault: false,
-    contactName: "",
-    contactPhone: "",
-    contactEmail: "",
-    phoneCode: "91",
+    isVerified: false,
   });
 
   const handleChange = (e) => {
@@ -27,30 +31,36 @@ export default function AddNewAddressForm({ onClose }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic Validation
+    // Basic validation
     if (
-      !formData.pincode ||
-      !formData.city ||
-      !formData.state ||
-      !formData.house ||
-      formData.road.length < 5 ||
-      !formData.contactName ||
-      formData.contactPhone.length < 10
-    ) {
-      alert("⚠ Please fill all required fields correctly.");
-      return;
-    }
-
-    console.log("✅ Final Address Data Submitted:");
-    console.log(formData);
-    // You can call onSubmit or an API here
-    if (onClose) onClose(); // hide form
+  !formData.firstName.trim() ||
+  !formData.lastName.trim() ||
+  !formData.phoneNumber.trim() ||
+  formData.phoneNumber.length !== 10 ||
+  !formData.zipCode.trim() ||
+  !formData.city.trim() ||
+  !formData.state.trim() ||
+  !formData.addressLine1.trim()
+) {
+  alert("⚠ Please fill all required fields correctly.");
+  return;
+}
+  const response= await UserAddreAddAndUpdate("add",formData)
+  if(response.status ===200){
+    
+   dispatch(toggleRefetchUserAddress())
+   setTimeout(()=>{
+    onClose()
+   },2000)
+   
+  }
+       
+      console.log("response...",response)
+    
   };
-
-
 
   return (
     <div className="relative border rounded-lg p-4 shadow-sm mb-3 bg-white">
@@ -63,21 +73,81 @@ export default function AddNewAddressForm({ onClose }) {
 
       <h2 className="text-lg font-semibold mb-4">Add New Address</h2>
 
-      <form className="space-y-3" onSubmit={handleSubmit}>
-        {/* Pincode, City, State */}
-        <div className="w-full flex flex-col md:flex-row gap-1">
-          <div className="w-full md:w-1/3">
-            <label className="block text-sm mb-1">Pincode</label>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        {/* First & Last Name */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm mb-1">First Name</label>
             <input
               type="text"
-              name="pincode"
-              value={formData.pincode}
+              name="firstName"
+              value={formData.firstName}
               onChange={handleChange}
               className="w-full border px-3 py-2 rounded bg-gray-100"
             />
           </div>
+          <div>
+            <label className="block text-sm mb-1">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded bg-gray-100"
+            />
+          </div>
+        </div>
 
-          <div className="w-full md:w-1/3">
+        {/* Phone Number */}
+        <div>
+          <label className="block text-sm mb-1">Phone</label>
+          <input
+          type="tel"
+          name="phoneNumber"
+          placeholder="Phone Number"
+          value={formData.phoneNumber}
+          onChange={handleChange}
+          className="p-2 border rounded w-full"
+        />
+        </div>
+
+        {/* Address Line 1 */}
+        <div>
+          <label className="block text-sm mb-1">Address Line 1</label>
+          <input
+            type="text"
+            name="addressLine1"
+            value={formData.addressLine1}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+          />
+        </div>
+
+        {/* Landmark */}
+        <div>
+          <label className="block text-sm mb-1">Landmark</label>
+          <input
+            type="text"
+            name="landMark"
+            value={formData.landMark}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded bg-gray-100"
+          />
+        </div>
+
+        {/* Zip Code, City, State */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm mb-1">Zip Code</label>
+            <input
+              type="text"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={handleChange}
+              className="w-full border px-3 py-2 rounded bg-gray-100"
+            />
+          </div>
+          <div>
             <label className="block text-sm mb-1">City</label>
             <input
               type="text"
@@ -87,8 +157,7 @@ export default function AddNewAddressForm({ onClose }) {
               className="w-full border px-3 py-2 rounded bg-gray-100"
             />
           </div>
-
-          <div className="w-full md:w-1/3">
+          <div>
             <label className="block text-sm mb-1">State</label>
             <input
               type="text"
@@ -100,100 +169,29 @@ export default function AddNewAddressForm({ onClose }) {
           </div>
         </div>
 
-        {/* House No */}
-        <div>
-          <label className="block text-sm mb-1">House/Flat/Office No.</label>
-          <input
-            type="text"
-            name="house"
-            value={formData.house}
-            onChange={handleChange}
-            className="w-full border px-3 py-2 rounded bg-gray-100"
-          />
-        </div>
-
-        {/* Road */}
-        <div>
-          <label className="block text-sm mb-1">Road Name/Area/Colony</label>
-          <textarea
-            name="road"
-            value={formData.road}
-            onChange={handleChange}
-            rows={2}
-            className="w-full border px-3 py-2 rounded bg-gray-100"
-          />
-          {formData.road.length < 5 && (
-            <p className="text-red-500 text-xs mt-1">
-              ⚠ Min. 5 characters required
-            </p>
-          )}
-        </div>
-
-        {/* Default Checkbox */}
-        <div className="flex items-center justify-between">
-          <label className="text-sm">Use as default address</label>
-          <input
-            type="checkbox"
-            name="isDefault"
-            checked={formData.isDefault}
-            onChange={handleChange}
-            className="accent-pink-600 w-5 h-5"
-          />
-        </div>
-
-        {/* Contact Info */}
-        <div className="pt-4">
-          <h3 className="text-lg font-semibold">Contact</h3>
-          <p className="text-sm text-gray-500 mb-2">
-            We'll use this to contact you for delivery updates
-          </p>
-
-          <div className="mb-3">
-            <label className="block text-sm mb-1">Name</label>
+        {/* Checkboxes */}
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-2 text-sm">
             <input
-              type="text"
-              name="contactName"
-              value={formData.contactName}
+              type="checkbox"
+              name="isDefault"
+              checked={formData.isDefault}
               onChange={handleChange}
-              className="w-full border px-3 py-2 rounded bg-gray-100"
+              className="accent-pink-600 w-4 h-4"
             />
-          </div>
+            Use as default address
+          </label>
 
-          <div className="flex flex-col md:flex-row gap-3">
-            <div className="flex-1">
-              <label className="block text-sm mb-1">Phone</label>
-              <PhoneInput
-                country={"in"}
-                value={formData.contactPhone}
-                onChange={(value, data) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    contactPhone: value,
-                    phoneCode: data.dialCode,
-                  }))
-                }
-                inputStyle={{ width: "100%" }}
-                inputProps={{ required: true }}
-                enableSearch
-              />
-              {formData.contactPhone.length < 10 && (
-                <p className="text-red-500 text-xs mt-1">
-                  ⚠ Enter a valid phone number
-                </p>
-              )}
-            </div>
-
-            <div className="flex-1">
-              <label className="block text-sm mb-1">Email ID (Optional)</label>
-              <input
-                type="email"
-                name="contactEmail"
-                value={formData.contactEmail}
-                onChange={handleChange}
-                className="w-full border px-3 py-2 rounded bg-gray-100"
-              />
-            </div>
-          </div>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              name="isVerified"
+              checked={formData.isVerified}
+              onChange={handleChange}
+              className="accent-green-600 w-4 h-4"
+            />
+            Verified
+          </label>
         </div>
 
         <button

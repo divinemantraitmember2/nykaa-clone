@@ -1,90 +1,67 @@
 "use client";
-import { useEffect, useState } from "react";
 
-export default function BottomBar({ categories = [], loading = false }) {
-  const [hovered, setHovered] = useState(false);
-  const [scrollDir, setScrollDir] = useState("up");
+import { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+
+export default function BottomBar({ category }) {
   const [getCategory, setGetCategory] = useState([]);
-  const [megaMenuData, setMegaMenuData] = useState([]); // <-- You missed this
-  const [activeLabel, setActiveLabel] = useState("");
+  const [activeLabel, setActiveLabel] = useState(null);
 
   useEffect(() => {
-    setGetCategory(categories);
-
-    let lastScrollY = window.scrollY;
-
-    const updateScrollDir = () => {
-      const currentScrollY = window.scrollY;
-      if (Math.abs(currentScrollY - lastScrollY) < 15) return;
-
-      setScrollDir(currentScrollY > lastScrollY ? "down" : "up");
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", updateScrollDir);
-    return () => window.removeEventListener("scroll", updateScrollDir);
-  }, [categories]);
+    setGetCategory(category || []);
+  }, [category]);
 
   return (
-    <section>
-      <div
-        className={`sticky top-[65px] z-20 hidden md:block transition-transform duration-300 ${
-          scrollDir === "down" ? "-translate-y-full" : "translate-y-0"
-        }`}
-      >
-        {/* Top Link Bar */}
-        <div
-          className="bg-white shadow overflow-x-auto whitespace-nowrap px-6 py-4 text-center text-sm font-medium text-gray-700"
-        >
-          {getCategory?.[0]?.children?.map((secondChild, index) => (
-  <span
-    key={index}
-    className="inline-block mr-6 hover:text-pink-600 cursor-pointer relative"
-    onMouseEnter={() => {
-      setHovered(true);
-      setActiveLabel(secondChild.label);
-      setMegaMenuData(secondChild.children || []);
-    }}
-    onMouseLeave={() => {
-      setHovered(false);
-    }}
-  >
-    <a href={`/${secondChild.slug}`} className="hover:text-pink-600">
-      {secondChild.label}
-    </a>
-  </span>
-))}
+    <section className="">
+      {/* Sirf desktop view ke liye menu */}
+      <div className="hidden md:block">
+        {/* Main navigation bar */}
+        <div className="bg-white shadow px-6 py-2 text-start text-sm font-medium text-gray-700 flex w-full">
+          {getCategory?.[0]?.children?.map((firstMenu, index) => (
+            <div
+              key={index}
+              className="relative group mx-3"
+              onMouseEnter={() => setActiveLabel(firstMenu.label)}
+              onMouseLeave={() => setActiveLabel(null)}
+            >
+              {/* Pehla menu item (full width mein row-wise honge) */}
+              <div className="flex items-center gap-1 cursor-pointer mr-6  ">
+                <a
+                  href={`/${firstMenu.slug}`}
+                  className="hover:text-pink-600 px-1 py-1"
+                >
+                  {firstMenu.label}
+                </a>
+                <ChevronDownIcon className="h-4 w-3 text-gray-500 group-hover:text-pink-600" />
+              </div>
 
-        </div>
-
-        {/* Mega Menu */}
-        {hovered && megaMenuData.length > 0 && (
-          <div
-            className="absolute left-0 top-full bg-white w-full shadow-xl border-t border-gray-100 py-6 px-8 grid grid-cols-2 md:grid-cols-5 gap-6 text-left"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
-            {megaMenuData.map((item, idx) => (
-              <div key={idx}>
-                <h4 className="font-bold text-sm text-gray-900 mb-3">{item.label}</h4>
-                {item.children && (
-                  <ul className="space-y-2 text-sm text-gray-600">
-                    {item.children.map((subItem, idy) => (
-                      <li key={idy}>
-                        <a
-                          href={`/${subItem.slug}`}
-                          className="hover:text-pink-600"
-                        >
-                          {subItem.label}
+              {/* Agar second level children hain to dropdown submenu dikhaye */}
+              {firstMenu.children?.length > 0 && (
+                <div
+                  className={`absolute left-0 top-full mt-1 bg-white shadow-lg border border-gray-100 py-1  min-w-[200px] z-50 transition-opacity duration-200 ${
+                    activeLabel === firstMenu.label
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible"
+                  }`}
+                >
+                  <ul className="flex flex-col gap-1">
+                    {firstMenu.children.map((secondMenu, idx) => (
+                      <li
+                        key={idx}
+                        className="text-md text-gray-800  hover:bg-[#faf4ec] p-2 hover:text-pink-600 cursor-pointer"
+                      >
+                        {/* Dusra menu item */}
+                        <a href={`/${secondMenu.slug}`}>
+                          {secondMenu.label}
                         </a>
                       </li>
                     ))}
                   </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

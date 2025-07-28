@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
 import TopBanner from "../../components/category/TopBanner";
@@ -13,16 +13,23 @@ export default function CategoryPage({ params }) {
 
   const [filters, setFilters] = useState({});
   const [products, setProducts] = useState([]);
-  const [availableFilters, setAvailableFilters] = useState({}); // sidebar filters
+  const [availableFilters, setAvailableFilters] = useState(null); 
 
-  const query = useMemo(() => {
-    return new URLSearchParams({ category_slug: slug, ...filters }).toString();
-  }, [slug, filters]);
+  const buildQuery = () => {
+    const query = new URLSearchParams({ category_slug: slug, ...filters });
+    return query.toString();
+  };
 
   const fetchInitialFilters = async () => {
     try {
-      const response = await GetProductFilters(`category_slug=${slug}`);
-      setAvailableFilters(response);
+      const query = buildQuery();
+      const response = await GetProductFilters(query);
+      if(response.status === 200 && response.data.categories !=null){
+      setAvailableFilters(response.data);
+      }else{
+        setAvailableFilters(null);
+      }
+      
     } catch (err) {
       console.error("Filter fetch failed:", err);
     }
@@ -30,35 +37,41 @@ export default function CategoryPage({ params }) {
 
   const fetchProducts = async () => {
     try {
+      const query = buildQuery();
       const response = await GetProductofcategorylist(query);
+
       setProducts(response.products || []);
     } catch (err) {
       console.error("Product fetch failed:", err);
     }
   };
 
+  // only run once on mount to get sidebar filters
   useEffect(() => {
-    fetchInitialFilters(); // only runs once when slug changes
+    fetchInitialFilters();
   }, [slug]);
 
+  // run when filters change
   useEffect(() => {
-    fetchProducts(); // re-runs on filters or slug change
-  }, [query]);
+    fetchProducts();
+  }, [filters, slug]);
 
   return (
-    <main className="min-h-screen bg-[#f3f3f3] px-1 lg:p-4 py-6">
+    <main className="min-h-scree bg-[#f3f3f3] px-1 lg:p-4 py-6">
       <TopBanner />
+
       <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center my-4">
         Buy Herbal Essences Products Online
       </h1>
 
       <div className="flex gap-6 mt-3">
-        <SidebarFilter
+       {availableFilters !=null? <SidebarFilter
           onFilterChange={setFilters}
           filters={availableFilters}
-        />
+        />:""} 
         <div className="flex-1">
-          <ProductGrid productsData={products} />
+
+          <ProductGrid productsData={products} catSlug={slug}  />
           <div className="text-center text-sm text-gray-600 mt-10">
             No More Products to Show
           </div>

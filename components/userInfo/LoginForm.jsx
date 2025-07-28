@@ -23,17 +23,12 @@ export default function LoginForm() {
 
     // Remove country code from full phone to get local number
     const localPhone = phone.replace(countryCode.replace("+", ""), "");
-
-    const payload = {
-      phone: localPhone,
-      countryCode, // optional if needed in API
-    };
-
-    const result = await signIn("credentials", {
+      const result = await signIn("credentials", {
       redirect: false,
       phone: localPhone,
     });
 
+    console.log("result...",result)
     if (result?.error) {
       toast.error("Login Failed!");
     } else {
@@ -57,9 +52,6 @@ export default function LoginForm() {
           inputProps={{ required: true }}
         />
       </div>
-
-      
-
       <button
         type="submit"
         className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700"

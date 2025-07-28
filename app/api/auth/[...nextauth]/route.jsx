@@ -1,36 +1,41 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginuser } from "../../../../utils/api/Httproutes";
+import jwt from "jsonwebtoken"; 
 
 const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        phone: { label: "phone", type: "text" },
-        password: { label: "Password", type: "password" },
+        phone: { label: "Phone Number", type: "text" },
       },
       async authorize(credentials) {
-        const { phone, password } = credentials;
-        try {
-        
-          const response = await loginuser({ phone, password });
+        const { phone } = credentials;
 
-          if (response.status === 200 && response.data.token) {
-            const user = response.data;
+        try {
+          const response = await loginuser({ phone });
+          if (response.status === 200 && response?.data?.data?.token) {
+            const token = response?.data?.data?.token;
+            const decoded = jwt.decode(token);
+            if (!decoded) {
+              console.error("Token decode failed");
+              return null;
+            }
+
             return {
-              id: user.id,
-              name: `${user.firstName} ${user.lastName}`,
-              email: user.email,
-              image: user.image,
-              accessToken: user.token,
-              refreshToken: user.refreshToken,
+              id: decoded.user_id || "default-id",
+              email: decoded.email || "",
+              phone: decoded.phone || "",
+              firstName: decoded.firstName || "",
+              lastName: decoded.lastName || "",
+              accessToken: token,
             };
           }
 
           return null;
         } catch (error) {
-          console.error("Authorize error:", error);
+          console.error("Authorization error:", error);
           return null;
         }
       },
@@ -40,34 +45,37 @@ const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.name = user.name;
-        token.email = user.email;
-        token.image = user.image;
         token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
+        token.id = user.id;
+        token.email = user.email;
+        token.phone = user.phone;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
       }
       return token;
     },
 
     async session({ session, token }) {
-      session.user.id = token.id;
-      session.user.name = token.name;
-      session.user.email = token.email;
-      session.user.image = token.image;
       session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
+      session.user = {
+        id: token.id,
+        email: token.email,
+        phone: token.phone,
+        firstName: token.firstName,
+        lastName: token.lastName,
+      };
       return session;
     },
   },
 
   session: {
     strategy: "jwt",
-    maxAge: 30 * 60, // 30 minutes
+    maxAge: 30 * 60, // 30 मिनट
   },
 
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

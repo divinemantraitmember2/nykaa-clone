@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   showLoginModal: false,
   showRegisterModal: false,
+  shouldRefetchUserAddress: false,
 };
 
 const userSlice = createSlice({
@@ -35,6 +36,10 @@ const userSlice = createSlice({
       state.showLoginModal = false;
       state.showRegisterModal = false;
     },
+
+    toggleRefetchUserAddress(state) {
+      state.shouldRefetchUserAddress = !state.shouldRefetchUserAddress;
+    },
   },
 });
 
@@ -44,6 +49,7 @@ export const {
   openLoginModal,
   openRegisterModal,
   closeModals,
+  toggleRefetchUserAddress, 
 } = userSlice.actions;
 
 export default userSlice.reducer;

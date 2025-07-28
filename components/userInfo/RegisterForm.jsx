@@ -45,8 +45,7 @@ export default function RegisterForm() {
     try {
       const res = await Registeruser(payload);
       console.log("res",res)
-
-      if (res?.status===200) {
+      if (res?.status===201 && res?.statusText==="Created") {
         toast.success(`Registered successfully`);
         setTimeout(() => {
           dispatch(closeModals());
