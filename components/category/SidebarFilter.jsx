@@ -90,7 +90,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     <aside className="hidden md:block">
       {/* Static Sort By */}
       <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
-        <Disclosure defaultOpen>
+        <Disclosure >
           {({ open }) => (
             <>
               <DisclosureButton className="flex justify-between items-center w-full text-lg font-bold text-gray-800 cursor-pointer">

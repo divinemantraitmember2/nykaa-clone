@@ -53,8 +53,8 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
 
           <nav className="flex space-x-6 text-md font-semibold text-gray-700">
             {categories.map((link, i) => (
-             <>
-              <Link key={i} href={`/${link.slug}`} className="mx-8">
+            
+              <Link key={i+40} href={`/${link.slug}`} className="mx-8">
               <span
                 onMouseEnter={() => onHoverCategory(link)}
                 // onMouseLeave={onLeaveCategory}
@@ -63,7 +63,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
                 {link.label}
               </span>
               </Link>
-             </>
+             
             ))}
           </nav>
         </div>

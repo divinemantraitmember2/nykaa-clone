@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function BottomBar({ category }) {
   const [getCategory, setGetCategory] = useState([]);
@@ -26,37 +27,33 @@ export default function BottomBar({ category }) {
             >
               {/* Pehla menu item (full width mein row-wise honge) */}
               <div className="flex items-center gap-1 cursor-pointer mr-6  ">
-                <a
-                  href={`/${firstMenu.slug}`}
-                  className="hover:text-pink-600 px-1 py-1"
-                >
+                 <Link href={`/${firstMenu.slug}`} className="block hover:text-pink-600">
                   {firstMenu.label}
-                </a>
+                 </Link>
                 <ChevronDownIcon className="h-4 w-3 text-gray-500 group-hover:text-pink-600" />
               </div>
 
               {/* Agar second level children hain to dropdown submenu dikhaye */}
               {firstMenu.children?.length > 0 && (
                 <div
-                  className={`absolute left-0 top-full mt-1 bg-white shadow-lg border border-gray-100 py-1  min-w-[200px] z-50 transition-opacity duration-200 ${
+                  className={`absolute left-0 top-full  bg-white shadow-lg border border-gray-100 py-1  min-w-[200px] z-50 transition-opacity duration-200 ${
                     activeLabel === firstMenu.label
                       ? "opacity-100 visible"
                       : "opacity-0 invisible"
                   }`}
                 >
                   <ul className="flex flex-col gap-1">
-                    {firstMenu.children.map((secondMenu, idx) => (
-                      <li
-                        key={idx}
-                        className="text-md text-gray-800  hover:bg-[#faf4ec] p-2 hover:text-pink-600 cursor-pointer"
-                      >
-                        {/* Dusra menu item */}
-                        <a href={`/${secondMenu.slug}`}>
-                          {secondMenu.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
+  {firstMenu.children.map((secondMenu, idx) => (
+    <li
+      key={idx}
+      className="text-md text-gray-800 hover:bg-[#faf4ec] hover:text-pink-600 cursor-pointer p-0 m-0"
+    >
+      <Link href={`/${secondMenu.slug}`} className="p-2 block">
+        {secondMenu.label}
+      </Link>
+    </li>
+  ))}
+</ul>
                 </div>
               )}
             </div>
