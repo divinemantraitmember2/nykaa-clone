@@ -26,8 +26,12 @@ export default function CategoryPage({ params }) {
     try {
       const query = buildQuery();
       const response = await GetProductFilters(query);
-      if(response.status === 200 && response.data.categories !=null){
-      setAvailableFilters(response.data);
+      if(response.status === 200){
+        if(response.data.price_range ===null && response.data.price_range.length ===0 && response.data.colors ===null && response.data.colors.length ===0 && response.data.attributes ===null && response.data.attributes.length ===0 && response.data.categories===null && response.data.categories.length ===0  && response.data.sizes===null && response.data.sizes.length ===0){
+        setAvailableFilters(null);
+        }else{
+          setAvailableFilters(response.data);
+        }
       }else{
         setAvailableFilters(null);
       }
@@ -41,8 +45,12 @@ export default function CategoryPage({ params }) {
     try {
       const query = buildQuery();
       const response = await GetProductofcategorylist(query);
-
-      setProducts(response.products || []);
+          if(response.products !=null && response.products.length>0){
+            setProducts(response.products);
+          }else{
+             setProducts([]);
+          }
+      
     } catch (err) {
       console.error("Product fetch failed:", err);
     }
@@ -66,7 +74,7 @@ export default function CategoryPage({ params }) {
       <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center py-8">
         Buy Herbal Essences Products Online
       </h1>
-      <div className="flex gap-6 mt-3 lg:px-8">
+      <div className="flex gap-6 mt-3 lg:px-2">
        {availableFilters !=null? <SidebarFilter
           onFilterChange={setFilters}
           filters={availableFilters}

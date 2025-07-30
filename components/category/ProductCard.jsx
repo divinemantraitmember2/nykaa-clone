@@ -1,37 +1,54 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { openLoginModal } from "../../slices/userSlice";
-import {useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+
 export default function ProductCard({ product, slug }) {
   const { data: session, status } = useSession();
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  const [showAllColors, setShowAllColors] = useState(false);
+  const [showAllSizes, setShowAllSizes] = useState(false);
+
   const handleWishlistClick = (e) => {
     e.preventDefault();
     if (status === "unauthenticated") {
-     dispatch(openLoginModal()) 
+      dispatch(openLoginModal());
     }
   };
 
+  const allColors = product?.variants?.map((v) => v.color)?.filter(Boolean) || [];
+  const uniqueColors = [...new Set(allColors)];
+  const visibleColors = showAllColors ? uniqueColors : uniqueColors.slice(0, 5);
+  const extraColors = uniqueColors.length - visibleColors.length;
+
+  const allSizes = product?.variants?.flatMap((v) =>
+    (v?.size_stocks || []).map((s) => s?.size)
+  ).filter(Boolean) || [];
+  const uniqueSizes = [...new Set(allSizes)];
+  const visibleSizes = showAllSizes ? uniqueSizes : uniqueSizes.slice(0, 4);
+  const extraSizes = uniqueSizes.length - visibleSizes.length;
+
+  const discount =
+    product?.basePrice?.mrp && product?.basePrice?.inr
+      ? Math.round(
+          ((product.basePrice.mrp - product.basePrice.inr) / product.basePrice.mrp) * 100
+        )
+      : null;
+
   return (
-    <div className="group relative bg-white border hover:shadow-xl transition duration-300 p-4 rounded-md text-sm overflow-hidden min-h-[330px] flex flex-col justify-between">
-      
+    <div className="w-full sm:w-[48%] md:w-[220px] bg-white  rounded-md overflow-hidden shadow hover:shadow-lg transition group relative text-sm">
       {/* Wishlist Button */}
       <button
         type="button"
-        className="absolute top-2 right-2 p-2 border rounded-full bg-white hover:text-pink-600 z-10 lg:hidden group-hover:block transition duration-200"
-        title="Add to Wishlist"
         onClick={handleWishlistClick}
+        className="absolute top-2 right-2 z-10 p-1 bg-white border rounded-full text-gray-600 hover:text-pink-600"
+        title="Add to Wishlist"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 23 20"
-          fill="none"
-          stroke="currentColor"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 23 20">
           <path
             fill="#fff"
             stroke="currentColor"
@@ -40,65 +57,90 @@ const dispatch = useDispatch();
         </svg>
       </button>
 
-      {/* Product Info */}
-      <Link href={`/${slug}/${product?.slug}`} className="block">
-        {/* Image */}
-        <div className="w-full h-40 flex justify-center items-center overflow-hidden">
+      <Link href={`/${slug}/${product?.slug || ""}`} className="block">
+        {/* Product Image */}
+        <div className="relative w-full pb-[110%] bg-gray-100 overflow-hidden">
           <img
-            src={product?.default_image}
-            alt={product.title}
-            className="w-full h-full object-contain"
+            src={`${product?.default_image}?tr=w-250`}
+            alt={product?.title}
+            className="absolute top-0 left-0 w-full h-full object-cover transition group-hover:scale-105"
           />
         </div>
 
-        {/* Title */}
-        <h3 className="mt-3 text-base font-semibold text-gray-800 leading-tight line-clamp-2">
-          {product.title}
-        </h3>
-
-        {/* Price and Stock */}
-        <div className="mt-1 flex justify-between text-sm text-gray-700">
-          <p className="font-bold">₹{product.basePrice.inr}</p>
-          <p className="text-xs font-semibold">Stock: {product.stock}</p>
+        {/* Tag */}
+        <div className="px-2 pt-2">
+          {product?.tag && (
+            <span className="text-[10px] font-semibold px-1 py-0.5 rounded-sm bg-blue-100 text-blue-800">
+              {product.tag}
+            </span>
+          )}
         </div>
 
-        {/* Color Options */}
-        {product?.variants?.length > 0 && (
-  <div className="flex flex-wrap items-center gap-1 mt-1">
-    <p className="text-sm font-semibold text-gray-700 min-w-[50px]">Color:</p>
-    {product.variants.map((variant, index) => (
-      <div
-        key={index}
-        className="w-4 h-4 lg:w-5 lg:h-5 rounded-full border border-gray-300 shadow-sm hover:scale-105 transition-transform duration-150 cursor-pointer ring-1 ring-offset-1 ring-white hover:ring-gray-400"
-        style={{ backgroundColor: variant.color?.toLowerCase() }}
-        title={variant.color}
-      ></div>
-    ))}
-  </div>
-)}
-        {/* Size Options */}
-{product?.variants?.some(v => v.size_stocks?.length) && (
-  <div className="mt-3">
-    <p className="text-sm font-bold text-gray-700 mb-1">Size:</p>
-    
-    <div className="overflow-x-auto max-h-[80px] custom-scrollbar">
-      <div className="flex gap-2 flex-wrap min-w-max">
-        {product.variants.map((variant, vIdx) =>
-          variant.size_stocks.map((sizeItem, sIdx) => (
-            <span
-              key={`${vIdx}-${sIdx}`}
-              className="min-w-[40px] px-2 py-1 text-center border border-gray-300 rounded-md text-xs font-medium cursor-pointer bg-white hover:bg-gray-100 transition whitespace-nowrap"
-            >
-              {sizeItem.size}
-            </span>
-          ))
+        {/* Brand & Title */}
+        <div className="px-2 py-1">
+          <p className="text-xs font-semibold text-gray-800 truncate">{product.brand || "Brand"}</p>
+          <p className="text-xs text-gray-600 truncate">{product.title}</p>
+        </div>
+
+        {/* Colors */}
+        {uniqueColors.length > 0 && (
+          <div className="px-2 flex items-center gap-1 mt-1 flex-wrap">
+            {visibleColors.map((color, i) => (
+              <div
+                key={i}
+                className="w-4 h-4 rounded-full border border-gray-300"
+                style={{ backgroundColor: color.toLowerCase() }}
+              ></div>
+            ))}
+            {extraColors > 0 && !showAllColors && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowAllColors(true);
+                }}
+                className="text-[10px] text-gray-500 font-medium hover:underline"
+              >
+                +{extraColors} more
+              </button>
+            )}
+          </div>
         )}
-      </div>
-    </div>
-  </div>
-)}
 
+        {/* Sizes */}
+        {uniqueSizes.length > 0 && (
+          <div className="px-2 flex flex-wrap gap-1 mt-1">
+            {visibleSizes.map((size, i) => (
+              <span
+                key={i}
+                className="text-[10px] px-1.5 py-0.5 border border-gray-300 rounded-sm text-gray-800 bg-gray-100"
+              >
+                {size}
+              </span>
+            ))}
+            {extraSizes > 0 && !showAllSizes && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowAllSizes(true);
+                }}
+                className="text-[10px] text-gray-500 font-medium hover:underline"
+              >
+                +{extraSizes} more
+              </button>
+            )}
+          </div>
+        )}
 
+        {/* Price */}
+        <div className="px-2 py-1 flex items-center gap-2">
+          <span className="text-sm font-bold text-gray-900">₹{product.basePrice.inr}</span>
+          {product.basePrice.mrp && (
+            <span className="text-xs line-through text-gray-500">₹{product.basePrice.mrp}</span>
+          )}
+          {discount > 0 && (
+            <span className="text-xs font-semibold text-green-600">{discount}%</span>
+          )}
+        </div>
       </Link>
     </div>
   );

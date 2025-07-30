@@ -88,7 +88,7 @@ try{
               {selectedVariant?.image_url?.map((img, i) => (
                 <img
                   key={i}
-                  src={img}
+                  src={`${img}?tr=w-200`}
                   alt={`thumb-${i}`}
                   width={64}
                   height={64}
@@ -275,6 +275,7 @@ try{
               <span className="truncate">Sold by: Pondric E RETA...</span>
             </div>
           </div>
+
         </div>
       </div>
     </section>

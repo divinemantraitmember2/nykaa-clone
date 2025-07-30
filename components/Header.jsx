@@ -8,7 +8,7 @@ export default function Header({ categories }) {
 
   return (
     <header className="sticky top-0 z-50 bg-[#faf4ec] border-b border-pink-700">
-      <Navbar 
+      {/* <Navbar 
         categories={categories.data}
         onHoverCategory={(category) => setHoveredCategory([category])}
         onLeaveCategory={() => setHoveredCategory(null)}
@@ -22,7 +22,7 @@ export default function Header({ categories }) {
   />
 </div>
        
-      )}
+      )} */}
     </header>
   );
 }

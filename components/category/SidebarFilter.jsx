@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Disclosure,
   DisclosureButton,
@@ -14,9 +15,10 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     price_range = [],
     sizes = [],
     attributes = [],
-    categories = [],
+    categories, // no default so we can check null explicitly
   } = filters || {};
 
+  // Group attributes like material, pattern, etc.
   const attributeGroups = attributes.reduce((acc, item) => {
     const { name, value } = item._id;
     if (!acc[name]) acc[name] = [];
@@ -24,41 +26,57 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     return acc;
   }, {});
 
+  // Collect available filter sections conditionally (without looping keys)
   const dynamicSections = {
-    Category: categories.map((c) => ({
-      label: c.name,
-      count: c.count,
-    })),
-    Color: colors.map((c) => ({
-      label: c._id,
-      count: c.count,
-    })),
-    Size: sizes.map((s) => ({
-      label: s._id,
-      count: s.count,
-    })),
-    Gender: genders.map((g) => ({
-      label: g._id,
-      count: g.count,
-    })),
-    "Price Range": price_range.map((p) => ({
-      label: p.label,
-      count: p.count,
-    })),
+    ...(categories ? {
+      Category: categories.map((c) => ({
+        label: c.name,
+        count: c.count,
+      })),
+    } : {}),
+    ...(colors.length ? {
+      Color: colors.map((c) => ({
+        label: c._id,
+        count: c.count,
+      })),
+    } : {}),
+    ...(sizes.length ? {
+      Size: sizes.map((s) => ({
+        label: s._id,
+        count: s.count,
+      })),
+    } : {}),
+    ...(genders.length ? {
+      Gender: genders.map((g) => ({
+        label: g._id,
+        count: g.count,
+      })),
+    } : {}),
+    ...(price_range.length ? {
+      "Price Range": price_range.map((p) => ({
+        label: p.label,
+        count: p.count,
+      })),
+    } : {}),
     ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
-      acc[key.charAt(0).toUpperCase() + key.slice(1)] = values;
+      if (values.length) {
+        acc[key.charAt(0).toUpperCase() + key.slice(1)] = values;
+      }
       return acc;
     }, {}),
   };
+
+  // Show if any section was null or missing (no loop)
+  const missingSections = [];
+  if (!categories) missingSections.push("Category");
 
   const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleCheckboxChange = (section, label) => {
     const current = selectedFilters[section] || [];
-    const updated =
-      current.includes(label)
-        ? current.filter((v) => v !== label)
-        : [...current, label];
+    const updated = current.includes(label)
+      ? current.filter((v) => v !== label)
+      : [...current, label];
 
     const newFilters = { ...selectedFilters, [section]: updated };
     setSelectedFilters(newFilters);
@@ -67,14 +85,11 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
   const triggerParentFilterChange = (selected) => {
     const queryFilters = {};
-
     Object.entries(selected).forEach(([section, values]) => {
       if (values.length === 0) return;
-
-      const key = section.toLowerCase().replace(" ", "_"); // like "Price Range" => "price_range"
+      const key = section.toLowerCase().replace(" ", "_");
       queryFilters[key] = values.join(",");
     });
-
     onFilterChange(queryFilters);
   };
 
@@ -88,9 +103,9 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
   return (
     <aside className="hidden md:block">
-      {/* Static Sort By */}
+      {/* Sort By */}
       <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
-        <Disclosure >
+        <Disclosure>
           {({ open }) => (
             <>
               <DisclosureButton className="flex justify-between items-center w-full text-lg font-bold text-gray-800 cursor-pointer">
@@ -104,7 +119,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
               <DisclosurePanel>
                 <ul className="mt-3 space-y-2">
                   {staticSortOptions.map((option, i) => (
-                    <li key={i} className="flex items-center gap-2 text-gray-800">
+                    <li key={i + 400} className="flex items-center gap-2 text-gray-800">
                       <input type="radio" name="sort" className="accent-pink-500" />
                       {option}
                     </li>
@@ -116,9 +131,17 @@ export default function SidebarFilter({ filters, onFilterChange }) {
         </Disclosure>
       </div>
 
-      {/* Dynamic Filters */}
+      {/* Filters */}
       <div className="bg-white p-4 w-[260px] rounded text-sm sticky top-[127px] h-[calc(100vh-140px)] overflow-y-auto">
         <h3 className="text-lg font-bold text-gray-800 mb-3">Filter By</h3>
+
+        {/* Null section warnings (no loop) */}
+        {missingSections.length > 0 && (
+          <div className="mb-4 text-sm text-red-500">
+            Missing: {missingSections.join(", ")}
+          </div>
+        )}
+
         <div className="space-y-3">
           {Object.entries(dynamicSections).map(([section, options]) => (
             <Disclosure key={section}>
