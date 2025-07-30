@@ -25,15 +25,26 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   
   // Auto-select first color and size on load
   useEffect(() => {
-    console.log("product",product)
+  if (product?.variants?.length > 0 && selsectSlug) {
+    // slug ke base par variant dhoondo
+    const matchedVariant = product.variants.find(
+      (variant) => variant.slug === selsectSlug
+    );
 
-    if (product?.variants?.length > 0) {
+    if (matchedVariant) {
+      setSelectedColor(matchedVariant.color);
+      setSelectedSize(matchedVariant.size_stocks?.[0]?.size || "");
+      setSelectedImg(matchedVariant.image_url?.[0] || product.default_image);
+    } else {
+      // Agar slug match na ho to default variant lo
       const defaultVariant = product.variants[0];
       setSelectedColor(defaultVariant.color);
       setSelectedSize(defaultVariant.size_stocks?.[0]?.size || "");
       setSelectedImg(defaultVariant.image_url?.[0] || product.default_image);
     }
-  }, [product]);
+  }
+}, [product, selsectSlug]);
+
 
   const handleColorSelect = (variant) => {
     setSelectedColor(variant.slug);
