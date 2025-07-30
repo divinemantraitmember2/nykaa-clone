@@ -6,6 +6,7 @@ const initialState = {
   showLoginModal: false,
   showRegisterModal: false,
   shouldRefetchUserAddress: false,
+  StopRuningUseEffect: false,
 };
 
 const userSlice = createSlice({
@@ -40,6 +41,8 @@ const userSlice = createSlice({
     toggleRefetchUserAddress(state) {
       state.shouldRefetchUserAddress = !state.shouldRefetchUserAddress;
     },
+    
+   
   },
 });
 

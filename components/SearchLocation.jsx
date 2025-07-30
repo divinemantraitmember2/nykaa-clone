@@ -22,17 +22,22 @@ export default function SearchLocation() {
 
         {/* Delivery Options */}
         <div className="w-full lg:w-auto flex flex-col">
+          <div className="mb-2">
+            <h2 className="text-2xl text-start font-semibold text-gray-800 mb-2">Select Delivery Location</h2>
+          <p className="text-start font-semibold ">Enter the pincode of your area to check product availability and delivery options</p>
+
+          </div>
           <div className="flex items-center gap-1 mb-2 text-gray-700 font-semibold text-sm">
             <MdLocationOn className="text-xl text-gray-600" />
             <span>Delivery Options</span>
           </div>
 
-<div className="relative w-full sm:w-[200px] ">
+<div className="relative w-full sm:w-[300px] ">
       
   <input
     type="text"
     placeholder="Enter pincode"
-    className="border py-2 lg:py-3 px-4 pr-16 text-sm w-full rounded "
+    className="border py-3 lg:py-3 px-4 pr-16 text-sm w-full rounded "
     value={pincode}
   onChange={(e) => setPincode(e.target.value)}
   />

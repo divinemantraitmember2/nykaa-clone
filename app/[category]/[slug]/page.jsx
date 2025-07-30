@@ -24,9 +24,9 @@ export default async function ProductDetails({ params }) {
   
 
   return (
-    <div className="bg-[#f3f3f3] py-10 lg:px-10 px-2">
-      {product !=null?(<><ClientProductDetails product={product} />
-      <ProductDescription /></>):(<>
+    <div className="bg-[#f3f3f3] py-10 lg:px-10">
+      {product !=null?(<><ClientProductDetails product={product} mainCate={category} selsectSlug={slug}/>
+      </>):(<>
       <p>Data Not Found</p>
       </>)}
       
