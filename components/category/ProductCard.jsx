@@ -59,7 +59,7 @@ export default function ProductCard({ product, slug }) {
         {/* Product Image */}
         <div className="aspect-square bg-gray-50">
           <img
-            src={product.default_image}
+            src={`${product.default_image}?trw-512,h-683`}
             alt={product.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
