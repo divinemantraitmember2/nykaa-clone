@@ -72,8 +72,6 @@ async function increaseQuantityCart(id) {
 }
 
 async function removeFromCart_cart(id) {
-  console.log("id...",id)
-  
   const itemToUpdate = items.find((item) => item.id === id);
  
   if (itemToUpdate && itemToUpdate.quantity > 0) {

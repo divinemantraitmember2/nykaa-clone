@@ -42,7 +42,7 @@ export default function ProductCard({ product, slug }) {
       : null;
 
   return (
-    <div className="group relative bg-white rounded-2xl mb-2 shadow hover:shadow-lg transition-all overflow-hidden w-full max-w-[220px] text-sm border border-gray-100">
+    <div className="group relative bg-white rounded-2xl shadow hover:shadow-lg transition-all overflow-hidden w-full max-w-[220px] text-sm border border-gray-100">
       {/* Wishlist Button */}
       <button
         onClick={handleWishlistClick}
