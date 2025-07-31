@@ -40,7 +40,7 @@ export default function ProductCard({ product, slug }) {
       : null;
 
   return (
-    <div className="group relative hover:shadow-md hover:shadow-pink-200 transition-all overflow-hidden w-full text-sm rounded">
+    <div className="group relative hover:shadow-md mb-2 hover:shadow-pink-200 transition-all overflow-hidden w-full text-sm rounded">
       <button
         onClick={handleWishlistClick}
         className="absolute top-2 right-2 z-10 bg-white p-1.5 rounded-full shadow hover:bg-pink-100 transition"
