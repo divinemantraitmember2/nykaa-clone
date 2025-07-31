@@ -7,7 +7,7 @@ export default function Header({ categories }) {
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#faf4ec] border-b border-pink-700">
+    <header className="sticky top-0 z-50 bg-[#fff] border-b border-pink-100">
       <Navbar 
         categories={categories.data}
         onHoverCategory={(category) => setHoveredCategory([category])}

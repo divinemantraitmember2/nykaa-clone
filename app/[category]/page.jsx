@@ -68,9 +68,9 @@ export default function CategoryPage({ params }) {
     <main className="min-h-screen bg-white">
       {/* <TopBanner /> */}
       <div className="px-2 sm:px-4 lg:px-6 py-2">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 py-4">
+        <h3 className="text-xl sm:text-2xl md:text-2xl font-bold text-[#192837] py-4">
           Buy Herbal Essences Products Online
-        </h1>
+        </h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {availableFilters && (

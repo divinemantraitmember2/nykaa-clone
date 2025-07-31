@@ -17,7 +17,7 @@ export default function BottomBar({ category }) {
       {/* Sirf desktop view ke liye menu */}
       <div className="hidden md:block">
         {/* Main navigation bar */}
-        <div className="bg-white shadow px-6 py-2 text-start text-sm font-medium text-gray-700 flex w-full">
+        <div className="bg-white  px-6 py-1  text-start text-sm font-medium text-gray-700 flex w-full">
           {getCategory?.[0]?.children?.map((firstMenu, index) => (
             <div
               key={index}
