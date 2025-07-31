@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState,use } from "react";
 
+import { useEffect, useState, use } from "react";
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
 import TopBanner from "../../components/category/TopBanner";
@@ -10,12 +10,10 @@ import {
 } from "../../utils/api/Httproutes";
 
 export default function CategoryPage({ params }) {
-  const slug = params.category;
-  const { category } = use(params);
-
+  const category = params.category;
   const [filters, setFilters] = useState({});
   const [products, setProducts] = useState([]);
-  const [availableFilters, setAvailableFilters] = useState(null); 
+  const [availableFilters, setAvailableFilters] = useState(null);
 
   const buildQuery = () => {
     const query = new URLSearchParams({ category_slug: category, ...filters });
@@ -26,16 +24,19 @@ export default function CategoryPage({ params }) {
     try {
       const query = buildQuery();
       const response = await GetProductFilters(query);
-      if(response.status === 200){
-        if(response.data.price_range ===null && response.data.price_range.length ===0 && response.data.colors ===null && response.data.colors.length ===0 && response.data.attributes ===null && response.data.attributes.length ===0 && response.data.categories===null && response.data.categories.length ===0  && response.data.sizes===null && response.data.sizes.length ===0){
-        setAvailableFilters(null);
-        }else{
-          setAvailableFilters(response.data);
-        }
-      }else{
+      if (response.status === 200) {
+        const data = response.data;
+        const isEmpty =
+          (!data.price_range || data.price_range.length === 0) &&
+          (!data.colors || data.colors.length === 0) &&
+          (!data.attributes || data.attributes.length === 0) &&
+          (!data.categories || data.categories.length === 0) &&
+          (!data.sizes || data.sizes.length === 0);
+
+        setAvailableFilters(isEmpty ? null : data);
+      } else {
         setAvailableFilters(null);
       }
-      
     } catch (err) {
       console.error("Filter fetch failed:", err);
     }
@@ -45,47 +46,48 @@ export default function CategoryPage({ params }) {
     try {
       const query = buildQuery();
       const response = await GetProductofcategorylist(query);
-          if(response.products !=null && response.products.length>0){
-            setProducts(response.products);
-          }else{
-             setProducts([]);
-          }
-      
+      if (response.products && response.products.length > 0) {
+        setProducts(response.products);
+      } else {
+        setProducts([]);
+      }
     } catch (err) {
       console.error("Product fetch failed:", err);
     }
   };
 
-  // only run once on mount to get sidebar filters
   useEffect(() => {
     fetchInitialFilters();
   }, [category]);
 
-  // run when filters change
   useEffect(() => {
     fetchProducts();
   }, [filters, category]);
 
   return (
-    <main className="min-h-scree bg-[#f3f3f3] ">
-      <TopBanner />
+    <main className="min-h-screen bg-white">
+      {/* <TopBanner /> */}
+      <div className="px-2 sm:px-4 lg:px-6 py-2">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 py-4">
+          Buy Herbal Essences Products Online
+        </h1>
 
-<div className="px-1 lg:p-4 py-6">
-      <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center py-8">
-        Buy Herbal Essences Products Online
-      </h1>
-      <div className="flex gap-6 mt-3 lg:px-2">
-       {availableFilters !=null? <SidebarFilter
-          onFilterChange={setFilters}
-          filters={availableFilters}
-        />:""} 
-        <div className="flex-1">
-          <ProductGrid productsData={products} catSlug={category}  />
-          <div className="text-center text-sm text-gray-600 mt-10">
-            No More Products to Show
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          {availableFilters && (
+            <aside className="lg:col-span-3 hidden lg:block">
+              <div className="sticky top-24 max-h-[calc(100vh)] overflow-y-auto pr-2 custom-scrollbar">
+                <SidebarFilter onFilterChange={setFilters} filters={availableFilters} />
+              </div>
+            </aside>
+          )}
+
+          <section className="lg:col-span-9">
+            <ProductGrid productsData={products} catSlug={category} />
+            <div className="text-center text-sm text-gray-600 mt-10">
+              No More Products to Show
+            </div>
+          </section>
         </div>
-      </div>
       </div>
     </main>
   );

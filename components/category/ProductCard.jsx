@@ -8,7 +8,7 @@ import { openLoginModal } from "../../slices/userSlice";
 import { Heart } from "lucide-react";
 
 export default function ProductCard({ product, slug }) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const dispatch = useDispatch();
 
   const [showAllColors, setShowAllColors] = useState(false);
@@ -27,9 +27,7 @@ export default function ProductCard({ product, slug }) {
   const extraColors = uniqueColors.length - visibleColors.length;
 
   const allSizes =
-    product?.variants?.flatMap((v) =>
-      (v?.size_stocks || []).map((s) => s?.size)
-    ) || [];
+    product?.variants?.flatMap((v) => (v?.size_stocks || []).map((s) => s?.size)) || [];
   const uniqueSizes = [...new Set(allSizes.filter(Boolean))];
   const visibleSizes = showAllSizes ? uniqueSizes : uniqueSizes.slice(0, 4);
   const extraSizes = uniqueSizes.length - visibleSizes.length;
@@ -42,8 +40,7 @@ export default function ProductCard({ product, slug }) {
       : null;
 
   return (
-    <div className="group relative bg-white rounded-2xl shadow hover:shadow-lg transition-all overflow-hidden w-full max-w-[220px] text-sm border border-gray-100">
-      {/* Wishlist Button */}
+    <div className="group relative hover:shadow-md hover:shadow-pink-200 transition-all overflow-hidden w-full text-sm bg-white rounded">
       <button
         onClick={handleWishlistClick}
         className="absolute top-2 right-2 z-10 bg-white p-1.5 rounded-full shadow hover:bg-pink-100 transition"
@@ -52,11 +49,10 @@ export default function ProductCard({ product, slug }) {
       </button>
 
       <Link
-        href={`${slug}/${product.slug}`}
+        href={`/${slug}/${product.slug}`}
         className="block"
         aria-labelledby={`title-${product.id}`}
       >
-        {/* Product Image */}
         <div className="aspect-square bg-gray-50">
           <img
             src={`${product.default_image}?tr=w-512,h-683`}
@@ -66,14 +62,11 @@ export default function ProductCard({ product, slug }) {
           />
         </div>
 
-        {/* Info Section */}
         <div className="p-2 space-y-1">
-          {/* Title */}
           <h2 className="text-sm text-gray-800 font-bold leading-snug line-clamp-2 min-h-[32px]">
-         {product.title}
-         </h2>
+            {product.title}
+          </h2>
 
-          {/* Colors */}
           {uniqueColors.length > 0 && (
             <div className="flex items-center gap-1 flex-wrap">
               {visibleColors.map((color, i) => (
@@ -97,7 +90,6 @@ export default function ProductCard({ product, slug }) {
             </div>
           )}
 
-          {/* Sizes */}
           {uniqueSizes.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {visibleSizes.map((size, i) => (
@@ -122,7 +114,6 @@ export default function ProductCard({ product, slug }) {
             </div>
           )}
 
-          {/* Pricing */}
           <div className="flex items-center gap-2 pt-1">
             <span className="text-sm font-semibold text-gray-900">
               ₹{product.basePrice.inr}

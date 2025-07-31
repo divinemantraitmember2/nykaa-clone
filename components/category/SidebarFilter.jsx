@@ -5,7 +5,12 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { Dialog } from "@headlessui/react";
+import {
+  XMarkIcon,
+  FunnelIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 
 export default function SidebarFilter({ filters, onFilterChange }) {
@@ -15,10 +20,12 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     price_range = [],
     sizes = [],
     attributes = [],
-    categories, // no default so we can check null explicitly
+    categories,
   } = filters || {};
 
-  // Group attributes like material, pattern, etc.
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState({});
+
   const attributeGroups = attributes.reduce((acc, item) => {
     const { name, value } = item._id;
     if (!acc[name]) acc[name] = [];
@@ -26,38 +33,37 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     return acc;
   }, {});
 
-  // Collect available filter sections conditionally (without looping keys)
   const dynamicSections = {
-    ...(categories ? {
+    ...(categories && {
       Category: categories.map((c) => ({
         label: c.name,
         count: c.count,
       })),
-    } : {}),
-    ...(colors.length ? {
+    }),
+    ...(colors.length && {
       Color: colors.map((c) => ({
         label: c._id,
         count: c.count,
       })),
-    } : {}),
-    ...(sizes.length ? {
+    }),
+    ...(sizes.length && {
       Size: sizes.map((s) => ({
         label: s._id,
         count: s.count,
       })),
-    } : {}),
-    ...(genders.length ? {
+    }),
+    ...(genders.length && {
       Gender: genders.map((g) => ({
         label: g._id,
         count: g.count,
       })),
-    } : {}),
-    ...(price_range.length ? {
+    }),
+    ...(price_range.length && {
       "Price Range": price_range.map((p) => ({
         label: p.label,
         count: p.count,
       })),
-    } : {}),
+    }),
     ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
       if (values.length) {
         acc[key.charAt(0).toUpperCase() + key.slice(1)] = values;
@@ -65,12 +71,6 @@ export default function SidebarFilter({ filters, onFilterChange }) {
       return acc;
     }, {}),
   };
-
-  // Show if any section was null or missing (no loop)
-  const missingSections = [];
-  if (!categories) missingSections.push("Category");
-
-  const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleCheckboxChange = (section, label) => {
     const current = selectedFilters[section] || [];
@@ -87,99 +87,92 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     const queryFilters = {};
     Object.entries(selected).forEach(([section, values]) => {
       if (values.length === 0) return;
-      const key = section.toLowerCase().replace(" ", "_");
+      const key = section.toLowerCase().replace(/ /g, "_");
       queryFilters[key] = values.join(",");
     });
     onFilterChange(queryFilters);
   };
 
-  const staticSortOptions = [
-    "Name",
-    "Customer Top Rated",
-    "New Arrivals",
-    "Price: High To Low",
-    "Price: Low To High",
-  ];
-
-  return (
-    <aside className="hidden md:block">
-      {/* Sort By */}
-      {/* <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
-        <Disclosure>
+  const FilterSections = () => (
+    <div className="space-y-2">
+      {Object.entries(dynamicSections).map(([section, options]) => (
+        <Disclosure key={section}>
           {({ open }) => (
             <>
-              <DisclosureButton className="flex justify-between items-center w-full text-lg font-bold text-gray-800 cursor-pointer">
-                Sort By
+              <DisclosureButton className="flex justify-between w-full font-semibold text-gray-900 text-base py-2 border-b border-gray-200">
+                {section}
                 <ChevronDownIcon
-                  className={`w-5 h-5 transition-transform duration-200 ${
+                  className={`w-5 h-5 text-gray-500 transition-transform ${
                     open ? "rotate-180" : ""
                   }`}
                 />
               </DisclosureButton>
-              <DisclosurePanel>
-                <ul className="mt-3 space-y-2">
-                  {staticSortOptions.map((option, i) => (
-                    <li key={i + 400} className="flex items-center gap-2 text-gray-800">
-                      <input type="radio" name="sort" className="accent-pink-500" />
-                      {option}
-                    </li>
-                  ))}
+              <DisclosurePanel className="pt-3">
+                <ul className="space-y-2 text-sm text-gray-700">
+                  {options.map((item, i) => {
+                    const isChecked = selectedFilters[section]?.includes(item.label);
+                    return (
+                      <li key={i} className="flex items-center justify-between">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={isChecked}
+                            className="accent-pink-600 w-4 h-4 rounded"
+                            onChange={() => handleCheckboxChange(section, item.label)}
+                          />
+                          <span>{item.label}</span>
+                        </label>
+                        <span className="text-xs text-gray-400 font-medium">
+                          {item.count}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </DisclosurePanel>
             </>
           )}
         </Disclosure>
-      </div> */}
+      ))}
+    </div>
+  );
 
-      {/* Filters */}
-      <div className="bg-white p-4 w-[260px] rounded text-sm sticky top-[127px] h-[calc(100vh-140px)] overflow-y-auto">
-        <h3 className="text-lg font-bold text-gray-800 mb-3">Filter By</h3>
-
-        {/* Null section warnings (no loop) */}
-        {missingSections.length > 0 && (
-          <div className="mb-4 text-sm text-red-500">
-            Missing: {missingSections.join(", ")}
-          </div>
-        )}
-
-        <div className="space-y-3">
-          {Object.entries(dynamicSections).map(([section, options]) => (
-            <Disclosure key={section}>
-              {({ open }) => (
-                <>
-                  <DisclosureButton className="flex justify-between items-center w-full font-semibold text-gray-800 cursor-pointer py-1">
-                    {section}
-                    <ChevronDownIcon
-                      className={`w-4 h-4 text-gray-500 transition-transform ${
-                        open ? "rotate-180" : ""
-                      }`}
-                    />
-                  </DisclosureButton>
-                  <DisclosurePanel>
-                    <ul className="mt-2 space-y-2 pl-2">
-                      {options.map((item, i) => {
-                        const isChecked = selectedFilters[section]?.includes(item.label);
-                        return (
-                          <li key={i} className="flex items-center gap-2 text-gray-700">
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              className="accent-pink-500"
-                              onChange={() => handleCheckboxChange(section, item.label)}
-                            />
-                            {item.label}
-                            <span className="text-xs text-gray-400">({item.count})</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </DisclosurePanel>
-                </>
-              )}
-            </Disclosure>
-          ))}
-        </div>
+  return (
+    <>
+      {/* Mobile Filter Button */}
+      <div className="md:hidden mb-4 flex justify-end px-2">
+        <button
+          className="flex items-center gap-2 text-sm px-3 py-1 border border-gray-300 rounded-md text-gray-700 hover:border-gray-400"
+          onClick={() => setIsMobileOpen(true)}
+        >
+          <FunnelIcon className="w-4 h-4" />
+          Filters
+        </button>
       </div>
-    </aside>
+
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:block">
+        <div className=" p-2  text-sm font-sans">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">Filters</h3>
+          <FilterSections />
+        </div>
+      </aside>
+
+      {/* Mobile Dialog Filter Panel */}
+      <Dialog open={isMobileOpen} onClose={() => setIsMobileOpen(false)} className="relative z-50 md:hidden">
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div className="fixed inset-0 flex justify-end">
+          <Dialog.Panel className="w-full max-w-sm bg-white p-4 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Filters</h3>
+              <button onClick={() => setIsMobileOpen(false)}>
+                <XMarkIcon className="w-5 h-5 text-gray-700" />
+              </button>
+            </div>
+            <FilterSections />
+          </Dialog.Panel>
+        </div>
+      </Dialog>
+    </>
   );
 }
