@@ -72,6 +72,7 @@ async function increaseQuantityCart(id) {
 }
 
 async function removeFromCart_cart(id) {
+  console.log("id...",id)
   
   const itemToUpdate = items.find((item) => item.id === id);
  
@@ -86,10 +87,11 @@ async function removeFromCart_cart(id) {
       quantity: 0,
     };
     try {
+       dispatch(removeFromCart(id))
       const res = await AddToCart("remove", addcart);
       if(res.status ===200){
         GetUserCartByUserId();
-        dispatch(decreaseQuantity(id))
+       
       }
     
     } catch (err) {

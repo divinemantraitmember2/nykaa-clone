@@ -3,7 +3,6 @@
 import React from "react";
 
 const MyOrders = ({ orders }) => {
-   
   if (!orders || orders.length === 0) {
     return (
       <div className="text-center p-6 text-gray-600">
@@ -20,7 +19,7 @@ const MyOrders = ({ orders }) => {
         {orders.map((order, index) => (
           <div
             key={order.id || index}
-            className="border rounded-xl p-4 md:p-6 shadow-sm bg-white"
+            className="border rounded-xl p-4 md:p-6"
           >
             {/* Order Summary */}
             <div className="flex flex-col md:flex-row justify-between gap-4">
@@ -56,55 +55,58 @@ const MyOrders = ({ orders }) => {
 
             <hr className="my-4" />
 
-            {/* Shipping Address */}
-            <div className="mb-4">
-              <p className="font-semibold text-sm mb-1">Shipping Address</p>
-              <p className="text-sm text-gray-600">
-                {order.shippingAddress?.firstName}{" "}
-                {order.shippingAddress?.lastName},{" "}
-                {order.shippingAddress?.addressLine1},{" "}
-                {order.shippingAddress?.city}, {order.shippingAddress?.state} -{" "}
-                {order.shippingAddress?.zipCode}
-              </p>
-              <p className="text-sm text-gray-600">
-                Phone: {order.shippingAddress?.phoneNumber}
-              </p>
-            </div>
-
-            {/* Ordered Items */}
-            <div>
-              <p className="font-semibold text-sm mb-2">Items Ordered</p>
-              {order.items.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col md:flex-row gap-4 items-start md:items-center border-b py-4"
-                >
-                  <img
-                    src={item.variants.image_url[0]}
-                    alt={item.productName}
-                    className="w-24 h-24 object-cover rounded"
-                  />
-                  <div className="flex-1 space-y-1">
-                    <p className="font-medium">{item.productName}</p>
-                    <p className="text-sm text-gray-600">
-                      Quantity: {item.quantity}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Size: {item.variants.size_stocks[0].size}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Color: {item.variants.color}
-                    </p>
-                    <p className="text-sm text-gray-800 font-semibold">
-                      ₹{item.variants.size_stocks[0].discounted_price_inr}
-                    </p>
+            {/* Ordered Items and Shipping Address - Responsive Layout */}
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Ordered Items */}
+              <div className="flex-1">
+                <p className="font-semibold text-sm mb-2">Items Ordered</p>
+                {order.items.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col md:flex-row gap-4 items-start md:items-center  py-4"
+                  >
+                    <img
+                      src={item.variants.image_url[0]}
+                      alt={item.productName}
+                      className="w-24 h-24 object-cover rounded"
+                    />
+                    <div className="flex-1 space-y-1">
+                      <p className="font-medium">{item.productName}</p>
+                      <p className="text-sm text-gray-600">
+                        Quantity: {item.quantity}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Size: {item.variants.size_stocks[0].size}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Color: {item.variants.color}
+                      </p>
+                      <p className="text-sm text-gray-800 font-semibold">
+                        ₹{item.variants.size_stocks[0].discounted_price_inr}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* Shipping Address */}
+              <div className="w-full md:max-w-sm bg-white p-4 ">
+                <p className="font-semibold text-sm mb-2">Shipping Address</p>
+                <p className="text-sm text-gray-600">
+                  {order.shippingAddress?.firstName}{" "}
+                  {order.shippingAddress?.lastName},{" "}
+                  {order.shippingAddress?.addressLine1},{" "}
+                  {order.shippingAddress?.city}, {order.shippingAddress?.state} -{" "}
+                  {order.shippingAddress?.zipCode}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  Phone: {order.shippingAddress?.phoneNumber}
+                </p>
+              </div>
             </div>
 
             {/* Payment Info */}
-            <div className="mt-4 flex flex-col md:flex-row justify-between gap-4 text-sm text-gray-700">
+            <div className="mt-4 flex flex-col md:flex-row border-t py-2 justify-between gap-4 text-sm text-gray-700">
               <p>
                 Payment Method:{" "}
                 <span className="font-medium">{order.paymentMethod}</span>

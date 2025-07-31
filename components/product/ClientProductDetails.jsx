@@ -77,7 +77,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       if (!selectedVariant || !selectedStock) return;
       dispatch(
         addToCart({
-          id: product.productID,
+          id: product.sku,
           title: product.title,
           price: selectedStock.discounted_price_inr,
           image: selectedImg,
