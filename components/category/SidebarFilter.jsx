@@ -104,7 +104,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
   return (
     <aside className="hidden md:block">
       {/* Sort By */}
-      <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
+      {/* <div className="mb-4 p-4 bg-white w-[260px] rounded text-sm">
         <Disclosure>
           {({ open }) => (
             <>
@@ -129,7 +129,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
             </>
           )}
         </Disclosure>
-      </div>
+      </div> */}
 
       {/* Filters */}
       <div className="bg-white p-4 w-[260px] rounded text-sm sticky top-[127px] h-[calc(100vh-140px)] overflow-y-auto">
