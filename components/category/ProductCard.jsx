@@ -42,7 +42,7 @@ export default function ProductCard({ product, slug }) {
       : null;
 
   return (
-    <div className="group relative bg-white rounded-2xl mb-1 shadow hover:shadow-lg transition-all overflow-hidden w-full max-w-[220px] text-sm border border-gray-100">
+    <div className="group relative bg-white rounded-2xl mb-2 shadow hover:shadow-lg transition-all overflow-hidden w-full max-w-[220px] text-sm border border-gray-100">
       {/* Wishlist Button */}
       <button
         onClick={handleWishlistClick}
@@ -59,7 +59,7 @@ export default function ProductCard({ product, slug }) {
         {/* Product Image */}
         <div className="aspect-square bg-gray-50">
           <img
-            src={`${product.default_image}?trw-512,h-683`}
+            src={`${product.default_image}?tr=w-512,h-683`}
             alt={product.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
@@ -67,11 +67,11 @@ export default function ProductCard({ product, slug }) {
         </div>
 
         {/* Info Section */}
-        <div className="p-3 space-y-1">
+        <div className="p-2 space-y-1">
           {/* Title */}
-          <div className="text-xs text-gray-800 font-medium line-clamp-2 min-h-[32px]">
-            {product.title}
-          </div>
+          <h2 className="text-sm text-gray-800 font-bold leading-snug line-clamp-2 min-h-[32px]">
+         {product.title}
+         </h2>
 
           {/* Colors */}
           {uniqueColors.length > 0 && (
