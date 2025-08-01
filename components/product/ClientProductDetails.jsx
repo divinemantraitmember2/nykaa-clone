@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect,useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
 import { AddToCart } from "../../utils/api/Httproutes";
@@ -10,6 +10,7 @@ import { openLoginModal } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 export default function ClientProductDetails({ product, mainCate,selsectSlug }) {
@@ -132,43 +133,86 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
     },
   ];
 
+  const scrollRef = useRef(null);
+
+  const scrollBy = (offset) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="py-1 px-1 lg:px-0">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-1 relative">
-          {/* LEFT: Images */}
-          <div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
-            <div className="flex gap-3">
-              {/* Thumbnails */}
-              <div className="flex flex-col gap-1">
-                {selectedVariant?.image_url?.map((img, i) => (
-                  <img
-                    key={i}
-                    src={`${img}?tr=w-70`}
-                    alt={`thumb-${i}`}
-                    width={70}
-                    height={70}
-                    onClick={() => setSelectedImg(img)}
-                    className={`w-20 h-25 border p-1 cursor-pointer rounded ${
-                      selectedImg === img
-                        ? "border-pink-600"
-                        : "border-gray-300"
-                    }`}
-                  />
-                ))}
-              </div>
-              {/* Main Image */}
-              <div className="flex-1 flex justify-center items-center relative">
-                <img
-                  src={`${selectedImg}?tr=w-500`}
-                  alt="Main"
-                  width={500}
-                  height={500}
-                  className="object-contain max-h-[600px] w-full"
-                />
-              </div>
-            </div>
+        
+         <div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
+  <div className="flex flex-col lg:flex-row gap-3">
+
+    {/* Thumbnails Container */}
+    <div className="relative w-full lg:w-fit">
+
+      {/* Left Arrow */}
+      <button
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full lg:hidden"
+        onClick={() => scrollBy(-240)}
+      >
+        <ChevronLeft size={20} />
+      </button>
+
+      {/* Right Arrow */}
+      <button
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full lg:hidden"
+        onClick={() => scrollBy(240)}
+      >
+        <ChevronRight size={20} />
+      </button>
+
+      {/* Thumbnails */}
+      <div
+        ref={scrollRef}
+        className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scroll-smooth px-1 hide-scrollbar"
+      >
+        {selectedVariant?.image_url?.map((img, i) => (
+          <div
+            key={i}
+            id={`thumb-${i}`}
+            className={`shrink-0 border rounded cursor-pointer p-1 snap-start
+              ${selectedImg === img ? "border-pink-600" : "border-gray-300"}
+              w-[240px] h-[340px] sm:w-[220px] sm:h-[310px] md:w-[180px] md:h-[260px] 
+              lg:w-[90px] lg:h-[120px] aspect-[3/4]`}
+            onClick={() => {
+              setSelectedImg(img);
+              const el = document.getElementById(`thumb-${i}`);
+              if (el && window.innerWidth < 1024) {
+                el.scrollIntoView({ behavior: "smooth", inline: "center" });
+              }
+            }}
+          >
+            <img
+              src={`${img}?tr=w-512`}
+              alt={`thumb-${i}`}
+              className="w-full h-full object-cover rounded"
+            />
           </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Main Image - desktop only */}
+    <div className="hidden lg:flex flex-1 justify-center items-center relative">
+      <img
+        src={`${selectedImg}?tr=w-500`}
+        alt="Main"
+        width={500}
+        height={500}
+        className="object-contain max-h-[600px] w-full"
+      />
+    </div>
+  </div>
+</div>
+
+
 
           {/* RIGHT: Product Info */}
           <div className="w-full lg:w-[55%] px-4 py-4">
@@ -314,16 +358,16 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
             </div>
 
             {/* Search Location */}
-            <div className="py-2">
+            <div className="">
               <SearchLocation />
             </div>
-            <div className="py-4">
+            <div className="">
               <InfoStrip />
             </div>
 
 
             {/* Coupons */}
-           <div className="overflow-x-auto  mt-4">
+           <div className="overflow-x-auto ">
   <div className="flex gap-3 px-2 w-max">
     {coupons.map((coupon, index) => (
       <div
