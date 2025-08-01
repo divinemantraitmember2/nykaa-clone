@@ -73,7 +73,7 @@ export default function CategoryPage({ params }) {
     <main className="min-h-screen bg-white">
       {/* <TopBanner /> */}
       <div className="px-2 sm:px-4 lg:px-6 py-2">
-    <div className="sticky top-[70px] z-30 bg-white">
+    {/* <div className="sticky top-[70px] z-30 bg-white">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-4 gap-2">
           <h3 className="text-xl sm:text-2xl font-bold text-[#192837]">
             Buy {category.split("-").join(" ")} Products Online
@@ -96,7 +96,7 @@ export default function CategoryPage({ params }) {
             </select>
           </div>
         </div>
-        </div>
+        </div> */}
 
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">

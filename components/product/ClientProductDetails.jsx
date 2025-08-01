@@ -26,8 +26,6 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   
   // Auto-select first color and size on load
   useEffect(() => {
-
-    console.log("product",product)
   if (product?.variants?.length > 0 && selsectSlug) {
     // slug ke base par variant dhoondo
     const matchedVariant = product.variants.find(
