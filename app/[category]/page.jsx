@@ -14,6 +14,7 @@ export default function CategoryPage({ params }) {
   const [filters, setFilters] = useState({});
   const [products, setProducts] = useState([]);
   const [availableFilters, setAvailableFilters] = useState(null);
+  const [sortOption, setSortOption] = useState("relevance");
 
   const buildQuery = () => {
     const query = new URLSearchParams({ category_slug: category, ...filters });
@@ -55,6 +56,10 @@ export default function CategoryPage({ params }) {
       console.error("Product fetch failed:", err);
     }
   };
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+    // Optional: implement sort filtering logic
+  };
 
   useEffect(() => {
     fetchInitialFilters();
@@ -68,14 +73,36 @@ export default function CategoryPage({ params }) {
     <main className="min-h-screen bg-white">
       {/* <TopBanner /> */}
       <div className="px-2 sm:px-4 lg:px-6 py-2">
-        <h3 className="text-xl sm:text-2xl md:text-2xl font-bold text-[#192837] py-4">
-          Buy Herbal Essences Products Online
-        </h3>
+    <div className="sticky top-[70px] z-30 bg-white">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-4 gap-2">
+          <h3 className="text-xl sm:text-2xl font-bold text-[#192837]">
+            Buy {category.split("-").join(" ")} Products Online
+          </h3>
+          <div className="flex items-center gap-2">
+            <label htmlFor="sort" className="text-sm text-gray-600 whitespace-nowrap">
+              Sort By:
+            </label>
+            <select
+              id="sort"
+              value={sortOption}
+              onChange={handleSortChange}
+              className="border border-gray-300 rounded px-2 py-2 lg:w-[400px] text-sm focus:outline-none focus:ring-1 focus:ring-pink-500"
+            >
+              <option value="relevance">Relevance</option>
+              <option value="new">Newest First</option>
+              <option value="price_low">Price: Low to High</option>
+              <option value="price_high">Price: High to Low</option>
+              <option value="discount">Better Discount</option>
+            </select>
+          </div>
+        </div>
+        </div>
+
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
           {availableFilters && (
             <aside className="lg:col-span-3 hidden lg:block">
-              <div className="sticky top-24 max-h-[calc(100vh)] overflow-y-auto pr-2 custom-scrollbar">
+              <div className="sticky top-24   pr-2 custom-scrollbar">
                 <SidebarFilter onFilterChange={setFilters} filters={availableFilters} />
               </div>
             </aside>

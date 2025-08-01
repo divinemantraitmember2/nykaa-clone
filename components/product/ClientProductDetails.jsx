@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { openLoginModal } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
+import  InfoStrip  from "../../components/product/InfoStrip";
 
 
 export default function ClientProductDetails({ product, mainCate,selsectSlug }) {
@@ -25,6 +26,8 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   
   // Auto-select first color and size on load
   useEffect(() => {
+
+    console.log("product",product)
   if (product?.variants?.length > 0 && selsectSlug) {
     // slug ke base par variant dhoondo
     const matchedVariant = product.variants.find(
@@ -133,22 +136,22 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   return (
     <section className="py-1 px-1 lg:px-0">
-      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg">
+      <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-1 relative">
           {/* LEFT: Images */}
           <div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {/* Thumbnails */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1">
                 {selectedVariant?.image_url?.map((img, i) => (
                   <img
                     key={i}
-                    src={`${img}?tr=w-150`}
+                    src={`${img}?tr=w-70`}
                     alt={`thumb-${i}`}
-                    width={64}
-                    height={64}
+                    width={70}
+                    height={70}
                     onClick={() => setSelectedImg(img)}
-                    className={`w-16 h-16 border p-1 cursor-pointer rounded ${
+                    className={`w-20 h-25 border p-1 cursor-pointer rounded ${
                       selectedImg === img
                         ? "border-pink-600"
                         : "border-gray-300"
@@ -159,18 +162,18 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
               {/* Main Image */}
               <div className="flex-1 flex justify-center items-center relative">
                 <img
-                  src={`${selectedImg}`}
+                  src={`${selectedImg}?tr=w-500`}
                   alt="Main"
                   width={500}
                   height={500}
-                  className="object-contain max-h-[500px] w-full"
+                  className="object-contain max-h-[600px] w-full"
                 />
               </div>
             </div>
           </div>
 
           {/* RIGHT: Product Info */}
-          <div className="w-full lg:w-[55%] px-4 py-4 border-t lg:border-t-0 lg:border-l border-[#fccee8]">
+          <div className="w-full lg:w-[55%] px-4 py-4">
             <div className="relative">
               <h1 className="text-2xl font-semibold text-gray-800 mb-2">
                 {product.title}
@@ -313,46 +316,51 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
             </div>
 
             {/* Search Location */}
-            <div className="pt-4">
+            <div className="py-2">
               <SearchLocation />
             </div>
-
-            {/* Coupons */}
-            <div className="overflow-x-auto mt-4">
-              <div className="flex gap-3 w-max min-w-full px-2">
-                {coupons.map((coupon, index) => (
-                  <div
-                    key={index}
-                    className="min-w-[300px] max-w-[300px] flex gap-2 items-start bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
-                  >
-                    <img
-                      src="/images/logo.jpeg"
-                      alt="pondric"
-                      className="w-10 h-6"
-                    />
-                    <div className="flex-1">
-                      <h3 className="text-base font-semibold text-gray-800">
-                        {coupon.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1 mb-2 line-clamp-2">
-                        {coupon.description}
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <div className="bg-gray-100 px-3 py-1 text-sm font-mono border border-gray-300 rounded cursor-pointer select-all">
-                          {coupon.code}
-                        </div>
-                        <button className="text-pink-600 text-sm underline hover:text-pink-800 whitespace-nowrap">
-                          See details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="py-4">
+              <InfoStrip />
             </div>
 
+
+            {/* Coupons */}
+           <div className="overflow-x-auto  mt-4">
+  <div className="flex gap-3 px-2 w-max">
+    {coupons.map((coupon, index) => (
+      <div
+        key={index}
+        className="min-w-[280px] max-w-[300px] flex gap-2 items-start bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
+      >
+        <img
+          src="/images/logo.jpeg"
+          alt="pondric"
+          className="w-10 h-6"
+        />
+        <div className="flex-1">
+          <h3 className="text-base font-semibold text-gray-800">
+            {coupon.title}
+          </h3>
+          <p className="text-sm text-gray-600 mt-1 mb-2 line-clamp-2">
+            {coupon.description}
+          </p>
+          <div className="flex items-center gap-2">
+            <div className="bg-gray-100 px-3 py-1 text-sm font-mono border border-gray-300 rounded cursor-pointer select-all">
+              {coupon.code}
+            </div>
+            <button className="text-pink-600 text-sm underline hover:text-pink-800 whitespace-nowrap">
+              See details
+            </button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+
            {/* Product Details Accordion */}
- <div className="border rounded-2xl overflow-hidden shadow-sm bg-white mt-4">
+ <div className="overflow-hidden shadow-sm bg-white  hover:shadow-2xl mt-4">
       <button
         onClick={() => setShowDetails(!showDetails)}
         className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-50 transition"
@@ -390,20 +398,24 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
           showDetails ? "max-h-[800px] py-4" : "max-h-0"
         }`}
       >
-        <div className="space-y-3 text-sm text-gray-700">
-          {product?.attributes?.map((attr, idx) => (
-            <div key={idx} className="flex justify-between">
-              <span className="font-medium">{attr.name}</span>
-              <span className="text-gray-600">{attr.value}</span>
-            </div>
-          ))}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
+  {product?.attributes?.map((attr, idx) => (
+    <div
+      key={idx}
+      className="flex justify-between items-center border p-3 rounded hover:shadow-sm"
+    >
+      <span className="text-gray-900 font-medium">{attr.name}</span>
+      <span className="text-gray-500 text-right">{attr.value}</span>
+    </div>
+  ))}
+</div>
+
       </div>
     </div>
 
 
             {/* Know Your Product Accordion */}
-            <div className="border rounded-2xl overflow-hidden shadow-sm bg-white mt-4">
+            <div className=" overflow-hidden shadow-sm  hover:shadow-2xl bg-white mt-4">
               <button
                 onClick={() => setOpenDetails(!openDetails)}
                 className="w-full flex justify-between items-center px-4 py-3 transition"

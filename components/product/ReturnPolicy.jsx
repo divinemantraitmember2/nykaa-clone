@@ -5,7 +5,7 @@ export default function ReturnPolicy() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border rounded-2xl overflow-hidden shadow-sm bg-white">
+    <div className="overflow-hidden shadow-sm hover:shadow-2xl bg-white">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition"

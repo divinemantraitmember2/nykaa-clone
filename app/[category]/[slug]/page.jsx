@@ -21,10 +21,9 @@ export default async function ProductDetails({ params }) {
     console.error("Error fetching product:", error);
   }
 
-  
 
   return (
-    <div className="bg-[#f3f3f3] py-10 lg:px-10">
+    <div className="bg-[#fff] py-10 lg:px-10">
       {product !=null?(<><ClientProductDetails product={product} mainCate={category} selsectSlug={slug}/>
       </>):(<>
       <p>Data Not Found</p>
