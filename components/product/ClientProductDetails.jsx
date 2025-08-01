@@ -396,8 +396,12 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
 
             {/* Coupons */}
+            <div className=" px-2">
+
+            <h2 className="text-2xl text-start font-semibold text-gray-800 mb-2">Coupons</h2>
+      
            <div className="overflow-x-auto ">
-  <div className="flex gap-3 px-2 w-max">
+  <div className="flex gap-2 w-max">
     {coupons.map((coupon, index) => (
       <div
         key={index}
@@ -427,7 +431,8 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       </div>
     ))}
   </div>
-</div>
+           </div>
+            </div>
 
 
            {/* Product Details Accordion */}
