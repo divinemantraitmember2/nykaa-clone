@@ -10,7 +10,7 @@ import { openLoginModal } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp } from "lucide-react";
 
 
 export default function ClientProductDetails({ product, mainCate,selsectSlug }) {
@@ -137,7 +137,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   const scrollBy = (offset) => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+      scrollRef.current.scrollBy({ top: offset, behavior: "smooth" });
     }
   };
 
@@ -145,33 +145,55 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
     <section className="py-1 px-1 lg:px-0">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-1 relative">
-        
-         <div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
-  <div className="flex flex-col lg:flex-row gap-3">
-
-    {/* Thumbnails Container */}
+          {/* LEFT: Images */}
+       
+<div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
+  <div className="flex flex-col lg:flex-row gap-3 items-start">
+    {/* Thumbnails */}
     <div className="relative w-full lg:w-fit">
-
-      {/* Left Arrow */}
+      {/* Arrow Buttons */}
+      {/* Desktop (Vertical) */}
       <button
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full lg:hidden"
-        onClick={() => scrollBy(-240)}
+        className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 z-10 bg-white shadow p-1 rounded-full"
+        onClick={() => {
+          if (scrollRef.current) scrollRef.current.scrollBy({ top: -150, behavior: "smooth" });
+        }}
+      >
+        <ChevronUp size={20} />
+      </button>
+
+      <button
+        className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-10 bg-white shadow p-1 rounded-full"
+        onClick={() => {
+          if (scrollRef.current) scrollRef.current.scrollBy({ top: 150, behavior: "smooth" });
+        }}
+      >
+        <ChevronDown size={20} />
+      </button>
+
+      {/* Mobile (Horizontal) */}
+      <button
+        className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
+        onClick={() => {
+          if (scrollRef.current) scrollRef.current.scrollBy({ left: -150, behavior: "smooth" });
+        }}
       >
         <ChevronLeft size={20} />
       </button>
 
-      {/* Right Arrow */}
       <button
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full lg:hidden"
-        onClick={() => scrollBy(240)}
+        className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
+        onClick={() => {
+          if (scrollRef.current) scrollRef.current.scrollBy({ left: 150, behavior: "smooth" });
+        }}
       >
         <ChevronRight size={20} />
       </button>
 
-      {/* Thumbnails */}
+      {/* Thumbnails Container */}
       <div
         ref={scrollRef}
-        className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible snap-x snap-mandatory scroll-smooth px-1 hide-scrollbar"
+        className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto snap-x lg:snap-y snap-mandatory scroll-smooth px-1 hide-scrollbar max-h-[420px] lg:pr-2"
       >
         {selectedVariant?.image_url?.map((img, i) => (
           <div
@@ -199,18 +221,21 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       </div>
     </div>
 
-    {/* Main Image - desktop only */}
-    <div className="hidden lg:flex flex-1 justify-center items-center relative">
-      <img
-        src={`${selectedImg}?tr=w-500`}
-        alt="Main"
-        width={500}
-        height={500}
-        className="object-contain max-h-[600px] w-full"
-      />
+    {/* Main Image */}
+    <div className="hidden lg:flex flex-1 justify-center items-center">
+      <div className="w-full max-w-[500px] max-h-[600px] aspect-[3/4]">
+        <img
+          src={`${selectedImg}?tr=w-500`}
+          alt="Main"
+          className="w-full h-full object-contain rounded"
+        />
+      </div>
     </div>
   </div>
 </div>
+
+
+
 
 
 
