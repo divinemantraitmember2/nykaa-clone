@@ -17,7 +17,7 @@ export default function SearchLocation() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6 ">
+    <div className="max-w-7xl mx-auto px-2 py-6 ">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
 
         {/* Delivery Options */}
