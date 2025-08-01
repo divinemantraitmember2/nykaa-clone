@@ -400,9 +400,9 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   {product?.attributes?.map((attr, idx) => (
     <div
       key={idx}
-      className="flex justify-between items-center border p-3 rounded hover:shadow-sm"
+      className="flex justify-between items-center border p-2 rounded hover:shadow-lg"
     >
-      <span className="text-gray-900 font-medium">{attr.name}</span>
+      <span className="text-gray-900 font-medium capitalize">{attr.name}</span>
       <span className="text-gray-500 text-right">{attr.value}</span>
     </div>
   ))}
