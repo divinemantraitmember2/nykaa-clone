@@ -47,7 +47,7 @@ export default function InfoStrip() {
               <span className="font-bold text-gray-900">{item.subtitle}</span>
             </h3>
 
-            <button className="mt-4 text-pink-600 border border-pink-600 px-4 py-1 rounded-full text-sm hover:bg-pink-600 hover:text-white transition-colors duration-300">
+            <button className="mt-4 text-pink-600 border border-pink-600 px-4 py-1 rounded text-sm hover:bg-pink-600 hover:text-white transition-colors duration-300">
               Know More
             </button>
           </div>

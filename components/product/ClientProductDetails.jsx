@@ -151,75 +151,76 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   <div className="flex flex-col lg:flex-row gap-3 items-start">
     {/* Thumbnails */}
     <div className="relative w-full lg:w-fit">
-      {/* Arrow Buttons */}
-      {/* Desktop (Vertical) */}
-      <button
-        className="hidden lg:flex absolute top-0 left-1/2 -translate-x-1/2 z-10 bg-white shadow p-1 rounded-full"
-        onClick={() => {
-          if (scrollRef.current) scrollRef.current.scrollBy({ top: -150, behavior: "smooth" });
-        }}
-      >
-        <ChevronUp size={20} />
-      </button>
-
-      <button
-        className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 z-10 bg-white shadow p-1 rounded-full"
-        onClick={() => {
-          if (scrollRef.current) scrollRef.current.scrollBy({ top: 150, behavior: "smooth" });
-        }}
-      >
-        <ChevronDown size={20} />
-      </button>
-
-      {/* Mobile (Horizontal) */}
-      <button
-        className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
-        onClick={() => {
-          if (scrollRef.current) scrollRef.current.scrollBy({ left: -150, behavior: "smooth" });
-        }}
-      >
-        <ChevronLeft size={20} />
-      </button>
-
-      <button
-        className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
-        onClick={() => {
-          if (scrollRef.current) scrollRef.current.scrollBy({ left: 150, behavior: "smooth" });
-        }}
-      >
-        <ChevronRight size={20} />
-      </button>
-
-      {/* Thumbnails Container */}
+  {/* Thumbnails Container */}
+  <div
+    ref={scrollRef}
+    className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto snap-x lg:snap-y snap-mandatory scroll-smooth px-1 hide-scrollbar max-h-[420px] lg:pr-2"
+  >
+    {selectedVariant?.image_url?.map((img, i) => (
       <div
-        ref={scrollRef}
-        className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto snap-x lg:snap-y snap-mandatory scroll-smooth px-1 hide-scrollbar max-h-[420px] lg:pr-2"
+        key={i}
+        id={`thumb-${i}`}
+        className={`shrink-0 border rounded cursor-pointer p-1 snap-start
+          ${selectedImg === img ? "border-pink-600" : "border-gray-300"}
+          w-[240px] h-[340px] sm:w-[220px] sm:h-[310px] md:w-[180px] md:h-[260px] 
+          lg:w-[90px] lg:h-[120px] aspect-[3/4]`}
+        onClick={() => {
+          setSelectedImg(img);
+          const el = document.getElementById(`thumb-${i}`);
+          if (el && window.innerWidth < 1024) {
+            el.scrollIntoView({ behavior: "smooth", inline: "center" });
+          }
+        }}
       >
-        {selectedVariant?.image_url?.map((img, i) => (
-          <div
-            key={i}
-            id={`thumb-${i}`}
-            className={`shrink-0 border rounded cursor-pointer p-1 snap-start
-              ${selectedImg === img ? "border-pink-600" : "border-gray-300"}
-              w-[240px] h-[340px] sm:w-[220px] sm:h-[310px] md:w-[180px] md:h-[260px] 
-              lg:w-[90px] lg:h-[120px] aspect-[3/4]`}
-            onClick={() => {
-              setSelectedImg(img);
-              const el = document.getElementById(`thumb-${i}`);
-              if (el && window.innerWidth < 1024) {
-                el.scrollIntoView({ behavior: "smooth", inline: "center" });
-              }
-            }}
-          >
-            <img
-              src={`${img}?tr=w-512`}
-              alt={`thumb-${i}`}
-              className="w-full h-full object-cover rounded"
-            />
-          </div>
-        ))}
+        <img
+          src={`${img}?tr=w-512`}
+          alt={`thumb-${i}`}
+          className="w-full h-full object-cover rounded"
+        />
       </div>
-    </div>
+    ))}
+  </div>
+
+  {/* Desktop Arrows (Bottom, Side-by-side) */}
+  <div className="hidden lg:flex justify-center gap-4 mt-2">
+    <button
+      onClick={() => {
+        if (scrollRef.current) scrollRef.current.scrollBy({ top: -150, behavior: "smooth" });
+      }}
+      className="bg-white shadow  shadow-pink-600 p-1 rounded-full"
+    >
+      <ChevronUp size={20} />
+    </button>
+    <button
+      onClick={() => {
+        if (scrollRef.current) scrollRef.current.scrollBy({ top: 150, behavior: "smooth" });
+      }}
+      className="bg-white shadow shadow-pink-600 p-1 rounded-full"
+    >
+      <ChevronDown size={20} />
+    </button>
+  </div>
+
+  {/* Mobile Arrows (Positioned Left & Right) */}
+  <button
+    className="lg:hidden absolute shadow-pink-600 left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
+    onClick={() => {
+      if (scrollRef.current) scrollRef.current.scrollBy({ left: -150, behavior: "smooth" });
+    }}
+  >
+    <ChevronLeft size={20} />
+  </button>
+
+  <button
+    className="lg:hidden absolute shadow-pink-600 right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow p-1 rounded-full"
+    onClick={() => {
+      if (scrollRef.current) scrollRef.current.scrollBy({ left: 150, behavior: "smooth" });
+    }}
+  >
+    <ChevronRight size={20} />
+  </button>
+</div>
+
 
     {/* Main Image */}
     <div className="hidden lg:flex flex-1 justify-center items-center">
@@ -233,11 +234,6 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
     </div>
   </div>
 </div>
-
-
-
-
-
 
           {/* RIGHT: Product Info */}
           <div className="w-full lg:w-[55%] px-4 py-4">
@@ -329,7 +325,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
                   {selectedVariant.size_stocks.map((stock, idx) => (
                     <label
                       key={idx}
-                      className={`cursor-pointer px-4 py-2 rounded-full border text-sm font-medium transition
+                      className={`cursor-pointer px-4 py-2 rounded border text-sm font-medium transition
                       ${
                         selectedSize === stock.size
                           ? "bg-pink-600 text-white border-pink-600"
