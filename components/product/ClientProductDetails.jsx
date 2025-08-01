@@ -135,12 +135,6 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   const scrollRef = useRef(null);
 
-  const scrollBy = (offset) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ top: offset, behavior: "smooth" });
-    }
-  };
-
   return (
     <section className="py-1 px-1 lg:px-0">
       <div className="max-w-7xl mx-auto">
@@ -191,17 +185,17 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
             onClick={() => {
               if (scrollRef.current) scrollRef.current.scrollBy({ top: -150, behavior: "smooth" });
             }}
-            className="bg-white shadow shadow-pink-600 p-1 rounded-full"
+            className="bg-white shadow  p-1 rounded-full"
           >
-            <ChevronUp size={20} />
+            <ChevronUp size={30} />
           </button>
           <button
             onClick={() => {
               if (scrollRef.current) scrollRef.current.scrollBy({ top: 150, behavior: "smooth" });
             }}
-            className="bg-white shadow shadow-pink-600 p-1 rounded-full"
+            className="bg-white shadow p-1 rounded-full"
           >
-            <ChevronDown size={20} />
+            <ChevronDown size={30} />
           </button>
         </div>
       )}
