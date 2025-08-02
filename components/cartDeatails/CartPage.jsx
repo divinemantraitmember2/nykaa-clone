@@ -142,7 +142,7 @@ async function decreaseQuantity_cart(id) {
               {items.map((item, i) => (
                 <li
                   key={i}
-                  className="relative flex items-center gap-4 border border-pink-600 rounded-xl p-4 bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
+                  className="relative flex items-center gap-4  p-2 rounded bg-white shadow-md hover:shadow-lg transition-shadow duration-300"
                 >
                   <button
                     onClick={() => removeFromCart_cart(item.id)}
@@ -204,7 +204,7 @@ async function decreaseQuantity_cart(id) {
           </div>
 
           {/* Price Summary */}
-          <div className="w-full lg:w-1/3 self-start border rounded-lg p-6 shadow-md bg-gray-50">
+          <div className="w-full lg:w-1/3 self-start rounded p-6 shadow-md bg-gray-50">
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <div className="flex justify-between text-gray-700 mb-2">
               <span>Subtotal</span>
