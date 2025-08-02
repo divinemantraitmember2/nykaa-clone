@@ -76,7 +76,7 @@ export default function CategoryPage({ params }) {
         <h3 className="text-xl sm:text-2xl py-4 font-bold text-[#192837] lg:hidden block">
       Buy {category.split("-").join(" ")} Products Online
     </h3>
-  <div className="sticky top-[85px] z-30 bg-white lg:py-2 py-4 px-2 hidden lg:block">
+  <div className="sticky top-[60px] z-30 bg-white lg:py-2 py-1 px-2 hidden lg:block">
   <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-4 gap-2">
     <h3 className="text-xl sm:text-2xl font-bold text-[#192837]">
       Buy {category.split("-").join(" ")} Products Online

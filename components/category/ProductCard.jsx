@@ -63,7 +63,7 @@ export default function ProductCard({ product, slug }) {
         </div>
 
         <div className="p-2 space-y-1">
-          <h2 className="text-sm text-gray-800 font-bold leading-snug line-clamp-2 min-h-[32px]">
+          <h2 className="text-sm text-[#001325] font-bold leading-snug line-clamp-2 min-h-[32px]">
             {product.title}
           </h2>
 

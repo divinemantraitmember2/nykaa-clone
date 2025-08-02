@@ -99,7 +99,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
         <Disclosure key={section}>
           {({ open }) => (
             <>
-              <DisclosureButton className="flex justify-between w-full font-semibold text-gray-900 text-base py-2 border-b border-gray-200">
+              <DisclosureButton className="flex justify-between w-full font-semibold text-fiter-color text-base py-2 border-b border-gray-200">
                 {section}
                 <ChevronDownIcon
                   className={`w-5 h-5 text-gray-500 transition-transform ${
@@ -153,7 +153,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
       {/* Desktop Sidebar */}
       <aside className="hidden md:block">
         <div className=" p-2  text-sm font-sans">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Filters</h3>
+          <h3 className="text-lg font-bold  mb-4">Filters</h3>
           <FilterSections />
         </div>
       </aside>
