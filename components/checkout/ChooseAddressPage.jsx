@@ -12,6 +12,10 @@ export default function ChooseAddressPage() {
    const [address, setAddress] = useState([]);
    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+ const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const dispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState("address");
+  const [showForm, setShowForm] = useState(false);
  const shouldRefetchUserAddress = useSelector((state) => state.user.shouldRefetchUserAddress);
 
   // Total Price Calculation
@@ -20,17 +24,26 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
     const quantity = item.quantity || 1;
     return acc + price * quantity;
   }, 0);
+  const discount =
+    appliedCoupon?.type === "percentage"
+      ? (totalPrice * appliedCoupon.discountValue) / 100
+      : appliedCoupon?.discountValue || 0;
 
- const dispatch = useDispatch();
+  const finalTotal = totalPrice - discount;
 
-  const [activeTab, setActiveTab] = useState("address");
-  const [showForm, setShowForm] = useState(false);
+
+  
 
 const GetUserCartByUserId = async () => {
     try {
       const response = await GetUserCart();
       const cartItems = response?.data?.items || [];
-
+const AppliedCoupons = response?.data?.appliedCoupons || [];
+      if(AppliedCoupons.length>0){
+        setAppliedCoupon(AppliedCoupons[0])
+      }else{
+        setAppliedCoupon(null)
+      }
       const formattedItems = cartItems.map((item) => ({
         id: item.sku || item.productName,
         title: item.productName,
@@ -134,7 +147,7 @@ const handlePayNow = async () => {
   }
 
   try {
-    const OrderPayload = { amount: totalPrice };
+    const OrderPayload = { amount: finalTotal };
     const orderData = await CreateUserOrder(OrderPayload);
 
     const paymentOrder = orderData?.data?.data?.paymentOrder;
@@ -384,10 +397,21 @@ const handlePayNow = async () => {
                 <details className="group" >
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>
-                    <span className="font-medium text-gray-700">₹ {totalPrice}</span>
+                    <span className="font-medium text-gray-700">₹ {finalTotal}</span>
                   </summary>
+
                   <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
-                    You are saving 
+                    {appliedCoupon && (
+            <div className="flex justify-between text-gray-700 mb-2">
+              <span> Coupon Discount ({appliedCoupon.code})</span>
+              <span className="text-red-600">
+                − ₹
+                {appliedCoupon.type === "percentage"
+                  ? ((totalPrice * appliedCoupon.discountValue) / 100).toFixed(2)
+                  : appliedCoupon.discountValue.toFixed(2)}
+              </span>
+            </div>
+          )} You are saving 
                   </div>
                 </details>
               </div>
