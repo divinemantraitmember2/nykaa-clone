@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import { GetMenu } from "../utils/api/serverApi";
 import MobileFooter from '../components/MobileFooter';
 import ScrollToTop from "../components/homecomponent/ScrollToTop";
+import ClientToastProvider from "../components/ClientToastProvider";
 
 
 const geistSans = Geist({
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }) {
          <MobileFooter/>
         </Providers>
         <ScrollToTop/>
+        <ClientToastProvider/>
       </body>
     </html>
   );

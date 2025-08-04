@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeModals, openLoginModal, openRegisterModal } from "../../slices/userSlice";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import ClientToastProvider from "../ClientToastProvider";
+
 
 export default function UserAuthModal() {
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export default function UserAuthModal() {
           </div>
         </div>
       </div>
-      <ClientToastProvider />
+      
     </>
   );
 }

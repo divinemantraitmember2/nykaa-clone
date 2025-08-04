@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { AddCoupon, CouponRemove } from '../../utils/api/Httproutes';
 import { toggleRefetchApplyCouponGetCart } from '../../slices/userSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export default function CouponForm({ appliedCoupon, onApply, onRemove }) {
   const [value, setValue] = useState('');
@@ -12,10 +13,12 @@ export default function CouponForm({ appliedCoupon, onApply, onRemove }) {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (appliedCoupon?.code) {
+      setValue(appliedCoupon.code);
+    }
+  }, [appliedCoupon]);
 
-  useEffect(()=>{
-setValue(appliedCoupon?.code)
-  },[])
   const handleApply = async () => {
     if (!value.trim()) {
       setError('Coupon code is required');
@@ -26,34 +29,39 @@ setValue(appliedCoupon?.code)
     try {
       const response = await AddCoupon(JSON.stringify(value.trim()));
       if (response.status === 200) {
+        const applied = response.data?.appliedCoupons?.[0];
         dispatch(toggleRefetchApplyCouponGetCart());
         setError('');
-        onApply(response.data?.appliedCoupon[0]); // Use response data if available
+        toast.success('Successfully applied coupon');
+        if (applied) onApply(applied);
       } else {
         setError('Invalid coupon code');
       }
     } catch (err) {
-      setError('Something went wrong. Please try again.');
+      setError(err?.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleRemove = async () => {
+    if (!value.trim()) return;
+
     setLoading(true);
     try {
-      const response = await CouponRemove(JSON.stringify(appliedCoupon?.code || value.trim()));
+      const response = await CouponRemove(JSON.stringify(value.trim()));
       if (response.status === 200) {
+        dispatch(toggleRefetchApplyCouponGetCart());
+        toast.success('Coupon removed successfully');
         setValue('');
         setFocused(false);
         setError('');
         onRemove();
-        dispatch(toggleRefetchApplyCouponGetCart());
       } else {
         setError('Failed to remove coupon');
       }
     } catch (err) {
-      setError('Something went wrong. Please try again.');
+      setError(err?.response?.data?.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -64,6 +72,7 @@ setValue(appliedCoupon?.code)
       <label htmlFor="coupon" className="block mb-2 text-sm font-medium text-gray-700">
         Have a coupon?
       </label>
+
       <div className="relative">
         <input
           id="coupon"
@@ -71,9 +80,7 @@ setValue(appliedCoupon?.code)
           value={value}
           placeholder="Enter Coupon Code"
           onFocus={() => setFocused(true)}
-          onBlur={() => {
-            if (!value) setFocused(false);
-          }}
+          onBlur={() => !value && setFocused(false)}
           onChange={(e) => {
             setValue(e.target.value);
             setError('');
@@ -81,7 +88,7 @@ setValue(appliedCoupon?.code)
           className={`w-full border rounded-md py-2 px-4 pr-24 transition duration-300 text-sm ${
             error ? 'border-red-500' : 'border-gray-300'
           } focus:outline-none focus:border-blue-500`}
-          disabled={loading || appliedCoupon}
+          disabled={loading || !!appliedCoupon}
         />
 
         {(focused || value || appliedCoupon) && (
