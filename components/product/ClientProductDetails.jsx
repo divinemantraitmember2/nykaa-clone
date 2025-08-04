@@ -1,5 +1,5 @@
 "use client";
-import { useEffect,useRef, useState } from "react";
+import { useEffect,useRef, useState} from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../slices/cartSlice";
 import { AddToCart } from "../../utils/api/Httproutes";
@@ -10,7 +10,9 @@ import { openLoginModal } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
-import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp } from "lucide-react";
+import Link from "next/link";
+
+import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp} from "lucide-react";
 
 
 export default function ClientProductDetails({ product, mainCate,selsectSlug }) {
@@ -24,6 +26,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   const [selectedImg, setSelectedImg] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
+  const [showGoToCart, setShowGoToCart] = useState(false);
 
   
   // Auto-select first color and size on load
@@ -77,6 +80,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   const handleAddToCart = async () => {
     console.log("selectedSlug",selectedSlug)
+     setShowGoToCart(true)
     if (status === "unauthenticated") {
       dispatch(openLoginModal());
     } else {
@@ -102,6 +106,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
       try {
         const res = await AddToCart("add", addcart);
+       
         console.log("Add to Cart Response:", res);
       } catch (error) {
         console.error("Add to Cart Error:", error);
@@ -356,7 +361,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
             {/* Add to Cart & Wishlist */}
             <div className="border-b border-gray-200 pt-4 pb-6">
               <div className="flex gap-4">
-                <button className="w-1/2 bg-white text-black border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center gap-2 transition">
+                <button className="w-1/2 bg-white text-black  border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5 text-black"
@@ -374,13 +379,24 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
                   <span>Add to Wishlist</span>
                 </button>
 
-                <button
-                  onClick={handleAddToCart}
-                  disabled={!selectedColor || !selectedSize}
-                  className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Add to Bag
-                </button>
+                {showGoToCart ? (
+  <Link
+    href="/cart"
+    className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-center text-md font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    View Your Bag
+  </Link>
+) : (
+  <button
+    onClick={handleAddToCart}
+    disabled={!selectedColor || !selectedSize}
+    className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Add to Bag
+  </button>
+)}
+
+
               </div>
             </div>
 

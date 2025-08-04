@@ -143,8 +143,8 @@ export default function CartPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-2 md:px-15 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-pink-600 text-center md:text-left">
-        Your Cart
+      <h1 className="text-3xl font-bold mb-6 text-pink-600 text-left">
+        Your Carts
       </h1>
       {items.length === 0 ? (
         <p className="text-gray-500 text-center">Your cart is empty.</p>

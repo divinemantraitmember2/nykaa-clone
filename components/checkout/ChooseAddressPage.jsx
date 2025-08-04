@@ -476,7 +476,7 @@ const handlePayNow = async () => {
               <p className="font-semibold text-gray-900">
                 ₹{item.price_inr * item.quantity}
               </p>
-              <p className="text-xs text-gray-500 mt-1">Total</p>
+              <p className="text-xs text-gray-500 mt-1">finalTotal</p>
             </div>
           </div>
         </div>
@@ -492,7 +492,7 @@ const handlePayNow = async () => {
                 <details className="group" open>
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>
-                    <span className="font-medium text-gray-700">₹ {totalPrice}</span>
+                    <span className="font-medium text-gray-700">₹ {finalTotal}</span>
                   </summary>
                   <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
                     You are saving 

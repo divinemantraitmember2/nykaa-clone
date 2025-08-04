@@ -35,11 +35,34 @@ export default function CategoryPage({ params }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const buildQuery = () => {
-    const query = new URLSearchParams({ category_slug: category, ...filters });
-    console.log("query.toString();",query.toString())
-    return query.toString();
-  };
+ const buildQuery = () => {
+  const queryParts = [];
+
+  // Add category_slug normally
+  queryParts.push(`category_slug=${encodeURIComponent(category)}`);
+
+  // Gather all filter values into a comma-separated string
+  const filterValues = [];
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      filterValues.push(...value);
+    } else if (value) {
+      filterValues.push(value);
+    }
+  });
+
+  // Append comma values without a key
+  if (filterValues.length > 0) {
+    queryParts.push(filterValues.join(","));
+  }
+
+  console.log("queryParts",queryParts)
+  // Final URL string
+  return queryParts.join("&");
+};
+
+
 
   const fetchInitialFilters = async () => {
     try {
@@ -115,8 +138,8 @@ export default function CategoryPage({ params }) {
          
 
         {/* Sticky header */}
-        <div className="sticky top-[60px] z-45 bg-white lg:py-8 py-6 px-2 hidden lg:block">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-4 gap-2">
+        <div className="sticky top-[60px] z-45 bg-white lg:py-8 py-2 px-2 hidden lg:block">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between  gap-2">
          
           {showStickyHeader?(<><h3
       className={`text-xl sm:text-2xl font-bold text-[#192837] transition-opacity duration-300 ${
