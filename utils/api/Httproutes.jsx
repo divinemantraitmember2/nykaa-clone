@@ -59,6 +59,18 @@ export const AddToCart = async (actionPayload, payload) => {
   });
 };
 
+export const AddCoupon = async (payload) => {
+  const requestUrl = `/api/v1/apply-coupon`;
+  return api.post(requestUrl, payload);
+};
+
+export const CouponRemove = async (payload) => {
+  const requestUrl = `/api/v1/remove-coupon`;
+  return api.delete(requestUrl, {
+    data: payload,
+  });
+};
+
 export async function GetUserCart(){
   try{ 
     const response= await api.get(`/api/v1/user/cart/get`);

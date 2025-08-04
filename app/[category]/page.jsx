@@ -37,6 +37,7 @@ export default function CategoryPage({ params }) {
 
   const buildQuery = () => {
     const query = new URLSearchParams({ category_slug: category, ...filters });
+    console.log("query.toString();",query.toString())
     return query.toString();
   };
 
@@ -65,6 +66,8 @@ export default function CategoryPage({ params }) {
   const fetchProducts = async () => {
     try {
       const query = buildQuery();
+      console.log("query...",query)
+
       const response = await GetProductofcategorylist(query);
       if (response.products && response.products.length > 0) {
         setProducts(response.products);

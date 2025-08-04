@@ -6,6 +6,7 @@ const initialState = {
   showLoginModal: false,
   showRegisterModal: false,
   shouldRefetchUserAddress: false,
+  ApplyCouponGetCart: false,
   StopRuningUseEffect: false,
 };
 
@@ -41,6 +42,10 @@ const userSlice = createSlice({
     toggleRefetchUserAddress(state) {
       state.shouldRefetchUserAddress = !state.shouldRefetchUserAddress;
     },
+     toggleRefetchApplyCouponGetCart(state) {
+      state. ApplyCouponGetCart = !state. ApplyCouponGetCart;
+    },
+   
     
    
   },
@@ -53,6 +58,7 @@ export const {
   openRegisterModal,
   closeModals,
   toggleRefetchUserAddress, 
+  toggleRefetchApplyCouponGetCart,
 } = userSlice.actions;
 
 export default userSlice.reducer;

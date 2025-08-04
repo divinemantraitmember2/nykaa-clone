@@ -19,6 +19,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   const { data: session, status } = useSession();
 
   const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSlug, setSelectedSlug] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedImg, setSelectedImg] = useState("");
   const [showDetails, setShowDetails] = useState(false);
@@ -28,6 +29,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   // Auto-select first color and size on load
   useEffect(() => {
   if (product?.variants?.length > 0 && selsectSlug) {
+     setSelectedSlug(selsectSlug)
     // slug ke base par variant dhoondo
     const matchedVariant = product.variants.find(
       (variant) => variant.slug === selsectSlug
@@ -50,6 +52,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   const handleColorSelect = (variant) => {
     setSelectedColor(variant.slug);
+    setSelectedSlug(variant.slug);
     setSelectedImg(variant.image_url?.[0] || product.default_image);
     setSelectedSize(variant.size_stocks?.[0]?.size || "");
     router.push(`/${mainCate}/${variant.slug}`);
@@ -73,6 +76,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       : 0;
 
   const handleAddToCart = async () => {
+    console.log("selectedSlug",selectedSlug)
     if (status === "unauthenticated") {
       dispatch(openLoginModal());
     } else {
@@ -83,7 +87,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
           title: product.title,
           price: selectedStock.discounted_price_inr,
           image: selectedImg,
-          slug: product.slug,
+          slug: selectedSlug,
           size: selectedSize,
           color: selectedColor,
         })
@@ -91,9 +95,9 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
       const addcart = {
         sku: product.sku,
-        variants: { color: selectedColor },
         size: selectedSize,
         quantity: 1,
+        slug:product.slug
       };
 
       try {

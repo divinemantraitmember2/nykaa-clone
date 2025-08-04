@@ -72,6 +72,11 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     }, {}),
   };
 
+  const isAttributeSection = (section) => {
+    const standardSections = ["Category", "Color", "Size", "Gender", "Price Range"];
+    return !standardSections.includes(section);
+  };
+
   const handleCheckboxChange = (section, label) => {
     const current = selectedFilters[section] || [];
     const updated = current.includes(label)
@@ -85,12 +90,29 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
   const triggerParentFilterChange = (selected) => {
     const queryFilters = {};
+
     Object.entries(selected).forEach(([section, values]) => {
       if (values.length === 0) return;
-      const key = section.toLowerCase().replace(/ /g, "_");
-      queryFilters[key] = values.join(",");
+
+      if (isAttributeSection(section)) {
+        values.forEach((val) => {
+          if (!queryFilters[`attributes[${section.toLowerCase()}]`]) {
+            queryFilters[`attributes[${section.toLowerCase()}]`] = [];
+          }
+          queryFilters[`attributes[${section.toLowerCase()}]`].push(val);
+        });
+      } else {
+        queryFilters[section.toLowerCase().replace(/ /g, "_")] = values.join(",");
+      }
     });
-    onFilterChange(queryFilters);
+
+    // Flatten arrays into comma-separated strings
+    const flattenedFilters = {};
+    Object.entries(queryFilters).forEach(([key, val]) => {
+      flattenedFilters[key] = Array.isArray(val) ? val.join(",") : val;
+    });
+
+    onFilterChange(flattenedFilters);
   };
 
   const FilterSections = () => (
@@ -152,8 +174,8 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
       {/* Desktop Sidebar */}
       <aside className="hidden md:block">
-        <div className=" p-2  text-sm font-sans">
-          <h3 className="text-lg font-bold  mb-4">Filters</h3>
+        <div className="p-2 text-sm font-sans">
+          <h3 className="text-lg font-bold mb-4">Filters</h3>
           <FilterSections />
         </div>
       </aside>
