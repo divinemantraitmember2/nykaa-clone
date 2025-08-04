@@ -499,7 +499,7 @@ const handlePayNow = async () => {
                   </div>
                 </details>
               </div>
-                <div className="border rounded-lg overflow-hidden shadow-sm">
+                {/* <div className="border rounded-lg overflow-hidden shadow-sm">
                   <details className="group" >
                     <summary className="px-4 py-3 bg-white cursor-pointer text-sm font-medium text-gray-800">
                       Deliver To
@@ -511,7 +511,7 @@ const handlePayNow = async () => {
                       Phone: 8840473290
                     </div>
                   </details>
-                </div>
+                </div> */}
                 <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
                 <button className="bg-pink-600 text-white lg:w-[40%] mx-auto lg:py-4 text-bold px-4 py-1 rounded hover:bg-pink-700"
                     onClick={() => handlePayNow()}
