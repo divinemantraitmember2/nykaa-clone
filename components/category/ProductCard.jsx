@@ -39,6 +39,8 @@ export default function ProductCard({ product, slug }) {
         )
       : null;
 
+
+
   return (
     <div className="group relative hover:shadow-md mb-2 hover:shadow-pink-200 transition-all overflow-hidden w-full text-sm rounded">
       <button
@@ -115,19 +117,20 @@ export default function ProductCard({ product, slug }) {
           )}
 
           <div className="flex items-center gap-2 pt-1">
-            <span className="text-sm font-semibold text-gray-900">
-              ₹{product.basePrice.inr}
-            </span>
-            {product.basePrice.mrp && (
-              <span className="text-xs text-gray-400 line-through">
-                ₹{product.basePrice.mrp}
-              </span>
-            )}
-            {discount > 0 && (
-              <span className="text-xs font-medium text-green-600">
-                {discount}% off
-              </span>
-            )}
+            {product?.variants.length > 0 && product?.variants[0].size_stocks.length > 0 && (
+  <div>
+    <p>
+      <span style={{ textDecoration: "line-through", color: "#888" }}>
+        ₹{product?.variants[0].size_stocks[0].price_inr}
+      </span>
+      &nbsp;
+      <span style={{ color: "#000", fontWeight: "bold" }}>
+        ₹{product?.variants[0].size_stocks[0].discounted_price_inr}
+      </span>
+    </p>
+  </div>
+)}
+
           </div>
         </div>
       </Link>

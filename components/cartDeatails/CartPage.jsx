@@ -20,6 +20,7 @@ export default function CartPage() {
   const [loading, setLoading] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [items, setItems] = useState([]);
+  const [CartResponse, setCartResponse] = useState(null);
   const dispatch = useDispatch();
   const ApplyCouponGetCart = useSelector((state) => state.user.ApplyCouponGetCart);
 
@@ -42,6 +43,7 @@ export default function CartPage() {
     try {
       const response = await GetUserCart();
       const cartItems = response?.data?.items || [];
+      setCartResponse(response?.data)
       const AppliedCoupons = response?.data?.appliedCoupons || [];
       if(AppliedCoupons.length>0){
         setAppliedCoupon(AppliedCoupons[0])
@@ -209,7 +211,7 @@ export default function CartPage() {
             <h2 className="text-xl font-semibold mb-4">Summary</h2>
             <div className="flex justify-between text-gray-700 mb-2">
               <span>Subtotal</span>
-              <span>₹{totalPrice.toFixed(2)}</span>
+              <span> ₹ {CartResponse && CartResponse.totalBasePrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-gray-700 mb-2">
               <span>Shipping</span>
@@ -217,7 +219,7 @@ export default function CartPage() {
             </div>
            {appliedCoupon && (
             <div className="flex justify-between text-gray-700 mb-2">
-              <span>Discount ({appliedCoupon.code})</span>
+              <span>Coupon Discount ({appliedCoupon.code})</span>
               <span className="text-red-600">
                 − ₹
                 {appliedCoupon.type === "percentage"
@@ -227,10 +229,14 @@ export default function CartPage() {
             </div>
           )}
 
+         {CartResponse && (
+          <p className="flex justify-between text-gray-700 mb-2"> <span>Discount</span> <span> ₹ {CartResponse && CartResponse.totalDiscount.toFixed(2)}</span></p>
+         )} 
+
             <hr className="my-4" />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
-              <span>₹{finalTotal.toFixed(2)}</span>
+              <span>₹{CartResponse && CartResponse.totalPrice.toFixed(2)}</span>
             </div>
             <div className="mt-2">
               <CouponForm

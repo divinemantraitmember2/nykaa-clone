@@ -8,7 +8,7 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 300);
+      setIsVisible(window.scrollY > 100);
     };
 
     window.addEventListener("scroll", toggleVisibility);
@@ -23,10 +23,10 @@ export default function ScrollToTop() {
     isVisible && (
       <button
         onClick={scrollToTop}
-        className="fixed bottom-30 right-6 z-50 p-3 bg-pink-600 rounded-md shadow-lg hover:scale-105 transition-transform"
+        className="fixed bottom-30 right-3 z-50 p-3 bg-pink-600 rounded-md shadow-lg hover:scale-105 transition-transform"
         aria-label="Scroll to top"
       >
-        <ArrowUp className="w-6 h-7 text-white" />
+        <ArrowUp className="w-4 h-5 text-white" />
       </button>
     )
   );

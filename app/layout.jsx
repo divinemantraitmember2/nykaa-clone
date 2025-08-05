@@ -6,6 +6,7 @@ import UserAuthModal from '../components/userInfo/UserAuthModal'
 import Footer from '../components/Footer'
 import { GetMenu } from "../utils/api/serverApi";
 import MobileFooter from '../components/MobileFooter';
+import CartSummaryDrawer from '../components/cartDeatails/CartSummaryDrawer';
 import ScrollToTop from "../components/homecomponent/ScrollToTop";
 import ClientToastProvider from "../components/ClientToastProvider";
 
@@ -46,6 +47,7 @@ export default async function RootLayout({ children }) {
          {children}
          <Footer />
          <MobileFooter/>
+         <CartSummaryDrawer/>
         </Providers>
         <ScrollToTop/>
         <ClientToastProvider/>

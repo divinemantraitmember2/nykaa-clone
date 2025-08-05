@@ -9,6 +9,7 @@ import { GetUserCart,UserAddressDelete,AddToCart,GetUser,UserAddressInCart,Creat
 
 export default function ChooseAddressPage() {
    const [items, setItems] = useState([]);
+   const [CartDetails, setCartDetails] = useState(null);
    const [address, setAddress] = useState([]);
    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -38,6 +39,7 @@ const GetUserCartByUserId = async () => {
     try {
       const response = await GetUserCart();
       const cartItems = response?.data?.items || [];
+      setCartDetails(response?.data)
 const AppliedCoupons = response?.data?.appliedCoupons || [];
       if(AppliedCoupons.length>0){
         setAppliedCoupon(AppliedCoupons[0])
@@ -52,6 +54,7 @@ const AppliedCoupons = response?.data?.appliedCoupons || [];
         price_inr: item.price_inr || 0,
         color: item.variants?.color,
         size: item.size,
+        discount_inr: item.discount_inr,
       }));
 
       setItems(formattedItems);
@@ -369,9 +372,9 @@ const handlePayNow = async () => {
                   +
                 </button>
               </div>
-              <p>
+              {/* <p>
                 Price: <span className="font-medium">₹{item.price_inr}</span>
-              </p>
+              </p> */}
             </div>
 
             <div className="text-right">
@@ -379,7 +382,7 @@ const handlePayNow = async () => {
                 ₹{item.price_inr * item.quantity}
               </p>
               <p className="font-semibold text-gray-900">
-                ₹{item.price_inr * item.quantity}
+                 ₹{item.discount_inr * item.quantity}
               </p>
               <p className="text-xs text-gray-500 mt-1">Total</p>
             </div>
@@ -394,13 +397,17 @@ const handlePayNow = async () => {
               </div>
 
               <div className="border rounded-lg overflow-hidden shadow-sm">
-                <details className="group" >
+                <details className="group " >
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>
-                    <span className="font-medium text-gray-700">₹ {finalTotal}</span>
+                   
                   </summary>
 
-                  <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
+                  <div className="flex justify-between text-gray-700 mb-2 px-2">
+                  <span>Subtotal</span>
+                   <span> ₹ {CartDetails && CartDetails.totalBasePrice.toFixed(2)}</span>
+                   </div>
+                  <div className="bg-green-100 text-green-700 text-sm px-2 py-2 font-medium">
                     {appliedCoupon && (
             <div className="flex justify-between text-gray-700 mb-2">
               <span> Coupon Discount ({appliedCoupon.code})</span>
@@ -413,6 +420,16 @@ const handlePayNow = async () => {
             </div>
           )} You are saving 
                   </div>
+
+                  <div className="flex justify-between text-gray-700 mb-2 px-2">
+                   <span>Discount</span>
+                   <span> ₹ {CartDetails && CartDetails.totalDiscount.toFixed(2)}</span>
+                   </div>
+                   <div className="flex justify-between font-medium text-gray-700 mb-2 px-2 border-t py-2">
+                  <span>Total</span>
+                   <span> ₹ {CartDetails && CartDetails.totalPrice.toFixed(2)}</span>
+                   </div>
+
                 </details>
               </div>
               
@@ -474,7 +491,7 @@ const handlePayNow = async () => {
                 ₹{item.price_inr * item.quantity}
               </p>
               <p className="font-semibold text-gray-900">
-                ₹{item.price_inr * item.quantity}
+                ₹{item.discount_inr * item.quantity}
               </p>
               <p className="text-xs text-gray-500 mt-1">finalTotal</p>
             </div>
@@ -488,15 +505,40 @@ const handlePayNow = async () => {
                 </details>
               </div>
 
-              <div className="border rounded-lg overflow-hidden shadow-sm">
-                <details className="group" open>
+               <div className="border rounded-lg overflow-hidden shadow-sm">
+                <details className="group" open >
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>
-                    <span className="font-medium text-gray-700">₹ {finalTotal}</span>
+                   
                   </summary>
-                  <div className="bg-green-100 text-green-700 text-sm px-4 py-2 font-medium">
-                    You are saving 
+
+                  <div className="flex justify-between text-gray-700 mb-2 px-2">
+                  <span>Subtotal</span>
+                   <span> ₹ {CartDetails && CartDetails.totalBasePrice.toFixed(2)}</span>
+                   </div>
+                  <div className="bg-green-100 text-green-700 text-sm px-2 py-2 font-medium">
+                    {appliedCoupon && (
+            <div className="flex justify-between text-gray-700 mb-2">
+              <span> Coupon Discount ({appliedCoupon.code})</span>
+              <span className="text-red-600">
+                − ₹
+                {appliedCoupon.type === "percentage"
+                  ? ((totalPrice * appliedCoupon.discountValue) / 100).toFixed(2)
+                  : appliedCoupon.discountValue.toFixed(2)}
+              </span>
+            </div>
+          )} You are saving 
                   </div>
+
+                  <div className="flex justify-between text-gray-700 mb-2 px-2">
+                   <span>Discount</span>
+                   <span> ₹ {CartDetails && CartDetails.totalDiscount.toFixed(2)}</span>
+                   </div>
+                   <div className="flex justify-between font-medium text-gray-700 mb-2 px-2 border-t py-2">
+                  <span>Total</span>
+                   <span> ₹ {CartDetails && CartDetails.totalPrice.toFixed(2)}</span>
+                   </div>
+
                 </details>
               </div>
                 {/* <div className="border rounded-lg overflow-hidden shadow-sm">

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { openLoginModal } from "../slices/userSlice";
+import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
 import { FaShoppingBag, FaBars, FaSearch,FaHeart } from "react-icons/fa";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import MobileDrawer from "../components/MobileDrawer";
 
 export default function Navbar({ categories, onHoverCategory, onLeaveCategory }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
   const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.items.length);
   const { data: session } = useSession();
@@ -86,7 +87,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
              <FaHeart className="text-xl text-black-600" />
               </Link>
 
-         <Link href="/cart" className="relative flex items-center gap-1 px-3 py-1 text-black hover:text-pink-600 transition-colors duration-200">
+        <button  onClick={() => dispatch(openUserCartDrawar())} className="relative flex items-center gap-1 px-3 py-1 text-black hover:text-pink-600 transition-colors duration-200">
       <ShoppingCart size={20} />
       <span className="font-medium sm:inline ">Cart</span>
 
@@ -95,7 +96,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
           {cartCount}
         </span>
       )}
-    </Link>
+    </button>
         </div>
       </div>
     </div>

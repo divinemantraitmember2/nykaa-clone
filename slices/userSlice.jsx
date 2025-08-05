@@ -4,6 +4,7 @@ const initialState = {
   isLoggedIn: false,
   user: null,
   showLoginModal: false,
+  showUserCartDrawar: false,
   showRegisterModal: false,
   shouldRefetchUserAddress: false,
   ApplyCouponGetCart: false,
@@ -33,7 +34,11 @@ const userSlice = createSlice({
       state.showRegisterModal = true;
       state.showLoginModal = false;
     },
+     openUserCartDrawar(state) {
+      state.showUserCartDrawar = !state.showUserCartDrawar;
+    },
 
+   
     closeModals(state) {
       state.showLoginModal = false;
       state.showRegisterModal = false;
@@ -59,6 +64,7 @@ export const {
   closeModals,
   toggleRefetchUserAddress, 
   toggleRefetchApplyCouponGetCart,
+  openUserCartDrawar,
 } = userSlice.actions;
 
 export default userSlice.reducer;

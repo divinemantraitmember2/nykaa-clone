@@ -6,7 +6,7 @@ import { AddToCart } from "../../utils/api/Httproutes";
 import SearchLocation from "../SearchLocation";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
-import { openLoginModal } from "../../slices/userSlice";
+import { openLoginModal,openUserCartDrawar } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
@@ -31,6 +31,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   
   // Auto-select first color and size on load
   useEffect(() => {
+    console.log(product)
   if (product?.variants?.length > 0 && selsectSlug) {
      setSelectedSlug(selsectSlug)
     // slug ke base par variant dhoondo
@@ -272,9 +273,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
             {/* Price */}
             {selectedStock && (
               <div className="text-lg font-medium mb-2">
-                <span className="line-through text-gray-400 text-base">
-                  ₹{selectedStock.price_inr}
-                </span>
+                
                 <span className="ml-2 text-black font-bold text-xl">
                   ₹{selectedStock.discounted_price_inr}
                 </span>
@@ -283,12 +282,15 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
                     ({discountPercent}% off)
                   </span>
                 )}
+                <p className="text-md mb-4 ">
+              MRP <span className="line-through text-gray-400 text-base">
+                  ₹{selectedStock.price_inr}
+                </span>  Inclusive of all taxes
+            </p>
               </div>
             )}
 
-            <p className="text-xs text-gray-500 mb-4">
-              Inclusive of all taxes
-            </p>
+            
 
             {/* Color Selection */}
             <div className="mb-6">
@@ -380,12 +382,12 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
                 </button>
 
                 {showGoToCart ? (
-  <Link
-    href="/cart"
+  <button
+     onClick={() => dispatch(openUserCartDrawar())}
     className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-center text-md font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
     View Your Bag
-  </Link>
+  </button>
 ) : (
   <button
     onClick={handleAddToCart}
