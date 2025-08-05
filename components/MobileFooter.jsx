@@ -2,7 +2,7 @@
 import { usePathname } from "next/navigation";
 import { Home, ShoppingCart, User } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { openLoginModal } from "../slices/userSlice";
+import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -40,40 +40,67 @@ export default function MobileFooter() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#faf4ec] md:hidden shadow-2xl  border-t-2 border-pink-700 rounded-t-3xl overflow-hidden">
-      <ul className="flex justify-around items-center h-25 text-xs text-gray-600 ">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl  overflow-hidden">
+      <ul className="flex justify-around items-center h-20  text-black ">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
           return (
-            <li key={item.href}>
-             <Link
-  href={item.href}
-  onClick={item.onClick}
-  className="flex flex-col items-center justify-center"
->
-  <div
-    className={`relative  w-10 h-10 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
-      isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
-    }`}
-  >
-    {item.icon}
-    {item.label === "Cart" && cartCount > 0 && (
-      <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
-        {cartCount}
+           <li key={item.href}>
+  {item.href === "/cart" ? (
+    <button
+      onClick={() => dispatch(openUserCartDrawar())}
+      className="flex flex-col items-center justify-center"
+    >
+      <div
+        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
+          isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
+        }`}
+      >
+        {item.icon}
+        {item.label === "Cart" && cartCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
+            {cartCount}
+          </span>
+        )}
+      </div>
+      <span
+        className={`text-[14px] mt-1 font-bold ${
+          isActive ? "text-pink-600" : "text-black"
+        }`}
+      >
+        {item.label}
       </span>
-    )}
-  </div>
-  <span
-    className={`text-[10px] mt-1 ${
-      isActive ? "text-pink-600" : "text-gray-600"
-    }`}
-  >
-    {item.label}
-  </span>
-</Link>
+    </button>
+  ) : (
+    <Link
+      href={item.href}
+      onClick={item.onClick}
+      className="flex flex-col items-center justify-center"
+    >
+      <div
+        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
+          isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
+        }`}
+      >
+        {item.icon}
+        {item.label === "Cart" && cartCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
+            {cartCount}
+          </span>
+        )}
+      </div>
+      <span
+        className={`text-[14px] mt-1 font-bold ${
+          isActive ? "text-pink-600" : "text-black"
+        }`}
+      >
+        {item.label}
+      </span>
+    </Link>
+  )}
+</li>
 
-            </li>
           );
         })}
       </ul>
