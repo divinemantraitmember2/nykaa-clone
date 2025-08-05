@@ -115,7 +115,7 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
     >
       <div className="flex items-center justify-between px-6 py-3 border-b bg-gray-100">
         <h2 className="text-lg font-semibold text-gray-800">Your Shopping Bag</h2>
-        <button onClick={() => dispatch(openUserCartDrawar())} className="text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+        <button onClick={() => dispatch(openUserCartDrawar())} className="lg:text-2xl  text-3xl font-medium text-gray-500 hover:text-gray-800">&times;</button>
       </div>
 
       <div className="h-[calc(100%-140px)] overflow-y-auto px-4 py-2">

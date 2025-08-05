@@ -91,7 +91,7 @@ export default function MobileFooter() {
         )}
       </div>
       <span
-        className={`text-[14px] mt-1 font-bold ${
+        className={`text-[14px]  font-bold ${
           isActive ? "text-pink-600" : "text-black"
         }`}
       >
