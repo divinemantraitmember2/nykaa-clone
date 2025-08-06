@@ -1,38 +1,35 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { MdArrowForward } from "react-icons/md";
 export default function MobileDrawer({ isOpen, onClose, links = [] }) {
-  const [openGender, setOpenGender] = useState(null);
-  const [openCategory, setOpenCategory] = useState(null);
+  const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
-  const toggleGender = (index) => {
-    setOpenGender(openGender === index ? null : index);
-    setOpenCategory(null); // close category when changing gender
-  };
-
-  const toggleCategory = (index) => {
-    setOpenCategory(openCategory === index ? null : index);
-  };
+  const selectedMain = links[selectedMenuIndex];
 
   return (
     <>
       {/* Overlay */}
-      {isOpen && <div className="fixed inset-0 z-40" onClick={onClose} />}
+      {isOpen && (
+        <div
+          className="fixed inset-0  z-40"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Sidebar */}
+      {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg z-50 transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 h-full w-[90vw] bg-white z-50 transition-transform duration-300 ease-in-out shadow-xl ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Header */}
@@ -41,62 +38,94 @@ export default function MobileDrawer({ isOpen, onClose, links = [] }) {
           <button onClick={onClose} className="text-gray-600 text-lg">✕</button>
         </div>
 
-        {/* Links */}
-        <nav className="flex flex-col text-md p-2  text-gray-700 font-semibold">
-          {links.map((gender, genderIndex) => (
-            <div key={genderIndex} className="border-b mb-2">
-              <button
-                onClick={() => toggleGender(genderIndex)}
-                className="w-full text-left p-2 mb-2 flex justify-between items-center hover:text-pink-600"
-              >
-               <Link href={`/${gender.slug}`}> {gender.label}</Link>
-                {openGender === genderIndex ? (
-                  <ChevronUpIcon className="w-4 h-4 text-gray-600" />
-                ) : (
-                  <ChevronDownIcon className="w-4 h-4 text-gray-600" />
-                )}
-              </button>
+        {/* Horizontal Main Menu */}
+        <div className="flex overflow-x-auto gap-4 p-2 bg-white border-b">
+          {links.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => setSelectedMenuIndex(index)}
+              className={`flex flex-col items-center px-1 py-1 min-w-[40px] ${
+                selectedMenuIndex === index
+                  ? 'text-pink-600 font-semibold border-b-2 border-pink-600'
+                  : 'text-gray-600'
+              }`}
+            >
+              <div className="w-13 h-13 mb-1 rounded-full p-[2px]  bg-gradient-to-br from-pink-500 via-yellow-400 to-blue-500">
+  <Image
+    src={`https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif?tr=w-350,h-350`}
+    alt={item.label}
+    width={48}
+    height={48}
+    className="rounded-full object-contain"
+  />
+</div>
 
-              {/* Categories */}
-              {openGender === genderIndex && gender.children?.length > 0 && (
-                <div className="ml-2">
-                  {gender.children.map((category, catIndex) => (
-                    <div key={catIndex} className="border-b">
-                      <button
-                        onClick={() => toggleCategory(catIndex)}
-                        className="w-full text-left p-2 mb-2 flex justify-between items-center text-sm hover:text-pink-600"
-                      >
-                        <Link href={`/${category.slug}`}> {category.label}</Link>
-                       
-                        {openCategory === catIndex ? (
-                          <ChevronUpIcon className="w-4 h-4 text-gray-600" />
-                        ) : (
-                          <ChevronDownIcon className="w-4 h-4 text-gray-600" />
-                        )}
-                      </button>
-
-                      {/* Subcategories */}
-                      {openCategory === catIndex && category.children?.length > 0 && (
-                        <div className="ml-4 mb-3 flex flex-col gap-2 text-sm">
-                          {category.children.map((sub, subIndex) => (
-                            <Link
-                              key={subIndex}
-                              href={`/${sub.slug}`}
-                              onClick={onClose}
-                              className="py-1 px-2 hover:text-pink-600"
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+              <span className="text-sm truncate">{item.label}</span>
+            </button>
           ))}
-        </nav>
+        </div>
+
+        {/* Selected Main Menu Link */}
+        {selectedMain?.slug && (
+          <div className="p-2 pb-2 border-b bg-[#fff7f2]">
+            <Link
+              href={`/${selectedMain.slug}`}
+              onClick={onClose}
+              className="text-pink-700 font-medium text-base hover:underline flex items-center gap-2"
+            >
+             
+              {selectedMain.label}
+               <span className="material-symbols-outlined text-pink-600"><MdArrowForward/></span>
+            </Link>
+          </div>
+        )}
+
+        {/* Submenu */}
+        <div className="p-2 overflow-y-auto h-[calc(100vh-200px)]">
+          {selectedMain?.children?.length > 0 ? (
+            selectedMain.children.map((cat, catIndex) => (
+              <div
+                key={catIndex}
+                className="mb-4 p-2 bg-[#fafafa] shadow hover:shadow-md transition"
+              >
+                <Link
+                  href={`/${cat.slug}`}
+                  className="flex items-center gap-3 text-gray-800 font-medium hover:text-pink-600"
+                  onClick={onClose}
+                >
+                  {cat.icon && (
+                    <Image
+                      src={cat.icon}
+                      alt={cat.label}
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
+                  )}
+                  <span>{cat.label}</span>
+                </Link>
+
+                {/* Subcategories */}
+                {cat.children?.length > 0 && (
+                  <div className="mt-2 ml-8 flex flex-col gap-1 text-sm text-gray-600">
+                    {cat.children.map((sub, subIndex) => (
+                      <Link
+                        key={subIndex}
+                        href={`/${sub.slug}`}
+                        className="hover:text-pink-600"
+                        onClick={onClose}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <p className="text-center text-gray-400 mt-10 text-sm">No categories available</p>
+          )}
+        </div>
       </div>
     </>
   );
