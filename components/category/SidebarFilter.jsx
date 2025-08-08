@@ -12,8 +12,14 @@ import {
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SidebarFilter({ filters, onFilterChange }) {
+export default function SidebarFilter({ filters }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const {
     colors = [],
     genders = [],
@@ -22,9 +28,6 @@ export default function SidebarFilter({ filters, onFilterChange }) {
     attributes = [],
     categories,
   } = filters || {};
-
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({});
 
   const attributeGroups = attributes.reduce((acc, item) => {
     const { name, value } = item._id;
@@ -35,34 +38,19 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
   const dynamicSections = {
     ...(categories && {
-      Category: categories.map((c) => ({
-        label: c.name,
-        count: c.count,
-      })),
+      Category: categories.map((c) => ({ label: c.name, count: c.count })),
     }),
     ...(colors.length && {
-      Color: colors.map((c) => ({
-        label: c._id,
-        count: c.count,
-      })),
+      Color: colors.map((c) => ({ label: c._id, count: c.count })),
     }),
     ...(sizes.length && {
-      Size: sizes.map((s) => ({
-        label: s._id,
-        count: s.count,
-      })),
+      Size: sizes.map((s) => ({ label: s._id, count: s.count })),
     }),
     ...(genders.length && {
-      Gender: genders.map((g) => ({
-        label: g._id,
-        count: g.count,
-      })),
+      Gender: genders.map((g) => ({ label: g._id, count: g.count })),
     }),
     ...(price_range.length && {
-      "Price Range": price_range.map((p) => ({
-        label: p.label,
-        count: p.count,
-      })),
+      "Price Range": price_range.map((p) => ({ label: p.label, count: p.count })),
     }),
     ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
       if (values.length) {
@@ -78,41 +66,21 @@ export default function SidebarFilter({ filters, onFilterChange }) {
   };
 
   const handleCheckboxChange = (section, label) => {
-    const current = selectedFilters[section] || [];
-    const updated = current.includes(label)
-      ? current.filter((v) => v !== label)
-      : [...current, label];
+    const currentParams = new URLSearchParams(searchParams.toString());
 
-    const newFilters = { ...selectedFilters, [section]: updated };
-    setSelectedFilters(newFilters);
-    triggerParentFilterChange(newFilters);
-  };
+    const paramKey = isAttributeSection(section)
+      ? `attributes[${section.toLowerCase()}]`
+      : section.toLowerCase().replace(/ /g, "_");
 
-  const triggerParentFilterChange = (selected) => {
-    const queryFilters = {};
+    const existingValues = currentParams.getAll(paramKey);
+    const updatedValues = existingValues.includes(label)
+      ? existingValues.filter((v) => v !== label)
+      : [...existingValues, label];
 
-    Object.entries(selected).forEach(([section, values]) => {
-      if (values.length === 0) return;
+    currentParams.delete(paramKey);
+    updatedValues.forEach((val) => currentParams.append(paramKey, val));
 
-      if (isAttributeSection(section)) {
-        values.forEach((val) => {
-          if (!queryFilters[`attributes[${section.toLowerCase()}]`]) {
-            queryFilters[`attributes[${section.toLowerCase()}]`] = [];
-          }
-          queryFilters[`attributes[${section.toLowerCase()}]`].push(val);
-        });
-      } else {
-        queryFilters[section.toLowerCase().replace(/ /g, "_")] = values.join(",");
-      }
-    });
-
-    // Flatten arrays into comma-separated strings
-    const flattenedFilters = {};
-    Object.entries(queryFilters).forEach(([key, val]) => {
-      flattenedFilters[key] = Array.isArray(val) ? val.join(",") : val;
-    });
-
-    onFilterChange(flattenedFilters);
+    router.push(`?${currentParams.toString()}`);
   };
 
   const FilterSections = () => (
@@ -121,18 +89,21 @@ export default function SidebarFilter({ filters, onFilterChange }) {
         <Disclosure key={section}>
           {({ open }) => (
             <>
-              <DisclosureButton className="flex justify-between w-full font-semibold text-fiter-color text-base py-2 border-b border-gray-200">
+              <DisclosureButton className="flex justify-between w-full font-semibold text-gray-700 text-base py-2 border-b border-gray-200">
                 {section}
                 <ChevronDownIcon
-                  className={`w-5 h-5 text-gray-500 transition-transform ${
-                    open ? "rotate-180" : ""
-                  }`}
+                  className={`w-5 h-5 text-gray-500 transition-transform ${open ? "rotate-180" : ""}`}
                 />
               </DisclosureButton>
               <DisclosurePanel className="pt-3">
                 <ul className="space-y-2 text-sm text-gray-700">
                   {options.map((item, i) => {
-                    const isChecked = selectedFilters[section]?.includes(item.label);
+                    const paramKey = isAttributeSection(section)
+                      ? `attributes[${section.toLowerCase()}]`
+                      : section.toLowerCase().replace(/ /g, "_");
+                    const selectedValues = searchParams.getAll(paramKey);
+                    const isChecked = selectedValues.includes(item.label);
+
                     return (
                       <li key={i} className="flex items-center justify-between">
                         <label className="flex items-center gap-2 cursor-pointer">
@@ -161,7 +132,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
 
   return (
     <>
-      {/* Mobile Filter Button */}
+      {/* Mobile filter toggle */}
       <div className="md:hidden mb-4 flex justify-end px-2">
         <button
           className="flex items-center gap-2 text-sm px-3 py-1 border border-gray-300 rounded-md text-gray-700 hover:border-gray-400"
@@ -172,7 +143,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
         </button>
       </div>
 
-      {/* Desktop Sidebar */}
+      {/* Desktop sidebar */}
       <aside className="hidden md:block">
         <div className="p-2 text-sm font-sans">
           <h3 className="text-lg font-bold mb-4">Filters</h3>
@@ -180,7 +151,7 @@ export default function SidebarFilter({ filters, onFilterChange }) {
         </div>
       </aside>
 
-      {/* Mobile Dialog Filter Panel */}
+      {/* Mobile filter drawer */}
       <Dialog open={isMobileOpen} onClose={() => setIsMobileOpen(false)} className="relative z-50 md:hidden">
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex justify-end">

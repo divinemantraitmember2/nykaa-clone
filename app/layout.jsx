@@ -40,6 +40,12 @@ export default async function RootLayout({ children }) {
    
   return (
     <html lang="en">
+      <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+  </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
         <Header categories={categories} />

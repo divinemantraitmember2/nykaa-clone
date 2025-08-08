@@ -23,7 +23,7 @@ export default function SearchLocation() {
         {/* Delivery Options */}
         <div className="w-full lg:w-auto flex flex-col">
           <div className="mb-2">
-            <h2 className="text-2xl text-start font-semibold text-gray-800 mb-2">Select Delivery Location</h2>
+            <h3 className="text-xl text-start font-semibold text-gray-800 mb-2">Select Delivery Location</h3>
           <p className="text-start font-semibold ">Enter the pincode of your area to check product availability and delivery options</p>
 
           </div>

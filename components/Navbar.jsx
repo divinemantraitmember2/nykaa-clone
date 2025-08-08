@@ -25,7 +25,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
       <div className="flex items-center justify-between mb-3 px-4 md:hidden">
         <Link href="/">
           <div className="">
-              <Image src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
+              <img src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
             </div>
         </Link>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -49,7 +49,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
         <div className="flex items-center space-x-6">
           <Link href="/">
             <div className="">
-              <Image src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
+              <img src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
             </div>
           </Link>
 
@@ -75,7 +75,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
 
           {session?.user ? (
             <Link href="/profile">
-              <Image src={userImage} alt="User" width={32} height={32} className="rounded-full mx-5 cursor-pointer" />
+              <img src={userImage} alt="User" width={32} height={32} className="rounded-full mx-5 cursor-pointer" />
             </Link>
           ) : (
             <button onClick={() => dispatch(openLoginModal())} className=" hover:text-pink-600 transition-colors duration-200">

@@ -10,6 +10,7 @@ const nextConfig = {
       'dummyjson.com',
       'ik.imagekit.io',
     ],
+    unoptimized: true,
   },
 };
 

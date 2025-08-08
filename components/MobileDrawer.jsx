@@ -28,13 +28,16 @@ export default function MobileDrawer({ isOpen, onClose, links = [] }) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-[90vw] bg-white z-50 transition-transform duration-300 ease-in-out shadow-xl ${
+        className={`fixed top-0 left-0 h-full w-[100vw]  bg-white z-50 transition-transform duration-300 ease-in-out shadow-xl ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-[#faf4ec]">
-          <span className="text-lg font-bold text-black">Menu</span>
+          <span className="text-lg font-bold text-black">
+           <Image src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
+                  
+          </span>
           <button onClick={onClose} className="text-gray-600 text-lg">✕</button>
         </div>
 
@@ -95,7 +98,7 @@ export default function MobileDrawer({ isOpen, onClose, links = [] }) {
                 >
                   {cat.icon && (
                     <Image
-                      src={cat.icon}
+                      src={`https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif?tr=w-350,h-350`}
                       alt={cat.label}
                       width={24}
                       height={24}
@@ -107,7 +110,7 @@ export default function MobileDrawer({ isOpen, onClose, links = [] }) {
 
                 {/* Subcategories */}
                 {cat.children?.length > 0 && (
-                  <div className="mt-2 ml-8 flex flex-col gap-1 text-sm text-gray-600">
+                  <div className="mt-2 ml-1 flex flex-col gap-1 text-sm text-gray-600">
                     {cat.children.map((sub, subIndex) => (
                       <Link
                         key={subIndex}

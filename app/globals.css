@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body{
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 @media screen and (max-width: 768px) {
   .AesturaSection {
     margin-top: -55px;
