@@ -33,11 +33,10 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
       ? (totalPrice * appliedCoupon.discountValue) / 100
       : appliedCoupon?.discountValue || 0;
 
-  const finalTotal = totalPrice - discount;
-
   const GetUserCartByUserId = async () => {
     try {
       const response = await GetUserCart();
+
       const cartItems = response?.data?.items || [];
       setCartResponse(response?.data);
       const AppliedCoupons = response?.data?.appliedCoupons || [];
@@ -60,6 +59,7 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
   };
 
   useEffect(() => {
+    
     GetUserCartByUserId();
   }, []);
 
@@ -105,7 +105,6 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
     }
   };
 
-  const clearAll = () => dispatch(clearCart());
 
   return (
     <div
@@ -118,7 +117,8 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
         <button onClick={() => dispatch(openUserCartDrawar())} className="lg:text-2xl  text-3xl font-medium text-gray-500 hover:text-gray-800">&times;</button>
       </div>
 
-      <div className="h-[calc(100%-140px)] overflow-y-auto px-4 py-2">
+{CartResponse !=null && items.length>0?(<>
+<div className="h-[calc(100%-140px)] overflow-y-auto px-4 py-2">
         {items.map((item, index) => (
           <div key={index} className="flex gap-4 px-2 py-4 border-b border-gray-200 relative">
             <img src={item.image} alt={item.title} className="w-20 h-28 object-cover rounded-md border border-gray-200" />
@@ -137,8 +137,8 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
             </button>
           </div>
         ))}
-
-        <div className="mt-6 space-y-3 bg-gray-50 p-4 rounded-lg shadow-inner">
+   
+        <div className="mt-6 space-y-3 bg-gray-50 p-4 rounded-lg shadow-inner ">
           <div className="flex justify-between text-sm text-gray-700">
             <span>Bag Total</span>
             <span>₹{CartResponse?.totalBasePrice.toFixed(2)}</span>
@@ -171,8 +171,8 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
             appliedCoupon={appliedCoupon}
           />
         </div>
-      </div>
 
+      </div>
      <div className="px-4 py-4 border-t border-gray-200">
     <Link onClick={() => dispatch(openUserCartDrawar())} href="/checkout">
       <button
@@ -185,6 +185,11 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
       </button>
     </Link>
   </div>
+
+</>):(<>
+<div className="flex items-center justify-between px-6 py-3 border-b bg-[#fff]"> Your Shopping Bag Is Empty </div>
+</>)}
+      
 
     </div>
   );

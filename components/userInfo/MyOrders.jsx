@@ -13,7 +13,7 @@ const MyOrders = ({ orders }) => {
 
   return (
     <div className="p-2 lg:p-4">
-      <h2 className="text-2xl font-semibold mb-6 text-start">My Orders</h2>
+      <h2 className="text-2xl font-semibold mb-6 text-start">My Orders <span className="" >{orders.length}</span></h2>
 
       <div className="space-y-6">
         {orders.map((order, index) => (
@@ -65,12 +65,12 @@ const MyOrders = ({ orders }) => {
                     key={idx}
                     className="flex flex-col md:flex-row gap-4 items-start md:items-center  py-4"
                   >
-                    <img
-                      src={item.variants.image_url[0]}
+                    {/* <img
+                      src={item?.variants?.image_url[0]}
                       alt={item.productName}
                       className="w-24 h-24 object-cover rounded"
-                    />
-                    <div className="flex-1 space-y-1">
+                    /> */}
+                    {/* <div className="flex-1 space-y-1">
                       <p className="font-medium">{item.productName}</p>
                       <p className="text-sm text-gray-600">
                         Quantity: {item.quantity}
@@ -84,7 +84,7 @@ const MyOrders = ({ orders }) => {
                       <p className="text-sm text-gray-800 font-semibold">
                         ₹{item.variants.size_stocks[0].discounted_price_inr}
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 ))}
               </div>

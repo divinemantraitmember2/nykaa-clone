@@ -2,9 +2,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
-import { FaShoppingBag, FaBars, FaSearch,FaHeart } from "react-icons/fa";
+import {  FaBars, FaSearch,FaHeart } from "react-icons/fa";
 import Link from "next/link";
-import Image from "next/image";
 import {ShoppingCart, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import MobileDrawer from "../components/MobileDrawer";
@@ -54,7 +53,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
           </Link>
 
           <nav className="flex space-x-6 text-md font-semibold text-gray-700">
-            {categories.map((link, i) => (
+            {categories?.map((link, i) => (
             
               <Link key={i+40} href={`/${link.slug}`} className="mx-8">
               <span
