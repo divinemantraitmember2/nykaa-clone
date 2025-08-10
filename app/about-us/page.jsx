@@ -67,8 +67,8 @@ export default function AboutPage() {
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
             >
               <img
-                src={member.img}
-                // alt={member.name}
+                src={`/images/no-profile.jpeg`}
+                 alt={member.name}
                 className="w-full h-56 object-cover"
               />
               <div className="p-4 text-center">
