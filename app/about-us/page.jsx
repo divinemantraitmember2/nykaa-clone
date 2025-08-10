@@ -58,9 +58,9 @@ export default function AboutPage() {
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
           {[
-            { name: "Alex Johnson", role: "Founder & CEO", img: "/team1.jpg" },
-            { name: "Sophia Lee", role: "Marketing Head", img: "/team2.jpg" },
-            { name: "Michael Smith", role: "Lead Developer", img: "/team3.jpg" },
+            { name: "Name", role: "Founder & CEO", img: "/team1.jpg" },
+            { name: "Name", role: "Marketing Head", img: "/team2.jpg" },
+            { name: "Name", role: "Lead Developer", img: "/team3.jpg" },
           ].map((member, idx) => (
             <div
               key={idx}
