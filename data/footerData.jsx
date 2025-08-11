@@ -4,54 +4,43 @@ export const footerData = [
   {
     title: "Pondric",
     links: [
-      "About Us",
-      "Careers",
-      "Pondric CSR",
-      "Responsible Disclosure Policy",
-      "Pondric Marketplace",
-      "Pondric Network",
+      { label: "About Us", slug: "about-us" },
+      { label: "Careers", slug: "careers" },
+       { label: "Contact Us", slug: "contact-us" },
+      { label: "FAQs", slug: "faqs" },
+
     ],
   },
   {
     title: "Help",
     links: [
-      "Contact Us",
-      "FAQs",
-      "Store Locator",
-      "Shipping & Delivery",
-      "Return & Refunds",
-      "Cancellation",
+     
+      { label: "Shipping & Delivery", slug: "shipping-and-delivery" },
+      { label: "Return & Refunds", slug: "return-and-refunds" },
+      { label: "Cancellation", slug: "cancellation" },
     ],
   },
   {
     title: "Policies",
     links: [
-      "Privacy Policy",
-      "Terms & Conditions",
-      "Vendor Connect",
-      "Sitemap",
-      "EPR Compliance",
+      { label: "Privacy Policy", slug: "terms/privacy-policy" },
+      { label: "Terms & Conditions", slug: "terms/conditions" },
     ],
   },
   {
     title: "Social",
     links: [
-      "Instagram",
-      "Facebook",
-      "Twitter",
-      "YouTube",
-      "Pinterest",
-      "LinkedIn",
+      { label: "Instagram", slug: "instagram" },
+      { label: "YouTube", slug: "youtube" },
+      { label: "LinkedIn", slug: "linkedin" },
     ],
   },
   {
     title: "Business",
     links: [
-      "Advertise with Us",
-      "Sell on Pondric",
-      "Trends & Insights",
-      "Offer Zone",
-      "Affiliate Program",
+      { label: "Sell on Pondric", slug: "sell-on-pondric" },
+      { label: "Trends & Insights", slug: "trends-and-insights" },
+      { label: "Offer Zone", slug: "offer-zone" },
     ],
   },
 ];

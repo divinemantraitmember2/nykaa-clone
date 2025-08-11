@@ -7,13 +7,20 @@ import {
 } from "../../utils/api/Httproutes";
 
 export default async function CategoryPage({ params, searchParams }) {
+ 
+   if (typeof params?.then === "function") {
+    params = await params;
+  }
+   const category = params?.category || "";
+  
   try {
     // ✅ Ensure searchParams is resolved if it's a Promise
     if (typeof searchParams?.then === "function") {
       searchParams = await searchParams;
+      
     }
 
-    const category = params?.category || "";
+    
 
     // ✅ Query builder
     const buildQuery = () => {
@@ -72,7 +79,7 @@ export default async function CategoryPage({ params, searchParams }) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {availableFilters && (
-              <aside className="lg:col-span-3 hidden lg:block">
+              <aside className="lg:col-span-3 ">
                 <div className="sticky top-24 pr-2 custom-scrollbar">
                   <SidebarFilter
                     filters={availableFilters}

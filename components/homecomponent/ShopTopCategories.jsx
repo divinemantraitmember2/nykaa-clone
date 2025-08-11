@@ -14,7 +14,7 @@ export default function ShopTopCategories() {
         SHOP TOP CATEGORIES
       </h2>
 
-      <div className="hidden lg:grid grid-cols-6 gap-6">
+      <div className="hidden lg:grid grid-cols-5 gap-6">
         {categories.map((cat, index) => (
           <CategoryCard key={index} name={cat.name} image={cat.image} />
         ))}
@@ -23,8 +23,11 @@ export default function ShopTopCategories() {
       {/* Swiper for mobile and tablet */}
       <div className="lg:hidden">
         <Swiper
+          className="shop-top-cat-swiper"
           modules={[Pagination]}
-          pagination={{ clickable: true }}
+          pagination={{
+            clickable: true,
+          }}
           spaceBetween={16}
           slidesPerView={2}
           breakpoints={{
@@ -48,24 +51,25 @@ function CategoryCard({ name, image }) {
     <div className="bg-pink-100 rounded-xl overflow-hidden shadow-pink-400 shadow-md hover:shadow-xl transition-shadow duration-300">
       <div className="relative w-full aspect-square overflow-hidden group">
         <Image
-          src={image}
+          src={`${image}?tr=w-212,h-283`}
           alt={name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
         />
       </div>
-      <div className="py-3 text-center">
-        <p className="text-sm sm:text-base font-semibold text-gray-700">{name}</p>
+      <div className="py-2 text-center">
+        <p className="text-sm sm:text-base font-semibold text-gray-700">
+          {name}
+        </p>
       </div>
     </div>
   );
 }
 
 const categories = [
-  { name: "Topwear", image: "/images/topwear.jpg" },
-  { name: "Bottomwear", image: "/images/bottomwear.jpg" },
-  { name: "Indian Wear", image: "/images/indianwear.jpg" },
-  { name: "Western Wear", image: "/images/westernwear.jpg" },
-  { name: "Shoes", image: "/images/shoes.jpg" },
-  { name: "Accessories", image: "/images/accessories.jpg" },
+  { name: "Topwear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
+  { name: "Bottomwear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
+  { name: "Indian Wear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
+  { name: "Western Wear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
+  { name: "Kids", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
 ];

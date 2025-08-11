@@ -33,7 +33,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
       </div>
 
       <div className="px-4  md:hidden">
-        <div className="flex items-center bg-white px-4 py-3  border border-pink-700 rounded">
+        <div className="flex items-center bg-white px-4 py-2  border border-pink-700 rounded">
           <FaSearch className="text-pink-600 mr-2 text-sm" />
           <input type="text" placeholder="Explore our Beauty Collection" className="bg-transparent w-full text-sm outline-none text-gray-600" />
         </div>

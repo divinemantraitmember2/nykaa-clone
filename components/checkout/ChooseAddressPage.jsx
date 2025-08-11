@@ -338,7 +338,7 @@ const handlePayNow = async () => {
   {items.length === 0 ? (
     <p className="text-gray-500">Your cart is empty.</p>
   ) : (
-    items.map((item, i) => (
+   items && items.map((item, i) => (
       <div
         key={i}
         className="flex items-start gap-4 border rounded-lg p-3 bg-white shadow-sm"
@@ -461,7 +461,7 @@ const handlePayNow = async () => {
   {items.length === 0 ? (
     <p className="text-gray-500">Your cart is empty.</p>
   ) : (
-    items.map((item, i) => (
+   items && items.map((item, i) => (
       <div
         key={i}
         className="flex items-start gap-2 rounded p-2 bg-white shadow-sm"
@@ -541,26 +541,17 @@ const handlePayNow = async () => {
 
                 </details>
               </div>
-                {/* <div className="border rounded-lg overflow-hidden shadow-sm">
-                  <details className="group" >
-                    <summary className="px-4 py-3 bg-white cursor-pointer text-sm font-medium text-gray-800">
-                      Deliver To
-                    </summary>
-                    <div className="bg-gray-50 px-4 py-3 text-sm text-gray-700">
-                      Ravi<br />
-                      606 kasia kushinagar, Uttar Pradesh<br />
-                      Kushinagar - 274402<br />
-                      Phone: 8840473290
-                    </div>
-                  </details>
-                </div> */}
-                <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
+               
+               {items && items.length>0?(<>
+               
+               <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
                 <button className="bg-pink-600 text-white lg:w-[40%] mx-auto lg:py-4 text-bold px-4 py-1 rounded hover:bg-pink-700"
                     onClick={() => handlePayNow()}
                   >
                     Pay Now
                   </button>
-              </div>
+              </div></>):""}
+                
               
             </div>
           </div>

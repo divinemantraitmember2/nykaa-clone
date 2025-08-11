@@ -17,7 +17,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function SidebarFilter({ filters }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const {
@@ -50,7 +49,10 @@ export default function SidebarFilter({ filters }) {
       Gender: genders.map((g) => ({ label: g._id, count: g.count })),
     }),
     ...(price_range.length && {
-      "Price Range": price_range.map((p) => ({ label: p.label, count: p.count })),
+      "Price Range": price_range.map((p) => ({
+        label: p.label,
+        count: p.count,
+      })),
     }),
     ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
       if (values.length) {
@@ -61,7 +63,13 @@ export default function SidebarFilter({ filters }) {
   };
 
   const isAttributeSection = (section) => {
-    const standardSections = ["Category", "Color", "Size", "Gender", "Price Range"];
+    const standardSections = [
+      "Category",
+      "Color",
+      "Size",
+      "Gender",
+      "Price Range",
+    ];
     return !standardSections.includes(section);
   };
 
@@ -84,82 +92,98 @@ export default function SidebarFilter({ filters }) {
   };
 
   const FilterSections = () => (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {Object.entries(dynamicSections).map(([section, options]) => (
-        <Disclosure key={section}>
-          {({ open }) => (
-            <>
-              <DisclosureButton className="flex justify-between w-full font-semibold text-gray-700 text-base py-2 border-b border-gray-200">
-                {section}
-                <ChevronDownIcon
-                  className={`w-5 h-5 text-gray-500 transition-transform ${open ? "rotate-180" : ""}`}
-                />
-              </DisclosureButton>
-              <DisclosurePanel className="pt-3">
-                <ul className="space-y-2 text-sm text-gray-700">
-                  {options.map((item, i) => {
-                    const paramKey = isAttributeSection(section)
-                      ? `attributes[${section.toLowerCase()}]`
-                      : section.toLowerCase().replace(/ /g, "_");
-                    const selectedValues = searchParams.getAll(paramKey);
-                    const isChecked = selectedValues.includes(item.label);
+  <Disclosure key={section} defaultOpen={["Category", "Color"].includes(section)}>
+    {({ open }) => (
+      <div className="bg-white border-gray-100 overflow-hidden">
+        <DisclosureButton className="flex justify-between w-full font-medium text-gray-800 text-sm py-3 hover:bg-gray-50 transition">
+          <span>{section}</span>
+          <ChevronDownIcon
+            className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
+              open ? "rotate-180" : ""
+            }`}
+          />
+        </DisclosureButton>
+        <DisclosurePanel className="pt-1 pb-3 bg-gray-50">
+          <ul className="flex flex-wrap gap-2 text-xs p-2 text-gray-700">
+            {options.map((item, i) => {
+              const paramKey = isAttributeSection(section)
+                ? `attributes[${section.toLowerCase()}]`
+                : section.toLowerCase().replace(/ /g, "_");
+              const selectedValues = searchParams.getAll(paramKey);
+              const isChecked = selectedValues.includes(item.label);
 
-                    return (
-                      <li key={i} className="flex items-center justify-between">
-                        <label className="flex items-center gap-2 cursor-pointer">
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            className="accent-pink-600 w-4 h-4 rounded"
-                            onChange={() => handleCheckboxChange(section, item.label)}
-                          />
-                          <span>{item.label}</span>
-                        </label>
-                        <span className="text-xs text-gray-400 font-medium">
-                          {item.count}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </DisclosurePanel>
-            </>
-          )}
-        </Disclosure>
-      ))}
+              return (
+                <li key={i}>
+                  <label className="inline-flex items-center gap-1 cursor-pointer select-none rounded-full border border-gray-200 px-1 py-1.5 shadow-sm hover:shadow-md hover:border-pink-400 hover:bg-pink-50 transition-all duration-200">
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      className="accent-pink-500 w-3 h-3 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-pink-300"
+                      onChange={() => handleCheckboxChange(section, item.label)}
+                    />
+                    <span className="flex items-center gap-2">
+                      <span className="text-gray-700 group-hover:text-pink-600 transition-colors">
+                        {item.label}
+                      </span>
+                      <span className="text-xs text-gray-600 font-medium rounded-full bg-gray-100 px-1 py-0.5">
+                        {item.count}
+                      </span>
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </DisclosurePanel>
+      </div>
+    )}
+  </Disclosure>
+))}
+
     </div>
   );
 
   return (
     <>
       {/* Mobile filter toggle */}
-      <div className="md:hidden mb-4 flex justify-end px-2">
+      <div className="md:hidden mb-4 flex justify-end px-4">
         <button
-          className="flex items-center gap-2 text-sm px-3 py-1 border border-gray-300 rounded-md text-gray-700 hover:border-gray-400"
+          className="flex items-center gap-2 p-1 px-2 text-md text-gray-700 border rounded border-gray-400 hover:bg-gray-50  transition"
           onClick={() => setIsMobileOpen(true)}
         >
-          <FunnelIcon className="w-4 h-4" />
+          <FunnelIcon className="w-8 h-5" />
           Filters
         </button>
       </div>
 
       {/* Desktop sidebar */}
       <aside className="hidden md:block">
-        <div className="p-2 text-sm font-sans">
-          <h3 className="text-lg font-bold mb-4">Filters</h3>
+        <div className="text-sm font-sans bg-white">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-900">
+            Filters
+          </h3>
           <FilterSections />
         </div>
       </aside>
 
-      {/* Mobile filter drawer */}
-      <Dialog open={isMobileOpen} onClose={() => setIsMobileOpen(false)} className="relative z-50 md:hidden">
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex justify-end">
-          <Dialog.Panel className="w-full max-w-sm bg-white p-4 overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-900">Filters</h3>
-              <button onClick={() => setIsMobileOpen(false)}>
-                <XMarkIcon className="w-5 h-5 text-gray-700" />
+      {/* Mobile filter drawer fullscreen */}
+      <Dialog
+        open={isMobileOpen}
+        onClose={() => setIsMobileOpen(false)}
+        className="relative z-50 md:hidden"
+      >
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" />
+        <div className="fixed inset-0">
+          <Dialog.Panel className="w-full h-full bg-white p-5 overflow-y-auto  shadow-lg">
+            <div className="flex justify-between items-center mb-4 border-b pb-2">
+              <h3 className="text-sm font-semibold text-gray-900">Filters</h3>
+              <button
+                onClick={() => setIsMobileOpen(false)}
+                className="hover:bg-gray-100 p-2 rounded-full"
+              >
+                <XMarkIcon className="w-8 h-6 text-gray-700" />
               </button>
             </div>
             <FilterSections />

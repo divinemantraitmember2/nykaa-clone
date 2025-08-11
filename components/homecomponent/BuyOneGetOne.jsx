@@ -12,31 +12,31 @@ const BuyOneGetOne = () => {
       title: "T-Shirts",
       description: "BOGO on all casual tees",
       bg: "#e0f7fa",
-      img: "/images/bogo-tshirt.jpg",
+      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
     },
     {
       title: "Jeans",
       description: "Buy 1 pair, get 1 free",
       bg: "#fce4ec",
-      img: "/images/bogo-jeans.jpg",
+      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
     },
     {
       title: "Sneakers",
       description: "Step up with our 1+1 offer",
       bg: "#ede7f6",
-      img: "/images/bogo-shoes.jpg",
+      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
     },
     {
       title: "Hoodies",
       description: "Stay warm — free 2nd piece!",
       bg: "#fff3e0",
-      img: "/images/bogo-hoodie.jpg",
+      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
     },
     {
       title: "Jackets",
       description: "Adventure-ready gear. BOGO!",
       bg: "#f3e5f5",
-      img: "/images/bogo-jacket.jpg",
+      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
     },
   ];
 
@@ -64,15 +64,15 @@ const BuyOneGetOne = () => {
               style={{ backgroundColor: deal.bg }}
             >
               {/* Circular Image at top-right */}
-              <div className="absolute -top-1 -right-1 w-25 h-25 rounded-full overflow-hidden border-2 border-white shadow-md">
-                <Image
-                  src={deal.img}
-                  alt={deal.title}
-                  width={64}
-                  height={64}
-                  className="object-cover w-full h-full"
-                />
-              </div>
+              <div className="absolute top-3 right-3 w-20 h-20  rounded-full overflow-hidden border-2 border-white shadow-md">
+  <Image
+    src={deal.img}
+    alt={deal.title}
+    width={64}
+    height={64}
+    className="object-cover w-full h-full"
+  />
+</div>
 
               {/* Content */}
               <div className="z-10">
