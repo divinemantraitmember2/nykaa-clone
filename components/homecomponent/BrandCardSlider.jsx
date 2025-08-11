@@ -7,7 +7,7 @@ import "swiper/css";
 const brandData = [
   {
     image: "https://images-static.nykaa.com/uploads/13f19a29-a01d-42c9-b8c2-236340e0674d.jpg?tr=w-300,cm-pad_resize",
-    brand: "Nykd BY NYKAA",
+    brand: "Nykd BY Pondric",
     offer: "Up to 60% off",
   },
   {
