@@ -54,10 +54,14 @@ export default async function CategoryPage({ params, searchParams }) {
       ]);
 
       if (productRes.status === 200) {
-        products = productRes?.data?.products || [];
+        if( productRes?.data?.code===200){
+          products = productRes?.data?.data || [];
+        }else{
+          console.log("page not found")
+        }
       }
       if (filterRes.status === 200) {
-        availableFilters = filterRes?.data || null;
+        availableFilters = filterRes?.data?.data || null;
       }
     } catch (apiError) {
       products = [];

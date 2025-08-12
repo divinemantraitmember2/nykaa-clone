@@ -5,7 +5,7 @@ import axios from "axios";
 export async function GetProductdetails(payload){
    try{
   const response=await axios.get(`https://api.pondric.com/api/v1/products?${payload}`);
-  return response.data
+  return response
    }catch(error){
     // console.error("Error fetching category list:", error.message);
     return [];
