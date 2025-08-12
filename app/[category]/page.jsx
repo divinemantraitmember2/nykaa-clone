@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
 import {
@@ -7,21 +6,17 @@ import {
 } from "../../utils/api/Httproutes";
 
 export default async function CategoryPage({ params, searchParams }) {
- 
-   if (typeof params?.then === "function") {
+  if (typeof params?.then === "function") {
     params = await params;
   }
-   const category = params?.category || "";
-  
+  const category = params?.category || "";
+
   try {
-    
     if (typeof searchParams?.then === "function") {
       searchParams = await searchParams;
-      
     }
 
-  
-    const buildQuery = () => {
+    const buildProductQuery = () => {
       const queryParts = [`category_slug=${encodeURIComponent(category)}`];
 
       const paramsObj =
@@ -41,26 +36,41 @@ export default async function CategoryPage({ params, searchParams }) {
       return queryParts.join("&");
     };
 
-    const query = buildQuery();
+    // Build query for filters (ONLY category slug, no other params)
+    const buildFilterQuery = () => {
+      return `category_slug=${encodeURIComponent(category)}`;
+    };
+
+    const productQuery = buildProductQuery();
+    const filterQuery = buildFilterQuery();
 
     let products = [];
     let availableFilters = null;
 
     try {
       const [productRes, filterRes] = await Promise.all([
-        GetProductofcategorylist(query),
-        GetProductFilters(query),
+        GetProductofcategorylist(productQuery),
+        GetProductFilters(filterQuery),
       ]);
 
-      products = productRes?.products || [];
-      availableFilters = filterRes?.data || null;
+      if (productRes.status === 200) {
+        products = productRes?.data?.products || [];
+      }
+      if (filterRes.status === 200) {
+        availableFilters = filterRes?.data || null;
+      }
     } catch (apiError) {
       products = [];
       availableFilters = null;
     }
 
     if (products.length === 0 && !availableFilters) {
-      notFound();
+      return (
+        <div className="text-center p-10">
+          <h2>No Products Found</h2>
+          <p>Please try another category or search.</p>
+        </div>
+      );
     }
 
     return (
@@ -71,28 +81,26 @@ export default async function CategoryPage({ params, searchParams }) {
           </h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {products?.length !=0 && availableFilters && (
+            {products.length !== 0 && availableFilters && (
               <aside className="lg:col-span-3 ">
                 <div className="sticky top-24 pr-2 custom-scrollbar">
                   <SidebarFilter
                     filters={availableFilters}
-                    category={category}
-                    searchParams={searchParams}
                   />
                 </div>
               </aside>
             )}
 
             <section className="lg:col-span-9">
-             {products?.length !=0 &&(
-              <ProductGrid productsData={products} catSlug={category} />
-             )} 
-              {products?.length === 0 && (
+              {products.length !== 0 && (
+                <ProductGrid productsData={products} catSlug={category} />
+              )}
+              {products.length === 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
                   No Products Found
                 </div>
               )}
-              {products?.length > 0 && (
+              {products.length > 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
                   No More Products to Show
                 </div>
@@ -103,7 +111,11 @@ export default async function CategoryPage({ params, searchParams }) {
       </main>
     );
   } catch (err) {
-    console.error("CategoryPage error:", err);
-    notFound();
+    return (
+      <div className="text-center p-10">
+        <h2>No Products Found</h2>
+        <p>Please try another category or search.</p>
+      </div>
+    );
   }
 }

@@ -107,7 +107,7 @@ export const GetUserOrder = async (payload) => {
 export async function GetProductofcategorylist (payload) {
   try{ 
     const response= await api.get(`/api/v1/products?${payload}`);
-    return response.data
+    return response
   }catch(error){
   //  console.log("Error fetching category list:", error.message);
     return [];
