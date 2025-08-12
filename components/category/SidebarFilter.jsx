@@ -18,8 +18,6 @@ export default function SidebarFilter({ filters }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-
-  console.log("filters",filters)
   const {
     colors = [],
     genders = [],
