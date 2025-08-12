@@ -7,6 +7,7 @@ const initialState = {
   showUserCartDrawar: false,
   showRegisterModal: false,
   shouldRefetchUserAddress: false,
+  GetUserCart: false,
   ApplyCouponGetCart: false,
   StopRuningUseEffect: false,
 };
@@ -47,12 +48,14 @@ const userSlice = createSlice({
     toggleRefetchUserAddress(state) {
       state.shouldRefetchUserAddress = !state.shouldRefetchUserAddress;
     },
+
      toggleRefetchApplyCouponGetCart(state) {
-      state. ApplyCouponGetCart = !state. ApplyCouponGetCart;
+      state.ApplyCouponGetCart = !state.ApplyCouponGetCart;
     },
-   
-    
-   
+
+     toggleUserGetCart(state) {
+      state.GetUserCart = !state.GetUserCart;
+    }, 
   },
 });
 
@@ -65,6 +68,7 @@ export const {
   toggleRefetchUserAddress, 
   toggleRefetchApplyCouponGetCart,
   openUserCartDrawar,
+  toggleUserGetCart,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -6,11 +6,11 @@ import { AddToCart } from "../../utils/api/Httproutes";
 import SearchLocation from "../SearchLocation";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
-import { openLoginModal,openUserCartDrawar } from "../../slices/userSlice";
+import { openLoginModal,openUserCartDrawar,toggleUserGetCart } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
-import Link from "next/link";
+
 
 import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp} from "lucide-react";
 
@@ -45,10 +45,10 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       setSelectedImg(matchedVariant.image_url?.[0] || product.default_image);
     } else {
       // Agar slug match na ho to default variant lo
-      const defaultVariant = product.variants[0];
+      const defaultVariant = product?.variants[0];
       setSelectedColor(defaultVariant.color);
       setSelectedSize(defaultVariant.size_stocks?.[0]?.size || "");
-      setSelectedImg(defaultVariant.image_url?.[0] || product.default_image);
+      setSelectedImg(defaultVariant.image_url?.[0] || product?.default_image);
     }
   }
 }, [product, selsectSlug]);
@@ -142,6 +142,11 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
       code: "MEGA30",
     },
   ];
+
+function get_cart_details(){
+  dispatch(openUserCartDrawar())
+  dispatch(toggleUserGetCart())
+}
 
   const scrollRef = useRef(null);
 
@@ -383,7 +388,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
                 {showGoToCart ? (
   <button
-     onClick={() => dispatch(openUserCartDrawar())}
+     onClick={() => get_cart_details()}
     className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-center text-md font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
     View Your Bag

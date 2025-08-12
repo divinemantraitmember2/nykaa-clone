@@ -17,7 +17,7 @@ import {
 import { openUserCartDrawar } from "../../slices/userSlice";
 import CouponForm from "./CouponForm";
 
-export default function CartSummaryDrawer({ isOpen, onClose }) {
+export default function CartSummaryDrawer() {
   const [loading, setLoading] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [items, setItems] = useState([]);
@@ -26,6 +26,7 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
   const dispatch = useDispatch();
   const ApplyCouponGetCart = useSelector((state) => state.user.ApplyCouponGetCart);
   const showUserCartDrawar = useSelector((state) => state.user.showUserCartDrawar);
+  const cartUpdateStatus = useSelector((state) => state.user.GetUserCart);
 
   const totalPrice = items.reduce((acc, item) => acc + (item.price_inr || 0) * (item.quantity || 1), 0);
 
@@ -70,6 +71,11 @@ export default function CartSummaryDrawer({ isOpen, onClose }) {
   useEffect(() => {
     GetUserCartByUserId();
   }, [ApplyCouponGetCart]);
+
+  useEffect(() => {
+  GetUserCartByUserId();
+  },[cartUpdateStatus, dispatch]); 
+  
 
   const updateCartQuantity = async (id, quantity) => {
     const item = items.find((i) => i.id === id);
