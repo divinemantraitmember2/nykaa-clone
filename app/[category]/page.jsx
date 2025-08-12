@@ -14,15 +14,13 @@ export default async function CategoryPage({ params, searchParams }) {
    const category = params?.category || "";
   
   try {
-    // ✅ Ensure searchParams is resolved if it's a Promise
+    
     if (typeof searchParams?.then === "function") {
       searchParams = await searchParams;
       
     }
 
-    
-
-    // ✅ Query builder
+  
     const buildQuery = () => {
       const queryParts = [`category_slug=${encodeURIComponent(category)}`];
 
@@ -45,7 +43,6 @@ export default async function CategoryPage({ params, searchParams }) {
 
     const query = buildQuery();
 
-    // ✅ API calls with error handling
     let products = [];
     let availableFilters = null;
 
@@ -58,18 +55,14 @@ export default async function CategoryPage({ params, searchParams }) {
       products = productRes?.products || [];
       availableFilters = filterRes?.data || null;
     } catch (apiError) {
-      console.error("API fetch error:", apiError);
-      // Agar API hi fail ho jaye, empty data set karenge
       products = [];
       availableFilters = null;
     }
 
-    // ✅ Invalid category → 404
     if (products.length === 0 && !availableFilters) {
       notFound();
     }
 
-    // ✅ Page render
     return (
       <main className="min-h-screen bg-white">
         <div className="px-2 sm:px-4 lg:px-6 lg:py-10">
