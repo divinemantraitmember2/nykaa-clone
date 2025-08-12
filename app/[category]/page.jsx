@@ -78,7 +78,7 @@ export default async function CategoryPage({ params, searchParams }) {
           </h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {availableFilters && (
+            {products?.length !=0 && availableFilters && (
               <aside className="lg:col-span-3 ">
                 <div className="sticky top-24 pr-2 custom-scrollbar">
                   <SidebarFilter
@@ -91,7 +91,9 @@ export default async function CategoryPage({ params, searchParams }) {
             )}
 
             <section className="lg:col-span-9">
+             {products?.length !=0 &&(
               <ProductGrid productsData={products} catSlug={category} />
+             )} 
               {products?.length === 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
                   No Products Found
@@ -109,7 +111,6 @@ export default async function CategoryPage({ params, searchParams }) {
     );
   } catch (err) {
     console.error("CategoryPage error:", err);
-    // Agar kuch unexpected crash ho jaye → 404
     notFound();
   }
 }

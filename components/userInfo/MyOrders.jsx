@@ -12,7 +12,7 @@ const MyOrders = ({ orders }) => {
   }
 
   return (
-    <div className="p-2 lg:p-4">
+    <div className="p-2 ">
       <h2 className="text-2xl font-semibold mb-6 text-start">
         My Orders <span>{orders.length}</span>
       </h2>
@@ -75,7 +75,7 @@ const MyOrders = ({ orders }) => {
                         className="flex flex-col md:flex-row gap-4 items-start md:items-center py-4"
                       >
                         <img
-                          src={variant?.image_url?.[0] || "/placeholder.png"}
+                          src={variant?.image_url?.[0] || ""}
                           alt={item?.productName || "Product Image"}
                           className="w-24 h-24 object-cover rounded"
                         />

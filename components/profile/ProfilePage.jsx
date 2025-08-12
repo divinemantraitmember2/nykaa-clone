@@ -95,7 +95,7 @@ export default function ProfilePage() {
         return loading.orders
           ? <p className="p-4 text-gray-500">Loading orders...</p>
           : error.orders
-          ? <p className="p-4 text-red-500">{error.orders}</p>
+          ? <p className="lg:p-4 text-red-500">{error.orders}</p>
           : <MyOrders orders={UserOrders || []} />;
       default:
         return null;
@@ -104,7 +104,7 @@ export default function ProfilePage() {
 
   return (
     <main className="bg-[#f4f4f4] min-h-screen">
-      <div className="flex flex-col lg:flex-row max-w-7xl mx-auto px-4 py-6 gap-4">
+      <div className="flex flex-col lg:flex-row max-w-7xl mx-auto lg:px-4  py-6 gap-4">
         {/* Sidebar */}
         <div className="lg:w-[300px] w-full">
           <aside

@@ -19,6 +19,7 @@ export default function SidebarFilter({ filters }) {
   const searchParams = useSearchParams();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  console.log("filters",filters)
   const {
     colors = [],
     genders = [],
@@ -94,7 +95,7 @@ export default function SidebarFilter({ filters }) {
   const FilterSections = () => (
     <div className="space-y-3">
       {Object.entries(dynamicSections).map(([section, options]) => (
-  <Disclosure key={section} defaultOpen={["Category", "Color"].includes(section)}>
+  <Disclosure key={section} defaultOpen={["Category"].includes(section)}>
     {({ open }) => (
       <div className="bg-white border-gray-100 overflow-hidden">
         <DisclosureButton className="flex justify-between w-full font-medium text-gray-800 text-sm py-3 hover:bg-gray-50 transition">
@@ -150,10 +151,10 @@ export default function SidebarFilter({ filters }) {
       {/* Mobile filter toggle */}
       <div className="md:hidden mb-4 flex justify-end px-4">
         <button
-          className="flex items-center gap-2 p-1 px-2 text-md text-gray-700 border rounded border-gray-400 hover:bg-gray-50  transition"
+          className="flex items-center gap-2 p-1 px-1 text-md text-gray-700 border rounded border-gray-400 hover:bg-gray-50  transition"
           onClick={() => setIsMobileOpen(true)}
         >
-          <FunnelIcon className="w-8 h-5" />
+          <FunnelIcon className="w-6 h-5" />
           Filters
         </button>
       </div>

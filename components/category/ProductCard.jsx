@@ -5,6 +5,7 @@ import  ProductColorSize from "./ProductColorSize"
 
 export default function ProductCard({ product, slug }) {
  
+  
   return (
     <div className="group relative hover:shadow-md mb-2 hover:shadow-pink-200 transition-all overflow-hidden w-full text-sm rounded">
         <ProductHeart/>
