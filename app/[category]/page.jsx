@@ -1,24 +1,13 @@
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
-import NotFound from "../not-found"
-import {
-  GetProductofcategorylist,
-  GetProductFilters,
-} from "../../utils/api/Httproutes";
+import NotFound from "../not-found";
+import {GetProductofcategorylist,GetProductFilters} from "../../utils/api/Httproutes";
 
 export default async function CategoryPage({ params, searchParams }) {
-  
   try {
-
-    if (typeof params?.then === "function") {
-    params = await params;
-    }
-   const category = params?.category || "";
-
-    if (typeof searchParams?.then === "function") {
-      searchParams = await searchParams;
-    }
-
+    if (typeof params?.then === "function") params = await params;
+    if (typeof searchParams?.then === "function") searchParams = await searchParams;
+    const category = (params?.category || "").toLowerCase();
     const buildProductQuery = () => {
       const queryParts = [`category_slug=${encodeURIComponent(category)}`];
 
@@ -39,51 +28,38 @@ export default async function CategoryPage({ params, searchParams }) {
       return queryParts.join("&");
     };
 
-    // Build query for filters (ONLY category slug, no other params)
-    const buildFilterQuery = () => {
-      return `category_slug=${encodeURIComponent(category)}`;
-    };
-
     const productQuery = buildProductQuery();
-    const filterQuery = buildFilterQuery();
-
+    const filterQuery = `category_slug=${encodeURIComponent(category)}`;
     let products = [];
     let availableFilters = null;
 
-try {
-  const [productRes, filterRes] = await Promise.all([
-    GetProductofcategorylist(productQuery),
-    GetProductFilters(filterQuery),
-  ]);
+    try {
+      const [productRes, filterRes] = await Promise.all([
+        GetProductofcategorylist(productQuery),
+        GetProductFilters(filterQuery),
+      ]);
 
-  if (productRes.status === 200) {
-    if (productRes?.data?.code === 200) {
-      products = productRes?.data?.data || [];
-    } else {
-      console.log("page not found");
-      products = [];
+      if (productRes?.status === 200 && productRes?.data?.code === 200) {
+        products = productRes?.data?.data || [];
+      }
+
+      if (filterRes?.status === 200) {
+        availableFilters = filterRes?.data?.data || null;
+      }
+    } catch (apiError) {
+      console.error("API Error:", apiError);
     }
-  } else {
-    products = [];
-  }
 
-  if (filterRes.status === 200) {
-    availableFilters = filterRes?.data?.data || null;
-  } else {
-    availableFilters = null;
-  }
-} catch (apiError) {
-  console.error("API Error:", apiError);
-  products = [];
-  availableFilters = null;
-}
+    //  Safer "not found" check
+    const isCompletelyInvalidCategory =
+      products.length === 0 &&
+      (!availableFilters || Object.keys(availableFilters).length === 0);
 
-if (products.length === 0 && !availableFilters) {
-  return (
-    <p>product not found</p>
-    // <NotFound/>
-  );
-}
+    if (isCompletelyInvalidCategory) {
+      console.warn(" No products or filters found for category:", category);
+      return <p>Product not found and filter not found</p>;
+      // return <NotFound />;
+    }
 
     return (
       <main className="min-h-screen bg-white">
@@ -94,23 +70,22 @@ if (products.length === 0 && !availableFilters) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {products.length !== 0 && availableFilters && (
-              <aside className="lg:col-span-3 ">
+              <aside className="lg:col-span-3">
                 <div className="sticky top-24 pr-2 custom-scrollbar">
-                  <SidebarFilter
-                    filters={availableFilters}
-                  />
+                  <SidebarFilter filters={availableFilters} />
                 </div>
               </aside>
             )}
 
             <section className="lg:col-span-9">
-              {products.length !== 0 && (
+              {products.length > 0 && (
                 <ProductGrid productsData={products} catSlug={category} />
               )}
+
               {products.length === 0 && (
-                 <p> product not found</p>
-                //  <NotFound/>
+                <p className="text-center text-gray-500 py-10">No Products Found</p>
               )}
+
               {products.length > 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
                   No More Products to Show
@@ -122,8 +97,7 @@ if (products.length === 0 && !availableFilters) {
       </main>
     );
   } catch (err) {
-    return (
-     <NotFound/>
-    );
+    console.error(" Unexpected Error:", err);
+    return <NotFound />;
   }
 }
