@@ -121,7 +121,9 @@ if (products.length === 0 && !availableFilters) {
     );
   } catch (err) {
     return (
-     <NotFound/>
+     <div>
+      <h3>page not found</h3>
+     </div>
     );
   }
 }
