@@ -47,35 +47,42 @@ export default async function CategoryPage({ params, searchParams }) {
     let products = [];
     let availableFilters = null;
 
-    try {
-      const [productRes, filterRes] = await Promise.all([
-        GetProductofcategorylist(productQuery),
-        GetProductFilters(filterQuery),
-      ]);
+try {
+  const [productRes, filterRes] = await Promise.all([
+    GetProductofcategorylist(productQuery),
+    GetProductFilters(filterQuery),
+  ]);
 
-      if (productRes.status === 200) {
-        if( productRes?.data?.code===200){
-          products = productRes?.data?.data || [];
-        }else{
-          console.log("page not found")
-        }
-      }
-      if (filterRes.status === 200) {
-        availableFilters = filterRes?.data?.data || null;
-      }
-    } catch (apiError) {
+  if (productRes.status === 200) {
+    if (productRes?.data?.code === 200) {
+      products = productRes?.data?.data || [];
+    } else {
+      console.log("page not found");
       products = [];
-      availableFilters = null;
     }
+  } else {
+    products = [];
+  }
 
-    if (products.length === 0 && !availableFilters) {
-      return (
-        <div className="text-center p-10">
-          <h2>No Products Found</h2>
-          <p>Please try another category or search.</p>
-        </div>
-      );
-    }
+  if (filterRes.status === 200) {
+    availableFilters = filterRes?.data?.data || null;
+  } else {
+    availableFilters = null;
+  }
+} catch (apiError) {
+  console.error("API Error:", apiError);
+  products = [];
+  availableFilters = null;
+}
+
+if (products.length === 0 && !availableFilters) {
+  return (
+    <div className="w-full text-center py-10">
+      <h1 className="text-2xl font-bold">Category Not Found</h1>
+      <p className="text-gray-600">The category you are looking for does not exist.</p>
+    </div>
+  );
+}
 
     return (
       <main className="min-h-screen bg-white">

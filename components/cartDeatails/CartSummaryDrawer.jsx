@@ -73,16 +73,10 @@ export default function CartSummaryDrawer() {
 }, [status]);
 
   useEffect(() => {
-    if (status === "authenticated") {
-GetUserCartByUserId();
-    } 
-  }, [ApplyCouponGetCart]);
-
-  useEffect(() => {
   if (status === "authenticated") {
-GetUserCartByUserId();
-    }
-  },[cartUpdateStatus, dispatch]); 
+    GetUserCartByUserId();
+  }
+}, [status, ApplyCouponGetCart, cartUpdateStatus]);
   
 
   const updateCartQuantity = async (id, quantity) => {
