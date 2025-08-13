@@ -6,12 +6,14 @@ import {
 } from "../../utils/api/Httproutes";
 
 export default async function CategoryPage({ params, searchParams }) {
-  if (typeof params?.then === "function") {
-    params = await params;
-  }
-  const category = params?.category || "";
-
+  
   try {
+
+    if (typeof params?.then === "function") {
+    params = await params;
+    }
+   const category = params?.category || "";
+
     if (typeof searchParams?.then === "function") {
       searchParams = await searchParams;
     }
@@ -125,7 +127,7 @@ if (products.length === 0 && !availableFilters) {
     return (
       <div className="text-center p-10">
         <h2>No Products Found</h2>
-        <p>Please try another category or search.</p>
+        <p>Please try another category or search. catch..</p>
       </div>
     );
   }
