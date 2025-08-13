@@ -2,7 +2,7 @@
 "use client";
 import { useState } from "react";
 export default function ProductColorSize({product}){
-  console.log("product",product)
+ 
     const [showAllColors, setShowAllColors] = useState(false);
       const [showAllSizes, setShowAllSizes] = useState(false);
       const allColors = product?.variants?.map((v) => v.color)?.filter(Boolean) || [];

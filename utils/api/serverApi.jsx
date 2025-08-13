@@ -12,10 +12,10 @@ export async function GetProductdetails(payload){
    }
 };
 
-export async function GetProductofcategorylist (payload) {
+export async function GetProductofcategorylist(payload) {
   try{ 
     const response= await axios.get(`https://api.pondric.com/api/v1/products?${payload}`);
-    return response.data
+    return response
   }catch(error){
   //  console.error("Error fetching category list:", error.message);
     return [];
@@ -36,12 +36,13 @@ export async function GetMenu() {
 }
 
 
-export async function GetProductFilters (payload) {
+export async function GetProductFilters(payload) {
   try{ 
-    const response= await axios.get(`https://api.pondric.com/api/v1/products?${payload}`);
+    const response= await axios.get(`https://api.pondric.com/api/v1/product/filters?${payload}`);
     return response
   }catch(error){
   //  console.error("Error fetching category list:", error.message);
     return [];
   }
 };
+

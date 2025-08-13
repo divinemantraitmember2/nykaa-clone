@@ -1,35 +1,36 @@
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
 import NotFound from "../not-found";
-import {GetProductofcategorylist,GetProductFilters} from "../../utils/api/Httproutes";
+import { GetProductofcategorylist ,GetProductFilters} from "../../utils/api/serverApi";
 
-export default async function CategoryPage({ params, searchParams }) {
+export default async function CategoryPage(propsPromise) {
   try {
-    if (typeof params?.then === "function") params = await params;
-    if (typeof searchParams?.then === "function") searchParams = await searchParams;
+    // ✅ Await the props first
+    let { params, searchParams } = await propsPromise;
+
+    // ✅ If they are promises themselves, await them
+    if (typeof params?.then === "function") {
+      params = await params;
+    }
+    if (typeof searchParams?.then === "function") {
+      searchParams = await searchParams;
+    }
+
     const category = (params?.category || "").toLowerCase();
+
+    // Build query string
     const buildProductQuery = () => {
-      const queryParts = [`category_slug=${encodeURIComponent(category)}`];
-
-      const paramsObj =
-        searchParams && typeof searchParams === "object"
-          ? Object.fromEntries(Object.entries(searchParams || {}))
-          : {};
-
-      for (const [key, value] of Object.entries(paramsObj)) {
-        if (Array.isArray(value)) {
-          value.forEach((v) =>
-            queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(v)}`)
-          );
-        } else if (value !== undefined && value !== null) {
-          queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        }
-      }
-      return queryParts.join("&");
+      const query = new URLSearchParams({ category_slug: category });
+      Object.entries(searchParams || {}).forEach(([key, value]) => {
+        if (Array.isArray(value)) value.forEach(v => query.append(key, v));
+        else if (value != null) query.append(key, value);
+      });
+      return query.toString();
     };
 
     const productQuery = buildProductQuery();
     const filterQuery = `category_slug=${encodeURIComponent(category)}`;
+
     let products = [];
     let availableFilters = null;
 
@@ -40,32 +41,31 @@ export default async function CategoryPage({ params, searchParams }) {
       ]);
 
       if (productRes?.status === 200 && productRes?.data?.code === 200) {
-        products = productRes?.data?.data || [];
-      }else{
-         products=[]
+        products = productRes.data.data || [];
       }
       if (filterRes?.status === 200 && filterRes?.data?.code === 200) {
-        availableFilters = filterRes?.data?.data || null;
+        availableFilters = filterRes.data.data || null;
       }
 
     } catch (apiError) {
-
       console.error("API Error:", apiError);
     }
 
-const isFiltersEmpty =
-  !availableFilters ||
-  Object.values(availableFilters).every((val) => {
-    if (Array.isArray(val)) return val.length === 0;
-    return val === null || val === undefined;
-  });
+    // Filter check
+    const isFiltersEmpty =
+      !availableFilters ||
+      Object.values(availableFilters).every(val =>
+        Array.isArray(val) ? val.length === 0 : !val
+      );
 
-const isCompletelyInvalidCategory = products.length === 0 && isFiltersEmpty;
+      
+    const isCompletelyInvalidCategory = products.length === 0 && isFiltersEmpty;
+    console.log("isCompletelyInvalidCategory",isCompletelyInvalidCategory)
 
-if (isCompletelyInvalidCategory) {
-  return <p>Product not found and filter not found</p>;
-  // return <NotFound />;
-}
+    if (isCompletelyInvalidCategory) {
+      console.log("Invalid category detected, rendering NotFound");
+      return <NotFound />;
+    }
 
     return (
       <main className="min-h-screen bg-white">
@@ -75,7 +75,7 @@ if (isCompletelyInvalidCategory) {
           </h3>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {products.length !== 0 && availableFilters && (
+            {products.length !== 0 && !isFiltersEmpty && (
               <aside className="lg:col-span-3">
                 <div className="sticky top-24 pr-2 custom-scrollbar">
                   <SidebarFilter filters={availableFilters} />
@@ -84,18 +84,15 @@ if (isCompletelyInvalidCategory) {
             )}
 
             <section className="lg:col-span-9">
-              {products.length > 0 && (
-                <ProductGrid productsData={products} catSlug={category} />
-              )}
-
-              {/* {products.length === 0 && (
+              {products.length > 0 ? (
+                <>
+                  <ProductGrid productsData={products} catSlug={category} />
+                  <div className="text-center text-sm text-gray-600 mt-10">
+                    No More Products to Show
+                  </div>
+                </>
+              ) : (
                 <p className="text-center text-gray-500 py-10">No Products Found</p>
-              )} */}
-
-              {products.length > 0 && (
-                <div className="text-center text-sm text-gray-600 mt-10">
-                  No More Products to Show
-                </div>
               )}
             </section>
           </div>
@@ -103,7 +100,7 @@ if (isCompletelyInvalidCategory) {
       </main>
     );
   } catch (err) {
-    console.error(" Unexpected Error:", err);
+    console.error("Unexpected Error:", err);
     return <NotFound />;
   }
 }
