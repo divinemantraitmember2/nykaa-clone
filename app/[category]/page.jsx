@@ -41,21 +41,31 @@ export default async function CategoryPage({ params, searchParams }) {
 
       if (productRes?.status === 200 && productRes?.data?.code === 200) {
         products = productRes?.data?.data || [];
+      }else{
+         products=[]
       }
-      
-      if (filterRes?.status === 200) {
+      if (filterRes?.status === 200 && filterRes?.data?.code === 200) {
         availableFilters = filterRes?.data?.data || null;
       }
+
     } catch (apiError) {
+
       console.error("API Error:", apiError);
     }
 
-    // const isCompletelyInvalidCategory = products.length === 0 &&(!availableFilters || Object.keys(availableFilters).length === 0);
+const isFiltersEmpty =
+  !availableFilters ||
+  Object.values(availableFilters).every((val) => {
+    if (Array.isArray(val)) return val.length === 0;
+    return val === null || val === undefined;
+  });
 
-    // if (isCompletelyInvalidCategory) {
-    //   return <p>Product not found and filter not found</p>;
-    //   // return <NotFound />;
-    // }
+const isCompletelyInvalidCategory = products.length === 0 && isFiltersEmpty;
+
+if (isCompletelyInvalidCategory) {
+  return <p>Product not found and filter not found</p>;
+  // return <NotFound />;
+}
 
     return (
       <main className="min-h-screen bg-white">

@@ -22,7 +22,7 @@ export default function ProductColorSize({product}){
                       {visibleColors.map((color, i) => (
                         <div
                           key={i}
-                          className="w-4 h-4 rounded-full border border-gray-300"
+                          className="w-3 h-3 rounded-full border border-gray-300"
                           style={{ backgroundColor: color?.toLowerCase() }}
                         ></div>
                       ))}

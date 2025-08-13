@@ -172,7 +172,7 @@ function get_cart_details(){
           <div
             key={i}
             id={`thumb-${i}`}
-            className={`shrink-0 border rounded cursor-pointer p-1 snap-start
+            className={`shrink-0 lg:border rounded cursor-pointer p-1 snap-start
               ${selectedImg === img ? "border-pink-600" : "border-gray-300"}
               w-full aspect-[3/4] sm:w-full md:w-full
               lg:w-[90px] lg:h-[120px]`}
@@ -224,7 +224,7 @@ function get_cart_details(){
               if (scrollRef.current) scrollRef.current.scrollBy({ left: -240, behavior: "smooth" });
             }}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={25} />
           </button>
           <button
             className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow shadow-pink-600 p-1 rounded-full"
@@ -232,7 +232,7 @@ function get_cart_details(){
               if (scrollRef.current) scrollRef.current.scrollBy({ left: 240, behavior: "smooth" });
             }}
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={25} />
           </button>
         </>
       )}
