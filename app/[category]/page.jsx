@@ -80,7 +80,8 @@ try {
 
 if (products.length === 0 && !availableFilters) {
   return (
-    <NotFound/>
+    <p>product not found</p>
+    // <NotFound/>
   );
 }
 
@@ -107,7 +108,8 @@ if (products.length === 0 && !availableFilters) {
                 <ProductGrid productsData={products} catSlug={category} />
               )}
               {products.length === 0 && (
-                 <NotFound/>
+                 <> product not found</>
+                //  <NotFound/>
               )}
               {products.length > 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
@@ -121,9 +123,7 @@ if (products.length === 0 && !availableFilters) {
     );
   } catch (err) {
     return (
-     <div>
-      <h3>page not found</h3>
-     </div>
+     <NotFound/>
     );
   }
 }
