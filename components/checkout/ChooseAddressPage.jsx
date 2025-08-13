@@ -5,7 +5,7 @@ import AddNewAddressForm from "../userInfo/AddNewAddressForm"
 import { increaseQuantity,decreaseQuantity} from "../../slices/cartSlice";
 import { FaTrash } from "react-icons/fa";
 import { GetUserCart,UserAddressDelete,AddToCart,GetUser,UserAddressInCart,CreateUserOrder,payment_verification,payment_fails} from "../../utils/api/Httproutes";
-
+import { useSession } from "next-auth/react";
 
 export default function ChooseAddressPage() {
    const [items, setItems] = useState([]);
@@ -18,6 +18,7 @@ const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [activeTab, setActiveTab] = useState("address");
   const [showForm, setShowForm] = useState(false);
  const shouldRefetchUserAddress = useSelector((state) => state.user.shouldRefetchUserAddress);
+const { data: session, status } = useSession();
 
   // Total Price Calculation
   const totalPrice = items.reduce((acc, item) => {
@@ -127,9 +128,12 @@ const AppliedCoupons = response?.data?.appliedCoupons || [];
 
 
   useEffect(() => {
-    GetUserCartByUserId();
+     if (status === "authenticated") {
+ GetUserCartByUserId();
     GetUserAdress()
-  }, []);
+     }
+   
+  }, [status]);
 
 
   const loadRazorpayScript = () => {

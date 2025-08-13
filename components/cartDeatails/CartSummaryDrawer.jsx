@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import { useSession } from "next-auth/react";
 import {
   GetUserCart,
   AddToCart,
@@ -22,6 +23,7 @@ export default function CartSummaryDrawer() {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [items, setItems] = useState([]);
   const [CartResponse, setCartResponse] = useState(null);
+   const { data: session, status } = useSession();
 
   const dispatch = useDispatch();
   const ApplyCouponGetCart = useSelector((state) => state.user.ApplyCouponGetCart);
@@ -65,15 +67,21 @@ export default function CartSummaryDrawer() {
   };
 
   useEffect(() => {
+  if (status === "authenticated") {
     GetUserCartByUserId();
-  }, []);
+  }
+}, [status]);
 
   useEffect(() => {
-    GetUserCartByUserId();
+    if (status === "authenticated") {
+GetUserCartByUserId();
+    } 
   }, [ApplyCouponGetCart]);
 
   useEffect(() => {
-  GetUserCartByUserId();
+  if (status === "authenticated") {
+GetUserCartByUserId();
+    }
   },[cartUpdateStatus, dispatch]); 
   
 
