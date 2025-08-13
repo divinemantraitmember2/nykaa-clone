@@ -42,7 +42,7 @@ export default async function CategoryPage({ params, searchParams }) {
       if (productRes?.status === 200 && productRes?.data?.code === 200) {
         products = productRes?.data?.data || [];
       }
-
+      
       if (filterRes?.status === 200) {
         availableFilters = filterRes?.data?.data || null;
       }
@@ -50,16 +50,12 @@ export default async function CategoryPage({ params, searchParams }) {
       console.error("API Error:", apiError);
     }
 
-    //  Safer "not found" check
-    const isCompletelyInvalidCategory =
-      products.length === 0 &&
-      (!availableFilters || Object.keys(availableFilters).length === 0);
+    // const isCompletelyInvalidCategory = products.length === 0 &&(!availableFilters || Object.keys(availableFilters).length === 0);
 
-    if (isCompletelyInvalidCategory) {
-      console.warn(" No products or filters found for category:", category);
-      return <p>Product not found and filter not found</p>;
-      // return <NotFound />;
-    }
+    // if (isCompletelyInvalidCategory) {
+    //   return <p>Product not found and filter not found</p>;
+    //   // return <NotFound />;
+    // }
 
     return (
       <main className="min-h-screen bg-white">
@@ -82,9 +78,9 @@ export default async function CategoryPage({ params, searchParams }) {
                 <ProductGrid productsData={products} catSlug={category} />
               )}
 
-              {products.length === 0 && (
+              {/* {products.length === 0 && (
                 <p className="text-center text-gray-500 py-10">No Products Found</p>
-              )}
+              )} */}
 
               {products.length > 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
