@@ -1,5 +1,6 @@
 import SidebarFilter from "../../components/category/SidebarFilter";
 import ProductGrid from "../../components/category/ProductGrid";
+import NotFound from "../not-found"
 import {
   GetProductofcategorylist,
   GetProductFilters,
@@ -79,10 +80,7 @@ try {
 
 if (products.length === 0 && !availableFilters) {
   return (
-    <div className="w-full text-center py-10">
-      <h1 className="text-2xl font-bold">Category Not Found</h1>
-      <p className="text-gray-600">The category you are looking for does not exist.</p>
-    </div>
+    <NotFound/>
   );
 }
 
@@ -109,9 +107,7 @@ if (products.length === 0 && !availableFilters) {
                 <ProductGrid productsData={products} catSlug={category} />
               )}
               {products.length === 0 && (
-                <div className="text-center text-sm text-gray-600 mt-10">
-                  No Products Found
-                </div>
+                 <NotFound/>
               )}
               {products.length > 0 && (
                 <div className="text-center text-sm text-gray-600 mt-10">
@@ -125,10 +121,7 @@ if (products.length === 0 && !availableFilters) {
     );
   } catch (err) {
     return (
-      <div className="text-center p-10">
-        <h2>No Products Found</h2>
-        <p>Please try another category or search. catch..</p>
-      </div>
+     <NotFound/>
     );
   }
 }
