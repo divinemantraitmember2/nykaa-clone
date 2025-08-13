@@ -108,7 +108,7 @@ if (products.length === 0 && !availableFilters) {
                 <ProductGrid productsData={products} catSlug={category} />
               )}
               {products.length === 0 && (
-                 <> product not found</>
+                 <p> product not found</p>
                 //  <NotFound/>
               )}
               {products.length > 0 && (
