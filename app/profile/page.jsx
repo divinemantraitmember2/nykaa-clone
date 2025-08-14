@@ -19,5 +19,5 @@ export default function UserProfile() {
     return <p>Loading...</p>; 
   }
 
-  return <ProfilePage />;
+  return <ProfilePage/>;
 }
