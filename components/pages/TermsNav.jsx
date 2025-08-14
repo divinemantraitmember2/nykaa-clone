@@ -6,7 +6,7 @@ export default function TermsNav() {
   const pathname = usePathname();
 
   const links = [
-    { label: "General Terms", href: "/terms/conditions" },
+    { label: "Terms And Conditions", href: "/terms/terms-and-conditions" },
     { label: "Privacy Policy", href: "/terms/privacy-policy" },
   ];
 

@@ -46,3 +46,24 @@ export async function GetProductFilters(payload) {
   }
 };
 
+export async function GetPagesDetails(payload) {
+  try {
+    const response = await axios.get(`https://api.pondric.com/api/v1/page/get/${payload}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+         
+          Authorization: `Bearer ll`
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("GetAboutUsPage error:", error);
+    return [];
+  }
+}
+
+

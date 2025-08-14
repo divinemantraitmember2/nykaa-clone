@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
-import {  FaBars, FaSearch,FaHeart } from "react-icons/fa";
+
+import { Heart,Search, Menu} from "lucide-react";
 import Link from "next/link";
 import {ShoppingCart, User } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -28,13 +29,13 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
             </div>
         </Link>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <FaBars className="text-xl" />
+          <Menu className="text-xl" />
         </button>
       </div>
 
       <div className="px-4  md:hidden">
         <div className="flex items-center bg-white px-4 py-2  border border-pink-700 rounded">
-          <FaSearch className="text-pink-600 mr-2 text-sm" />
+          <Search className="text-pink-600 mr-2 text-sm" />
           <input type="text" placeholder="Explore our Beauty Collection" className="bg-transparent w-full text-sm outline-none text-gray-600" />
         </div>
       </div>
@@ -70,8 +71,12 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
         </div>
 
         <div className="flex items-center space-x-4">
-          <input type="text" placeholder="Search on Pondric" className="border-b border-pink-90 px-3 py-3 mx-8 bg-pink-100 text-sm w-80" />
-
+         <input
+  type="text"
+  placeholder="Search on Pondric"
+  className="border border-pink-90 rounded px-2 py-2 mx-8 bg-white-100 text-sm w-80 
+             focus:border-pink-90 focus:outline-none"
+/>
           {session?.user ? (
             <Link href="/profile">
               <img src={userImage} alt="User" width={32} height={32} className="rounded-full mx-5 cursor-pointer" />
@@ -82,11 +87,15 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
             </button>
           )}
 
-          <Link href="/profile" className="relative mx-5  hover:text-pink-600 transition-colors duration-200">
-             <FaHeart className="text-xl text-black-600" />
-              </Link>
+              <Link
+  href="/profile"
+  className="relative mx-5 hover:text-pink-600 transition-colors duration-200"
+>
+  <Heart className="w-6 h-6 text-gray-800 group-hover:text-pink-600" />
 
-        <button  onClick={() => dispatch(openUserCartDrawar())} className="relative flex items-center gap-1 px-3 py-1 text-black hover:text-pink-600 transition-colors duration-200">
+</Link>
+
+        <button  onClick={() => dispatch(openUserCartDrawar())} className="relative flex mx-2 items-center gap-1 px-3 py-1 text-black hover:text-pink-600 transition-colors duration-200">
       <ShoppingCart size={20} />
       <span className="font-medium sm:inline ">Cart</span>
 

@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 
 
 const api = axios.create({
-  // baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+   baseURL:"https://api.pondric.com",
 });
 
 
@@ -22,7 +22,7 @@ api.interceptors.request.use(
 );
 
 export const loginuser = (payload) => {
-    let requestUrl = `https://api.pondric.com/api/v1/user/login`
+    let requestUrl = `/api/v1/user/login`
     let loginWith={
       "phone":payload.phone
     }
@@ -30,27 +30,27 @@ export const loginuser = (payload) => {
 }
 
 export const Registeruser = (payload) => {
-    let requestUrl = `https://api.pondric.com/api/v1/user/profile`
+    let requestUrl = `/api/v1/user/profile`
     return api.post(requestUrl,payload);
 }
 
 export const UserAddreAddAndUpdate= async(actions,payload)=>{
-   const requestUrl=`https://api.pondric.com/api/v1/user/profile/address/add`;
+   const requestUrl=`/api/v1/user/profile/address/add`;
    return api.post(requestUrl, payload)
 }
 
 export const UserAddressDelete = async (addressId) => {
-  const requestUrl = `https://api.pondric.com/api/v1/user/profile/address/${addressId}/remove`;
+  const requestUrl = `/api/v1/user/profile/address/${addressId}/remove`;
   return api.delete(requestUrl);
 };
 
 export const GetUser= async()=>{
-   const requestUrl=`https://api.pondric.com/api/v1/user/profile/get`;
+   const requestUrl=`/api/v1/user/profile/get`;
    return api.get(requestUrl)
 
 }
 export const AddToCart = async (actionPayload, payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/user/add2bag`;
+  const requestUrl = `/api/v1/user/add2bag`;
   return api.post(requestUrl, payload, {
     headers: {
       action: `${actionPayload}`,
@@ -60,12 +60,12 @@ export const AddToCart = async (actionPayload, payload) => {
 };
 
 export const AddCoupon = async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/apply-coupon`;
+  const requestUrl = `/api/v1/apply-coupon`;
   return await api.post(requestUrl, payload);
 };
 
 export const CouponRemove = async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/remove-coupon`;
+  const requestUrl = `/api/v1/remove-coupon`;
   return await api.delete(requestUrl, {
     data: payload,
   });
@@ -73,7 +73,7 @@ export const CouponRemove = async (payload) => {
 
 export async function GetUserCart(){
   try{ 
-    const response= await api.get(`https://api.pondric.com/api/v1/user/cart/get`);
+    const response= await api.get(`/api/v1/user/cart/get`);
     return response.data
   }catch(error){
     return [];
@@ -81,28 +81,40 @@ export async function GetUserCart(){
 }; 
 
 export const CreateUserOrder = async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/order/create`;
+  const requestUrl = `/api/v1/order/create`;
   return await api.post(requestUrl, payload);
 };
  
  export const  payment_verification= async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/payment/verify`;
+  const requestUrl = `/api/v1/payment/verify`;
   return await api.post(requestUrl, payload);
 };
 export const  payment_fails= async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/order/failed`;
+  const requestUrl = `/api/v1/order/failed`;
   return await api.post(requestUrl, payload);
 };
 export const UserAddressInCart= async(payload)=>{
-  const requestUrl = `https://api.pondric.com/api/v1/user/cart/property/set`;
+  const requestUrl = `/api/v1/user/cart/property/set`;
   return api.post(requestUrl, payload, {
   });
 }
 
 export const GetUserOrder = async (payload) => {
-  const requestUrl = `https://api.pondric.com/api/v1/orders`;
+  const requestUrl = `/api/v1/orders`;
   return await api.get(requestUrl, payload);
 }
+
+// export async function GetAboutUsPage() {
+//   try { 
+//     const response = await api.get(`/api/v1/page/get/about-us`);
+//     return response;
+//   } catch (error) {
+//     console.error("GetAboutUsPage API error:", error.message);
+//     return null; // keep it predictable
+//   }
+// }
+
+
 
 // export async function GetProductofcategorylist (payload) {
 //   try{ 

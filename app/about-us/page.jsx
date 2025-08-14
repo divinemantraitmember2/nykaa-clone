@@ -1,4 +1,27 @@
-export default function AboutPage() {
+
+import  {GetPagesDetails}  from "../../utils/api/serverApi";
+import NotFound from "../not-found";
+
+
+export default async function AboutPage() {
+
+let pageData = null;
+
+  try {
+    const response = await GetPagesDetails("about-us");
+    if (response?.status === 200 && response?.data?.code === 200) {
+      pageData = response.data.data;
+      
+    } else {
+      return <NotFound />;
+    }
+  } catch (error) {
+    console.error("Error fetching About Us page:", error);
+    return <NotFound />;
+  }
+
+  if (!pageData) return <NotFound />;
+
   return (
     <main className="flex flex-col min-h-screen bg-white">
       {/* Top Banner */}
@@ -17,16 +40,11 @@ export default function AboutPage() {
 
       {/* Introduction */}
       <section className="max-w-6xl mx-auto px-4 py-12 md:py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
-          Who We Are
-        </h2>
-        <p className="text-gray-600 leading-relaxed text-base md:text-lg">
-          Welcome to <span className="font-semibold text-pink-600">Our Company</span>, 
-          where passion meets innovation. We specialize in delivering high-quality 
-          products and services that bring value to our customers. Our mission is 
-          simple – to provide excellence, inspire creativity, and build trust through 
-          every interaction.
-        </p>
+        <div
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: pageData.content }} // 'content' API ke data ka field
+        />
+        
       </section>
 
       {/* Mission & Vision */}

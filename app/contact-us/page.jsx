@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
+import ContactusFAQPage from "../../components/pages/ContactusFAQPage"
+import ContactForm from "../../components/pages/ContactForm"
 
 export default function ContactUs() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -40,99 +42,38 @@ export default function ContactUs() {
 
       {/* Content Section */}
       <div className="mx-auto px-2  lg:px-8 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2">
           {/* Contact Info */}
-          <div className="lg:col-span-4 bg-white shadow-lg p-6 space-y-6">
-            <div className="flex items-center gap-4">
-              <Mail className="w-6 h-6 text-pink-500" />
-              <div>
-                <p className="font-semibold text-gray-900">Email</p>
-                <p className="text-gray-600">support@pondric.com</p>
-              </div>
+          <div className="lg:col-span-9  space-y-2">
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-1">
+            <div className="lg:col-span-9 space-y-2">
+              <ContactForm/>
             </div>
-            <div className="flex items-center gap-4">
-              <Phone className="w-6 h-6 text-green-500" />
-              <div>
-                <p className="font-semibold text-gray-900">Phone</p>
-                <p className="text-gray-600">+1 234 567 890</p>
-              </div>
+            <div className="lg:col-span-3 space-y-2">
+              <div className="flex-1 min-w-[200px]">
+          <p className="text-sm text-gray-600" >Or Reach out to us:</p>
+          <p className="text-base font-semibold text-gray-800">
+            pondric@gmail.com
+          </p>
+        </div>
             </div>
-            <div className="flex items-center gap-4">
-              <MapPin className="w-6 h-6 text-red-500" />
-              <div>
-                <p className="font-semibold text-gray-900">Location</p>
-                <p className="text-gray-600">123 Pondric Street, NY</p>
-              </div>
+              
             </div>
+            <div className="">
+                <ContactusFAQPage/>
+            </div>
+            
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-8 bg-white shadow-lg p-6 ">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block font-medium text-gray-700 mb-1">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
-                  placeholder="Enter your name"
-                />
-              </div>
-
-              <div>
-                <label className="block font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
-                  placeholder="you@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  required
-                  rows="5"
-                  className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition"
-                  placeholder="Write your message here..."
-                ></textarea>
-              </div>
-
-              {/* Centered Button */}
-              <div className="flex justify-center">
-                <button
-                  type="submit"
-                  className="w-[50%] bg-pink-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-pink-700 transition sm:w-auto sm:px-8"
-                >
-                  Send Message
-                </button>
-              </div>
-
-              {status && (
-                <p className="text-green-600 text-center font-medium mt-2">
-                  {status}
-                </p>
-              )}
-            </form>
+          <div className="lg:col-span-3 ">
+           
           </div>
         </div>
       </div>
+
+    
     </main>
   );
 }

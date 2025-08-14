@@ -1,19 +1,8 @@
 import TermsNav from "../../../components/pages/TermsNav";
-import { notFound } from "next/navigation";
+import  {GetPagesDetails}  from "../../../utils/api/serverApi";
+import NotFound from "../../not-found";
 
 export const dynamic = "force-dynamic"; // Always SSR
-
-const termsData = {
-  conditions: `
-1. Your Agreement
-This website www.pondric.com and/or the pondric App...
-  `,
-  "privacy-policy": `
-Terms & Conditions for AI Tools:
-1. Usage Restrictions...
-2. Data Privacy...
-  `,
-};
 
 export default async function TermsPage({ params }) {
   if (typeof params?.then === "function") {
@@ -22,28 +11,41 @@ export default async function TermsPage({ params }) {
 
   const { slug } = params || {};
 
-  if (!slug) notFound();
+  if (!slug) <NotFound/>;
 
-  const content = termsData[slug];
-  if (!content) notFound();
-
-  const pageTitle =
-    slug === "conditions" ? "Terms & Conditions" : "Privacy Policy";
+ console.log("slug",slug)
+  let pageData = null;
+  
+    try {
+      const response = await GetPagesDetails(`${slug}`);
+      if (response?.status === 200 && response?.data?.code === 200) {
+        pageData = response.data.data;
+        
+      } else {
+        return <NotFound />;
+      }
+    } catch (error) {
+      console.error("Error fetching About Us page:", error);
+      return <NotFound />;
+    }
+  
+    if (!pageData) return <NotFound />;
 
   return (
     <main className="min-h-screen bg-gray-50">
     <section className="relative w-full bg-gradient-to-r from-pink-200 via-pink-100 to-yellow-100">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
     <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-3 text-gray-900">
-      {pageTitle}
+      {slug}
     </p>
     <p className="text-base sm:text-lg lg:text-xl text-gray-700 max-w-3xl">
-      {slug === "conditions"
+      {slug === "terms-and-conditions"
         ? "Read our terms carefully to understand your rights and responsibilities."
         : "Learn how we handle your personal data and privacy protection."}
     </p>
   </div>
 </section>
+
 
       {/* Content Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -58,16 +60,12 @@ export default async function TermsPage({ params }) {
           {/* Main Content */}
           <section className="lg:col-span-9">
             <div className="bg-white  shadow-lg border border-gray-100 p-4 transition-all duration-300 hover:shadow-xl">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">
-                {pageTitle}
-              </h1>
-              <div className="prose max-w-none text-gray-700 leading-relaxed">
-                {content.split("\n").map((line, idx) => (
-                  <p key={idx} className="mb-3">
-                    {line.trim()}
-                  </p>
-                ))}
-              </div>
+               <div
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: pageData.content }} 
+        />
+        
+             
             </div>
           </section>
         </div>

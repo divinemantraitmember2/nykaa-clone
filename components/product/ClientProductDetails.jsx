@@ -107,7 +107,9 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
       try {
         const res = await AddToCart("add", addcart);
-        setShowGoToCart(true)
+        if(res?.status===200 && res?.data?.code===200 && res.data.message==='Item added to cart'){
+          setShowGoToCart(true)
+        }
         console.log("Add to Cart Response:", res);
       } catch (error) {
         console.error("Add to Cart Error:", error);
