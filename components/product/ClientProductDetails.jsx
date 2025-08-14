@@ -81,7 +81,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
   const handleAddToCart = async () => {
     console.log("selectedSlug",selectedSlug)
-     setShowGoToCart(true)
+     
     if (status === "unauthenticated") {
       dispatch(openLoginModal());
     } else {
@@ -107,7 +107,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
 
       try {
         const res = await AddToCart("add", addcart);
-       
+        setShowGoToCart(true)
         console.log("Add to Cart Response:", res);
       } catch (error) {
         console.error("Add to Cart Error:", error);
