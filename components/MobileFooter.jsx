@@ -40,7 +40,7 @@ export default function MobileFooter() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl  overflow-hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl  shadow-pink-300 overflow-hidden">
       <ul className="flex justify-around items-center h-20  text-black ">
         {navItems.map((item) => {
           const isActive = pathname === item.href;

@@ -10,7 +10,7 @@ import ScrollToTop from "../components/homecomponent/ScrollToTop";
 import ClientToastProvider from "../components/ClientToastProvider";
 
 export const metadata = {
-  title: "Meri Website",
+  title: "pondric",
   description: "Description text yaha",
   icons: {
     icon: "/favicon.ico",
@@ -30,23 +30,19 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* ✅ Inter font via Google Fonts */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased font-light">
         <Providers>
-          <Header categories={categories} />
-          <UserAuthModal />
+          {/* <Header categories={categories} /> */}
+          <UserAuthModal/>
           {children}
           <Footer />
-          <MobileFooter />
-          <CartSummaryDrawer />
+          <MobileFooter/>
+          <CartSummaryDrawer/>
         </Providers>
-        <ScrollToTop />
-        <ClientToastProvider />
+        <ScrollToTop/>
+        <ClientToastProvider/>
       </body>
     </html>
   );
