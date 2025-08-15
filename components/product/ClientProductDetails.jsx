@@ -10,6 +10,7 @@ import { openLoginModal,openUserCartDrawar,toggleUserGetCart } from "../../slice
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
+import { toast } from "react-toastify";
 
 
 import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp} from "lucide-react";
@@ -102,13 +103,15 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
         sku: product.sku,
         size: selectedSize,
         quantity: 1,
-        slug:product.slug
+        slug:selectedSlug
       };
 
       try {
         const res = await AddToCart("add", addcart);
         if(res?.status===200 && res?.data?.code===200 && res.data.message==='Item added to cart'){
           setShowGoToCart(true)
+         toast.success(`${product.title} has been added to your cart successfully!`);
+         dispatch(toggleUserGetCart())
         }
         console.log("Add to Cart Response:", res);
       } catch (error) {

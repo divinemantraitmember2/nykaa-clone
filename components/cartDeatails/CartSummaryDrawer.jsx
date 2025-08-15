@@ -17,6 +17,8 @@ import {
 } from "../../slices/cartSlice";
 import { openUserCartDrawar } from "../../slices/userSlice";
 import CouponForm from "./CouponForm";
+import { toast } from "react-toastify";
+
 
 export default function CartSummaryDrawer() {
   const [loading, setLoading] = useState(false);
@@ -112,7 +114,10 @@ export default function CartSummaryDrawer() {
     try {
       dispatch(removeFromCart(id));
       const res = await AddToCart("remove", payload);
-      if (res.status === 200) GetUserCartByUserId();
+      if (res.status === 200){
+        toast.success(`${item.title} has been removed`)
+        GetUserCartByUserId();
+      } 
     } catch (err) {
       console.error("Remove error", err);
     }
