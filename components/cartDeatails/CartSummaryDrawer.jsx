@@ -14,6 +14,7 @@ import {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  updateCartCount,
 } from "../../slices/cartSlice";
 import { openUserCartDrawar } from "../../slices/userSlice";
 import CouponForm from "./CouponForm";
@@ -48,7 +49,7 @@ export default function CartSummaryDrawer() {
 
       const AppliedCoupons = response?.data?.appliedCoupons || [];
       setAppliedCoupon(AppliedCoupons.length > 0 ? AppliedCoupons[0] : null);
-
+      dispatch(updateCartCount(cartItems.length));
       const formattedItems = cartItems.map((item) => ({
         id: item?.sku || item?.productName || "",
         title: item?.productName || "Unnamed Product",
@@ -59,7 +60,7 @@ export default function CartSummaryDrawer() {
         color: item?.variants?.color || "N/A",
         size: item?.size || "N/A",
       }));
-
+      
       setItems(formattedItems);
     } catch (error) {
       console.error("Cart fetch error:", error);

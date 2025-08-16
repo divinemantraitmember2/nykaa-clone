@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   items: [],
   total: 0,
+  countItems:0,
 };
 
 const cartSlice = createSlice({
@@ -42,6 +43,11 @@ const cartSlice = createSlice({
   }
   // Do nothing if quantity is already 1
 },
+
+updateCartCount(state, action) {
+      state.countItems = action.payload; // yaha sirf length rakhenge
+    },
+
   },
 });
 
@@ -51,6 +57,7 @@ export const {
   clearCart,
   increaseQuantity,
   decreaseQuantity,
+  updateCartCount,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

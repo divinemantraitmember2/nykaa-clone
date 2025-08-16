@@ -11,8 +11,6 @@ import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
 import { toast } from "react-toastify";
-
-
 import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp} from "lucide-react";
 
 
@@ -29,7 +27,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   const [openDetails, setOpenDetails] = useState(false);
   const [showGoToCart, setShowGoToCart] = useState(false);
 
-  
+
   // Auto-select first color and size on load
   useEffect(() => {
     console.log(product)
@@ -249,7 +247,7 @@ function get_cart_details(){
         <img
           src={`${selectedImg}?tr=w-500`}
           alt="Main"
-          className="w-full h-full object-contain rounded"
+          className="w-full h-full object-contain "
         />
       </div>
     </div>

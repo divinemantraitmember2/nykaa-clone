@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
-
 import { Heart,Search, Menu} from "lucide-react";
 import Link from "next/link";
 import {ShoppingCart, User } from "lucide-react";
@@ -11,13 +10,10 @@ import MobileDrawer from "../components/MobileDrawer";
 
 export default function Navbar({ categories, onHoverCategory, onLeaveCategory }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
   const dispatch = useDispatch();
-  const cartCount = useSelector((state) => state.cart.items.length);
+  const cartCount = useSelector((state) => state.cart.countItems);
   const { data: session } = useSession();
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
-
-   
 
   return (
     <div className="w-full bg-[#fff] relative py-2">
