@@ -6,17 +6,19 @@ import { Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import Link from "next/link";
 
 export default function ShopTopCategories() {
   return (
-    <div className="w-full bg-white px-4 sm:px-2 lg:px-10 py-20">
+    <div className="w-full bg-white px-4 sm:px-2 lg:px-10 py-10">
       <h2 className="text-start text-3xl sm:text-4xl font-bold text-gray-800 mb-8">
         SHOP TOP CATEGORIES
       </h2>
 
-      <div className="hidden lg:grid grid-cols-5 gap-6">
+      {/* Desktop Grid */}
+      <div className="hidden lg:grid grid-cols-4 gap-6">
         {categories.map((cat, index) => (
-          <CategoryCard key={index} name={cat.name} image={cat.image} />
+          <CategoryCard key={index} name={cat.name} image={cat.image} slug={cat.slug} />
         ))}
       </div>
 
@@ -25,11 +27,9 @@ export default function ShopTopCategories() {
         <Swiper
           className="shop-top-cat-swiper"
           modules={[Pagination]}
-          pagination={{
-            clickable: true,
-          }}
+          pagination={{ clickable: true }}
           spaceBetween={16}
-          slidesPerView={2}
+          slidesPerView={1.5}
           breakpoints={{
             640: { slidesPerView: 3 },
             768: { slidesPerView: 4 },
@@ -37,7 +37,7 @@ export default function ShopTopCategories() {
         >
           {categories.map((cat, index) => (
             <SwiperSlide key={index}>
-              <CategoryCard name={cat.name} image={cat.image} />
+              <CategoryCard name={cat.name} image={cat.image}slug={cat.slug} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -46,12 +46,14 @@ export default function ShopTopCategories() {
   );
 }
 
-function CategoryCard({ name, image }) {
+function CategoryCard({ name, image,slug }) {
   return (
-    <div className="bg-pink-100 rounded-xl overflow-hidden shadow-pink-400 shadow-md hover:shadow-xl transition-shadow duration-300">
-      <div className="relative w-full aspect-square overflow-hidden group">
+    <div className="bg-pink-100 transition-shadow duration-300">
+      {/* Full-size Image Container */}
+      <Link href={`/${slug}`}>
+      <div className="relative w-full h-85 overflow-hidden group">
         <Image
-          src={`${image}?tr=w-212,h-283`}
+          src={image} // 👈 Removed width/height query param
           alt={name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -62,14 +64,45 @@ function CategoryCard({ name, image }) {
           {name}
         </p>
       </div>
+      </Link>
     </div>
   );
 }
 
 const categories = [
-  { name: "Topwear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
-  { name: "Bottomwear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
-  { name: "Indian Wear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
-  { name: "Western Wear", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
-  { name: "Kids", image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif" },
+  {
+    name: "Men",
+    slug: "men",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+  },
+  {
+    name: "Women",
+    slug: "women",
+    image: "/images/women.avif",
+  },
+  {
+    name: "Kids",
+    slug: "kids",
+    image: "https://ik.imagekit.io/pondric/catalog/product/kg01/lavender/kg01-lavender-01.avif",
+  },
+  {
+    name: "Topwear",
+    slug: "men-bottomwear",
+    image: "/images/topwear.avif",
+  },
+  {
+    name: "Bottomwear",
+    slug: "men-topwear",
+    image: "/images/bottmwear.avif",
+  },
+  {
+    name: "Indian Wear",
+    slug: "women-indianwear",
+    image: "/images/indiaweare.avif",
+  },
+  {
+    name: "Western Wear",
+    slug: "women-westernwear",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+  },
 ];
