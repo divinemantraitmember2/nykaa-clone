@@ -39,7 +39,7 @@ let pageData = null;
       </section>
 
       {/* Introduction */}
-      <section className="max-w-6xl mx-auto px-4 py-12 md:py-16">
+      <section className="max-w-6xl  mx-auto px-4 py-12 md:py-16 about-us">
         <div
           className="prose max-w-none"
           dangerouslySetInnerHTML={{ __html: pageData.content }} // 'content' API ke data ka field
@@ -109,7 +109,7 @@ let pageData = null;
             always excited to collaborate.
           </p>
           <a
-            href="/"
+            href="/contact-us"
             className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition"
           >
             Contact Us

@@ -52,4 +52,43 @@ h1,h2,h3,h4{
   box-shadow: 0 0 6px rgba(236, 72, 153, 0.6);
 }
 
+.shipping-policy h1{
+  font-size: large;
+  border-bottom:2px solid ;
+  margin-bottom: 10px;
+  font-weight: bold;
 
+}
+
+.shipping-policy h2{
+  font-size:medium;
+  margin-bottom: 5px;
+  font-weight: bold;
+
+}
+.about-us h2{
+  font-size:medium;
+  margin-bottom: 5px;
+  font-weight: bold;
+
+}
+
+.about-us h1{
+  font-size: large;
+  border-bottom:2px solid ;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.about-us ul{
+  list-style-type: circle;
+}
+.shipping-policy ul{
+  list-style-type: circle;
+}
+
+.conditoinandPolicy h2{
+  font-size:medium;
+  margin-bottom: 5px;
+  font-weight: bold;
+
+}

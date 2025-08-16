@@ -24,7 +24,8 @@ export const footerData = [
     title: "Policies",
     links: [
       { label: "Privacy Policy", slug: "terms/privacy-policy" },
-      { label: "Terms & Conditions", slug: "terms/conditions" },
+      { label: "Terms & Conditions", slug: "/terms/terms-and-conditions" },
+      { label: "Shipping Policy", slug: "/terms/terms-and-conditions" },
     ],
   },
   {

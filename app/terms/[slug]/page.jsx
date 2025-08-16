@@ -59,13 +59,12 @@ export default async function TermsPage({ params }) {
 
           {/* Main Content */}
           <section className="lg:col-span-9">
-            <div className="bg-white  shadow-lg border border-gray-100 p-4 transition-all duration-300 hover:shadow-xl">
+            <div className="bg-white p-4 ">
                <div
-          className="prose max-w-none"
+          className="prose max-w-none conditoinandPolicy"
           dangerouslySetInnerHTML={{ __html: pageData.content }} 
         />
         
-             
             </div>
           </section>
         </div>

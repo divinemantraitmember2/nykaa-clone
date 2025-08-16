@@ -34,7 +34,7 @@ export default function TermsNav() {
       </div>
 
       {/* Desktop view → vertical card menu */}
-      <div className="hidden lg:flex flex-col gap-3 p-4 bg-white  shadow-md border border-gray-100 sticky top-24">
+      <div className="hidden lg:flex flex-col gap-3 p-4 bg-white sticky top-24">
         <h2 className="text-lg font-semibold text-gray-800 mb-2">Terms Menu</h2>
         {links.map((link) => (
           <Link

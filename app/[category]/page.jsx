@@ -5,10 +5,9 @@ import { GetProductofcategorylist ,GetProductFilters} from "../../utils/api/serv
 
 export default async function CategoryPage(propsPromise) {
   try {
-    // ✅ Await the props first
+   
     let { params, searchParams } = await propsPromise;
 
-    // ✅ If they are promises themselves, await them
     if (typeof params?.then === "function") {
       params = await params;
     }
@@ -60,10 +59,9 @@ export default async function CategoryPage(propsPromise) {
 
       
     const isCompletelyInvalidCategory = products.length === 0 && isFiltersEmpty;
-    console.log("isCompletelyInvalidCategory",isCompletelyInvalidCategory)
+   
 
     if (isCompletelyInvalidCategory) {
-      console.log("Invalid category detected, rendering NotFound");
       return <NotFound />;
     }
 
