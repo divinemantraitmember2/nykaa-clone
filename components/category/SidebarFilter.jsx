@@ -123,17 +123,17 @@ export default function SidebarFilter({ filters }) {
 
                     return (
                       <li key={i}>
-                        <label className="inline-flex items-center gap-1 cursor-pointer select-none rounded-full border border-gray-200 px-1 py-1.5 shadow-sm hover:shadow-md hover:border-pink-400 hover:bg-pink-50 transition-all duration-200">
+                        <label className="inline-flex items-center gap-1 cursor-pointer select-none rounded-full border border-gray-200 px-1 py-1.5  hover:border-pink-400 hover:bg-pink-50 transition-all duration-200">
                           <input
                             type="checkbox"
                             checked={isChecked}
-                            className="accent-pink-500 w-3 h-3 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-pink-300"
+                            className="accent-pink-500 w-4 h-4 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-pink-300"
                             onChange={() =>
                               handleCheckboxChange(section, item.label)
                             }
                           />
                           <span className="flex items-center gap-2">
-                            <span className="text-gray-700 group-hover:text-pink-600 transition-colors">
+                            <span className="text-gray-700 font-medium group-hover:text-pink-600 transition-colors">
                               {item.label}
                             </span>
                             <span className="text-xs text-gray-600 font-medium rounded-full bg-gray-100 px-1 py-0.5">
