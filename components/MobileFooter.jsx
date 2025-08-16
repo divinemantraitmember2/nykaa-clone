@@ -40,8 +40,8 @@ export default function MobileFooter() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl  shadow-pink-300 overflow-hidden">
-      <ul className="flex justify-around items-center h-20  text-black ">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl shadow-pink-300 overflow-hidden rounded-t-2xl">
+      <ul className="flex justify-around items-center h-15  text-black ">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -59,13 +59,13 @@ export default function MobileFooter() {
       >
         {item.icon}
         {item.label === "Cart" && cartCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
+          <span className="absolute top-1 -right-2 bg-pink-600 text-white text-[12px] px-[6px] py-[3px] rounded-full leading-none">
             {cartCount}
           </span>
         )}
       </div>
       <span
-        className={`text-[14px] mt-1 font-bold ${
+        className={`text-[12px] mt-1 font-bold ${
           isActive ? "text-pink-600" : "text-black"
         }`}
       >
@@ -85,13 +85,13 @@ export default function MobileFooter() {
       >
         {item.icon}
         {item.label === "Cart" && cartCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
+          <span className="absolute top-1 -right-2 bg-pink-600 text-white text-[12px] px-[6px] py-[4px] rounded-full leading-none">
             {cartCount}
           </span>
         )}
       </div>
       <span
-        className={`text-[14px]  font-bold ${
+        className={`text-[12px]  font-bold ${
           isActive ? "text-pink-600" : "text-black"
         }`}
       >
