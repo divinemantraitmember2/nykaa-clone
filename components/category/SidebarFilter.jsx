@@ -112,7 +112,7 @@ export default function SidebarFilter({ filters }) {
                   }`}
                 />
               </DisclosureButton>
-              <DisclosurePanel className="pt-1 pb-3 bg-gray-50">
+              <DisclosurePanel className="py-1 bg-gray-50">
                 <ul className="flex flex-wrap gap-2 text-xs p-2 text-gray-700">
                   {options.map((item, i) => {
                     const paramKey = isAttributeSection(section)

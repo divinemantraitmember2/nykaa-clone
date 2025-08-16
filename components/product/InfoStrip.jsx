@@ -42,7 +42,7 @@ export default function InfoStrip() {
               />
             </div>
 
-            <h3 className="text-sm sm:text-base md:text-lg font-medium text-gray-800">
+            <h3 className="text-sm sm:text-base  font-medium text-gray-800">
               {item.title}{" "}
               <span className="font-bold text-gray-900">{item.subtitle}</span>
             </h3>

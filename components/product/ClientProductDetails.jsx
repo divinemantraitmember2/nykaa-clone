@@ -422,7 +422,7 @@ function get_cart_details(){
             {/* Coupons */}
             <div className=" px-2">
 
-            <h2 className="text-2xl text-start font-semibold text-gray-800 mb-2">Coupons</h2>
+            <h2 className="text-lg text-start font-semibold text-gray-800 mb-2">Coupons</h2>
       
            <div className="overflow-x-auto ">
   <div className="flex gap-2 w-max">
