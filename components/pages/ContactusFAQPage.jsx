@@ -46,7 +46,7 @@ export default function ContactusFAQPage() {
 
   return (
     <main className="max-w-6xl mx-auto py-10">
-      <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+      <div className="flex flex-col md:flex-row gap-2">
         {/* Sidebar */}
         <aside className="md:w-1/4 md:border-r md:pr-4 flex md:flex-col gap-2 overflow-x-auto scrollbar-thin">
           {faqs.map((cat, idx) => {
@@ -70,14 +70,13 @@ export default function ContactusFAQPage() {
             );
           })}
         </aside>
-
         {/* Right Section */}
-        <section className="flex-1 bg-gray-50">
+        <section className="flex-1 bg-gray-50 ">
           {selectedCategory.questions.map((q, idx) => (
             <div key={idx} className="bg-white border-b border-gray-200">
               <button
                 onClick={() => toggleAccordion(idx)}
-                className="w-full flex justify-between items-center px-4 py-4 text-sm font-medium text-gray-800"
+                className="w-full flex justify-between items-center px-2 py-4 text-sm font-medium text-gray-800"
               >
                 <span>{q}</span>
                 <ChevronRight

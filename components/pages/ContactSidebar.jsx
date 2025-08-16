@@ -9,7 +9,7 @@ export default function ContactSidebar() {
   "help": {
     "phone": "+91-730-5297673",
     "hours": "Operational Hours – 9:30 AM to 7:00 PM",
-    "email": "hello@jaypore.com"
+    "email": "hello@pndric.com"
   },
   "social": [
     { "name": "Instagram", "icon": "instagram" },
@@ -23,12 +23,12 @@ export default function ContactSidebar() {
   ],
   "businessPartnership": {
     "text": "Interested in partnering with us, write to",
-    "email": "partnering.jaypore@abfrl.adityabirla.com"
+    "email": "partnering.pondric@gmail.com"
   },
   "corporateOrders": {
     "text": "For Bulk / Corporate Orders, Write To",
-    "email": "b2b@jaypore.com",
-    "phone": "(+91) 9205044554"
+    "email": "pondric@gmail.com",
+    "phone": "(+91) 8868803285"
   },
   "deliveryCheck": {
     "placeholder": "Enter 6 digit pincode"

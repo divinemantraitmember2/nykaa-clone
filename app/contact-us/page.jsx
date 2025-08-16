@@ -25,7 +25,7 @@ export default function ContactUs() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Top Banner with Background Image */}
-      <section className="relative h-72  md:h-60 bg-pink-400 w-full flex items-center justify-center">
+      {/* <section className="relative h-72  md:h-60 bg-pink-400 w-full flex items-center justify-center">
         
         <div className="absolute inset-0 "></div>
         <div className="relative z-10 text-center text-white px-4">
@@ -34,7 +34,7 @@ export default function ContactUs() {
             We’re here to help! Reach out and we’ll get back to you soon.
           </p>
         </div>
-      </section>
+      </section> */}
 
       {/* Content Section */}
       <div className="mx-auto px-2  lg:px-8 py-10">
@@ -42,7 +42,7 @@ export default function ContactUs() {
           {/* Contact Info */}
           <div className="lg:col-span-9  space-y-2">
             <div className="py-4 lg:pb-8">
-              <h2 className="text-lg font-bold uppercase border-b-3 border-black pb-1"> Contact Us
+              <h2 className="text-lg font-bold uppercase border-b-2 border-black pb-1"> Contact Us
               </h2>
             <p className="mt-4 text-base">What can we help with you today?</p>
             </div>
@@ -63,7 +63,7 @@ export default function ContactUs() {
             </div>
             <div className="">
                <div className="py-4">
-              <h2 className="text-lg font-bold uppercase border-b-3 border-black pb-1"> frequently asked questions</h2>
+              <h2 className="text-lg font-bold uppercase border-b-2 border-black pb-1"> frequently asked questions</h2>
             <p className="mt-4 text-base">What can we help with you today?</p>
             </div>
                 <ContactusFAQPage/>

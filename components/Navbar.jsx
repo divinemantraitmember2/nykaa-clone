@@ -83,7 +83,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
             </button>
           )}
 
-              <Link
+  <Link
   href="/profile"
   className="relative mx-5 hover:text-pink-600 transition-colors duration-200"
 >
