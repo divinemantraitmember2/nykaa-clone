@@ -11,45 +11,45 @@ const BuyOneGetOne = () => {
     {
       title: "T-Shirts",
       description: "BOGO on all casual tees",
-      bg: "#e0f7fa",
-      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+      gradient: "from-pink-100 to-pink-50",
+      img: "/images/free.png",
     },
     {
       title: "Jeans",
       description: "Buy 1 pair, get 1 free",
-      bg: "#fce4ec",
-      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+      gradient: "from-blue-100 to-blue-50",
+      img: "/images/free.png",
     },
     {
       title: "Sneakers",
       description: "Step up with our 1+1 offer",
-      bg: "#ede7f6",
-      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+      gradient: "from-purple-100 to-purple-50",
+      img: "/images/free.png",
     },
     {
       title: "Hoodies",
       description: "Stay warm — free 2nd piece!",
-      bg: "#fff3e0",
-      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+      gradient: "from-orange-100 to-orange-50",
+      img: "/images/free.png",
     },
     {
       title: "Jackets",
       description: "Adventure-ready gear. BOGO!",
-      bg: "#f3e5f5",
-      img: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+      gradient: "from-pink-200 to-pink-50",
+      img: "/images/free.png",
     },
   ];
 
   return (
-    <section className="py-20 px-2 lg:px-10 bg-gradient-to-b from-[#fceaeb] to-[#fbf6f6] mb-3">
-      <h2 className="text-3xl md:text-4xl font-bold text-start text-[#144e47] mb-10">
+    <section className="py-20 px-2 lg:px-10 bg-gradient-to-b from-[#fff0f2] to-[#fff] mb-3">
+      <h2 className="text-3xl md:text-4xl font-bold text-start text-[#111] mb-10">
         Buy One Get One Free
       </h2>
 
       <Swiper
         modules={[Autoplay]}
-        autoplay={{ delay: 3000 }}
-        spaceBetween={20}
+        autoplay={{ delay: 3500 }}
+        spaceBetween={25}
         slidesPerView={1.2}
         breakpoints={{
           640: { slidesPerView: 2 },
@@ -60,31 +60,29 @@ const BuyOneGetOne = () => {
         {deals.map((deal, idx) => (
           <SwiperSlide key={idx}>
             <div
-              className="relative rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 h-52 sm:h-56 flex flex-col justify-between"
-              style={{ backgroundColor: deal.bg }}
+              className={`relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group bg-gradient-to-br ${deal.gradient}`}
             >
-              {/* Circular Image at top-right */}
-              <div className="absolute top-3 right-3 w-20 h-20  rounded-full overflow-hidden border-2 border-white shadow-md">
-  <Image
-    src={deal.img}
-    alt={deal.title}
-    width={64}
-    height={64}
-    className="object-cover w-full h-full"
-  />
-</div>
+              {/* Product Image */}
+              <div className="relative w-full h-70 sm:h-64 flex items-center justify-center overflow-hidden">
+                <Image
+                  src={deal.img}
+                  alt={deal.title}
+                  width={250}
+                  height={350}
+                  className="object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-lg"
+                />
+              </div>
 
-              {/* Content */}
-              <div className="z-10">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">
+              {/* Content Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 rounded-t-2xl">
+                <h3 className="text-lg font-bold text-gray-800">
                   {deal.title}
                 </h3>
                 <p className="text-sm text-gray-600">{deal.description}</p>
+                <button className="mt-3 inline-block bg-[#144e47] text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md hover:bg-[#0f3c36] transition">
+                  Shop Now →
+                </button>
               </div>
-
-              <span className="mt-4 text-sm font-medium text-[#144e47]">
-                Shop Now →
-              </span>
             </div>
           </SwiperSlide>
         ))}

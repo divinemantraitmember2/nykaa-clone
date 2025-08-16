@@ -10,7 +10,7 @@ import {
   XMarkIcon,
   FunnelIcon,
   ChevronDownIcon,
-  ArrowPathIcon
+  ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -19,6 +19,7 @@ export default function SidebarFilter({ filters }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   const {
     colors = [],
     genders = [],
@@ -28,6 +29,7 @@ export default function SidebarFilter({ filters }) {
     categories,
   } = filters || {};
 
+  // ✅ Group attributes
   const attributeGroups = attributes.reduce((acc, item) => {
     const { name, value } = item._id;
     if (!acc[name]) acc[name] = [];
@@ -35,9 +37,14 @@ export default function SidebarFilter({ filters }) {
     return acc;
   }, {});
 
+  // ✅ Create dynamic filter sections
   const dynamicSections = {
     ...(categories && {
-      Category: categories.map((c) => ({ label: c._id, count: c.count })),
+      Category: categories.map((c) => ({
+        label: c._id,
+        name: c.name,
+        count: c.count,
+      })),
     }),
     ...(colors.length && {
       Color: colors.map((c) => ({ label: c._id, count: c.count })),
@@ -62,6 +69,7 @@ export default function SidebarFilter({ filters }) {
     }, {}),
   };
 
+  // ✅ Identify if section is attribute
   const isAttributeSection = (section) => {
     const standardSections = [
       "Category",
@@ -73,6 +81,7 @@ export default function SidebarFilter({ filters }) {
     return !standardSections.includes(section);
   };
 
+  // ✅ Checkbox change handler
   const handleCheckboxChange = (section, label) => {
     const currentParams = new URLSearchParams(searchParams.toString());
 
@@ -88,16 +97,15 @@ export default function SidebarFilter({ filters }) {
     currentParams.delete(paramKey);
     updatedValues.forEach((val) => currentParams.append(paramKey, val));
 
-
-    console.log("currentParams.toString()",currentParams.toString())
     router.push(`?${currentParams.toString()}`);
   };
 
   // ✅ Reset filters
   const handleReset = () => {
-    router.push(window.location.pathname); 
+    router.push(window.location.pathname);
   };
 
+  // ✅ Filter Sections
   const FilterSections = () => (
     <div className="space-y-3">
       {Object.entries(dynamicSections).map(([section, options]) => (
@@ -105,27 +113,33 @@ export default function SidebarFilter({ filters }) {
           {({ open }) => (
             <div className="bg-white border-gray-100 overflow-hidden">
               <DisclosureButton className="flex justify-between w-full font-medium text-gray-800 text-sm py-3 hover:bg-gray-50 transition">
-               <span className="text-[#212121] uppercase text-[16px] font-[400] leading-6 tracking-[0.38px] font-sans">
-  {section}
-</span>
+                <span className="text-[#212121] uppercase text-[16px] font-[400] leading-6 tracking-[0.38px] font-sans">
+                  {section}
+                </span>
                 <ChevronDownIcon
                   className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
                     open ? "rotate-180" : ""
                   }`}
                 />
               </DisclosureButton>
+
               <DisclosurePanel className="py-1 bg-gray-50">
                 <ul className="flex flex-wrap gap-2 text-xs p-2 text-gray-700">
                   {options.map((item, i) => {
                     const paramKey = isAttributeSection(section)
                       ? `attributes[${section.toLowerCase()}]`
                       : section.toLowerCase().replace(/ /g, "_");
+
                     const selectedValues = searchParams.getAll(paramKey);
                     const isChecked = selectedValues.includes(item.label);
 
+                    // ✅ Category -> show name, others -> show label
+                    const displayText =
+                      section === "Category" ? item.name : item.label;
+
                     return (
                       <li key={i}>
-                        <label className="inline-flex items-center gap-1 cursor-pointer select-none rounded-full border border-gray-200 px-1 py-1.5  hover:border-pink-400 hover:bg-pink-50 transition-all duration-200">
+                        <label className="inline-flex items-center gap-1 cursor-pointer select-none rounded-full border border-gray-200 px-1 py-1.5 hover:border-pink-400 hover:bg-pink-50 transition-all duration-200">
                           <input
                             type="checkbox"
                             checked={isChecked}
@@ -136,7 +150,7 @@ export default function SidebarFilter({ filters }) {
                           />
                           <span className="flex items-center gap-2">
                             <span className="text-gray-700 font-medium group-hover:text-pink-600 transition-colors">
-                              {item.label}
+                              {displayText}
                             </span>
                             <span className="text-xs text-gray-600 font-medium rounded-full bg-gray-100 px-1 py-0.5">
                               {item.count}
@@ -166,27 +180,26 @@ export default function SidebarFilter({ filters }) {
           <FunnelIcon className="w-4 h-4" />
           Filters
         </button>
-       
       </div>
 
       {/* Desktop sidebar */}
       <aside className="hidden md:block">
         <div className="text-sm font-sans bg-white">
-    <div className="flex items-center justify-between mb-4">
-  <h3 className="text-2xl font-semibold text-gray-900">Filters</h3>
-  <button
-    onClick={handleReset}
-    className="flex items-center gap-1 text-sm font-medium text-gray-400 border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 hover:text-gray-600 transition"
-  >
-    <span>Reset</span>
-    <ArrowPathIcon className="w-4 h-4" />
-  </button>
-</div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-2xl font-semibold text-gray-900">Filters</h3>
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-1 text-sm font-medium text-gray-400 border border-gray-300 px-3 py-1.5 rounded-md hover:bg-gray-50 hover:text-gray-600 transition"
+            >
+              <span>Reset</span>
+              <ArrowPathIcon className="w-4 h-4" />
+            </button>
+          </div>
           <FilterSections />
         </div>
       </aside>
 
-      {/* Mobile filter drawer fullscreen */}
+      {/* Mobile filter drawer */}
       <Dialog
         open={isMobileOpen}
         onClose={() => setIsMobileOpen(false)}
@@ -199,12 +212,12 @@ export default function SidebarFilter({ filters }) {
               <h3 className="text-sm font-semibold text-gray-900">Filters</h3>
               <div className="flex gap-1">
                 <button
-    onClick={handleReset}
-    className="flex items-center gap-1 text-sm font-medium text-gray-400 border border-gray-300 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-gray-600 transition"
-  >
-    <span>Reset</span>
-    <ArrowPathIcon className="w-4 h-4" />
-  </button>
+                  onClick={handleReset}
+                  className="flex items-center gap-1 text-sm font-medium text-gray-400 border border-gray-300 px-2 py-1 rounded-md hover:bg-gray-50 hover:text-gray-600 transition"
+                >
+                  <span>Reset</span>
+                  <ArrowPathIcon className="w-4 h-4" />
+                </button>
                 <button
                   onClick={() => setIsMobileOpen(false)}
                   className="hover:bg-gray-100 p-2 rounded-full"
@@ -213,7 +226,7 @@ export default function SidebarFilter({ filters }) {
                 </button>
               </div>
             </div>
-            
+
             <FilterSections />
           </Dialog.Panel>
         </div>

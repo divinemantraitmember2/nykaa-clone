@@ -16,7 +16,7 @@ export default function ShopTopCategories() {
       </h2>
 
       {/* Desktop Grid */}
-      <div className="hidden lg:grid grid-cols-4 gap-6">
+      <div className="hidden lg:grid grid-cols-4 gap-3">
         {categories.map((cat, index) => (
           <CategoryCard key={index} name={cat.name} image={cat.image} slug={cat.slug} />
         ))}
