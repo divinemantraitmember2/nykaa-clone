@@ -4,8 +4,8 @@ import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
+  Dialog,
 } from "@headlessui/react";
-import { Dialog } from "@headlessui/react";
 import {
   XMarkIcon,
   FunnelIcon,
@@ -37,7 +37,7 @@ export default function SidebarFilter({ filters }) {
     return acc;
   }, {});
 
-  // ✅ Create dynamic filter sections
+  // ✅ Dynamic sections
   const dynamicSections = {
     ...(categories && {
       Category: categories.map((c) => ({
@@ -69,7 +69,6 @@ export default function SidebarFilter({ filters }) {
     }, {}),
   };
 
-  // ✅ Identify if section is attribute
   const isAttributeSection = (section) => {
     const standardSections = [
       "Category",
@@ -81,23 +80,33 @@ export default function SidebarFilter({ filters }) {
     return !standardSections.includes(section);
   };
 
-  // ✅ Checkbox change handler
+  // ✅ Checkbox handler
   const handleCheckboxChange = (section, label) => {
     const currentParams = new URLSearchParams(searchParams.toString());
 
-    const paramKey = isAttributeSection(section)
+    let paramKey = isAttributeSection(section)
       ? `attributes[${section.toLowerCase()}]`
       : section.toLowerCase().replace(/ /g, "_");
 
-    const existingValues = currentParams.getAll(paramKey);
+    if (paramKey === "category") {
+      paramKey = "category_slug";
+    }
+
+    const existingValues = currentParams.get(paramKey)
+      ? currentParams.get(paramKey).split(",")
+      : [];
+
     const updatedValues = existingValues.includes(label)
       ? existingValues.filter((v) => v !== label)
       : [...existingValues, label];
 
     currentParams.delete(paramKey);
-    updatedValues.forEach((val) => currentParams.append(paramKey, val));
+    if (updatedValues.length > 0) {
+      currentParams.set(paramKey, updatedValues.join(","));
+    }
 
-    router.push(`?${currentParams.toString()}`);
+    const queryString = currentParams.toString().replace(/%2C/g, ",");
+    router.push(`?${queryString}`);
   };
 
   // ✅ Reset filters
@@ -105,7 +114,33 @@ export default function SidebarFilter({ filters }) {
     router.push(window.location.pathname);
   };
 
-  // ✅ Filter Sections
+  // ✅ Remove single filter
+  const handleRemoveFilter = (paramKey, value) => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+    const existingValues = currentParams.get(paramKey)
+      ? currentParams.get(paramKey).split(",")
+      : [];
+
+    const updatedValues = existingValues.filter((v) => v !== value);
+
+    currentParams.delete(paramKey);
+    if (updatedValues.length > 0) {
+      currentParams.set(paramKey, updatedValues.join(","));
+    }
+
+    const queryString = currentParams.toString().replace(/%2C/g, ",");
+    router.push(`?${queryString}`);
+  };
+
+  // ✅ Extract active filters
+  const activeFilters = [];
+  searchParams.forEach((value, key) => {
+    value.split(",").forEach((val) => {
+      activeFilters.push({ key, value: val });
+    });
+  });
+
+  // ✅ Filter sections
   const FilterSections = () => (
     <div className="space-y-3">
       {Object.entries(dynamicSections).map(([section, options]) => (
@@ -126,14 +161,17 @@ export default function SidebarFilter({ filters }) {
               <DisclosurePanel className="py-1 bg-gray-50">
                 <ul className="flex flex-wrap gap-2 text-xs p-2 text-gray-700">
                   {options.map((item, i) => {
-                    const paramKey = isAttributeSection(section)
+                    let paramKey = isAttributeSection(section)
                       ? `attributes[${section.toLowerCase()}]`
                       : section.toLowerCase().replace(/ /g, "_");
 
-                    const selectedValues = searchParams.getAll(paramKey);
-                    const isChecked = selectedValues.includes(item.label);
+                    if (paramKey === "category") paramKey = "category_slug";
 
-                    // ✅ Category -> show name, others -> show label
+                    const selectedValues = searchParams.get(paramKey)
+                      ? searchParams.get(paramKey).split(",")
+                      : [];
+
+                    const isChecked = selectedValues.includes(item.label);
                     const displayText =
                       section === "Category" ? item.name : item.label;
 
@@ -149,7 +187,7 @@ export default function SidebarFilter({ filters }) {
                             }
                           />
                           <span className="flex items-center gap-2">
-                            <span className="text-gray-700 font-medium group-hover:text-pink-600 transition-colors">
+                            <span className="text-gray-700 font-medium">
                               {displayText}
                             </span>
                             <span className="text-xs text-gray-600 font-medium rounded-full bg-gray-100 px-1 py-0.5">
@@ -169,6 +207,25 @@ export default function SidebarFilter({ filters }) {
     </div>
   );
 
+  // ✅ Active filter chips
+  const ActiveFilterChips = () =>
+    activeFilters.length > 0 && (
+      <div className="mt-3 flex flex-wrap gap-2">
+        {activeFilters.map((f, idx) => (
+          <span
+            key={idx}
+            className="flex items-center gap-1 text-sm bg-pink-100 text-pink-700 px-3 py-1 rounded-full shadow-sm"
+          >
+            {f.value}
+            <XMarkIcon
+              className="w-4 h-4 cursor-pointer hover:text-red-600"
+              onClick={() => handleRemoveFilter(f.key, f.value)}
+            />
+          </span>
+        ))}
+      </div>
+    );
+
   return (
     <>
       {/* Mobile filter toggle */}
@@ -185,7 +242,7 @@ export default function SidebarFilter({ filters }) {
       {/* Desktop sidebar */}
       <aside className="hidden md:block">
         <div className="text-sm font-sans bg-white">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-2xl font-semibold text-gray-900">Filters</h3>
             <button
               onClick={handleReset}
@@ -195,6 +252,10 @@ export default function SidebarFilter({ filters }) {
               <ArrowPathIcon className="w-4 h-4" />
             </button>
           </div>
+
+          {/* ✅ Active filter chips */}
+          <ActiveFilterChips />
+
           <FilterSections />
         </div>
       </aside>
@@ -226,6 +287,9 @@ export default function SidebarFilter({ filters }) {
                 </button>
               </div>
             </div>
+
+            {/* ✅ Active filter chips for mobile */}
+            <ActiveFilterChips />
 
             <FilterSections />
           </Dialog.Panel>
