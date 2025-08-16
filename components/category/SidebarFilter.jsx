@@ -136,7 +136,15 @@ export default function SidebarFilter({ filters }) {
   const activeFilters = [];
   searchParams.forEach((value, key) => {
     value.split(",").forEach((val) => {
-      activeFilters.push({ key, value: val });
+      let displayValue = val;
+
+      // agar category hai to uska readable name lao
+      if (key === "category_slug" && categories) {
+        const matched = categories.find((c) => c._id === val);
+        if (matched) displayValue = matched.name;
+      }
+
+      activeFilters.push({ key, value: val, displayValue });
     });
   });
 
@@ -207,7 +215,7 @@ export default function SidebarFilter({ filters }) {
     </div>
   );
 
-  // ✅ Active filter chips
+  // ✅ Active filter chips (slug → readable name)
   const ActiveFilterChips = () =>
     activeFilters.length > 0 && (
       <div className="mt-3 flex flex-wrap gap-2">
@@ -216,7 +224,7 @@ export default function SidebarFilter({ filters }) {
             key={idx}
             className="flex items-center gap-1 text-sm bg-pink-100 text-pink-700 px-3 py-1 rounded-full shadow-sm"
           >
-            {f.value}
+            {f.displayValue} {/* ✅ readable name dikhega */}
             <XMarkIcon
               className="w-4 h-4 cursor-pointer hover:text-red-600"
               onClick={() => handleRemoveFilter(f.key, f.value)}
@@ -288,7 +296,6 @@ export default function SidebarFilter({ filters }) {
               </div>
             </div>
 
-            {/* ✅ Active filter chips for mobile */}
             <ActiveFilterChips />
 
             <FilterSections />
