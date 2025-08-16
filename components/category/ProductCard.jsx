@@ -9,7 +9,7 @@ export default function ProductCard({ product, slug }) {
     variant?.size_stocks?.length > 0 ? variant?.size_stocks[0] : null;
 
   return (
-    <div className="group relative mb-4 w-full hover:rounded-2xl overflow-hidden  hover:shadow-lg hover:shadow-pink-200 transition-all duration-300 bg-white">
+    <div className="group relative mb-4 w-full  overflow-hidden  hover:shadow-lg hover:shadow-pink-200 transition-all duration-300 bg-white">
       {/* Wishlist Heart */}
       <div className="absolute top-1 right-1 z-10">
         <ProductHeart />
@@ -38,7 +38,7 @@ export default function ProductCard({ product, slug }) {
           {/* Title */}
           <h2
             id={`title-${product?.id}`}
-            className="text-sm md:text-base text-[#001325] font-semibold leading-snug line-clamp-2 min-h-[38px] group-hover:text-pink-600 transition-colors"
+            className="text-sm md:text-base text-[#001325]  leading-snug line-clamp-2 min-h-[38px] group-hover:text-pink-600 transition-colors"
           >
             {product?.title}
           </h2>
@@ -52,7 +52,7 @@ export default function ProductCard({ product, slug }) {
               <span className="text-gray-400 text-sm line-through">
                 ₹{sizeStock?.price_inr}
               </span>
-              <span className="text-lg font-bold text-pink-600">
+              <span className="text-sm md:text-base font-medium  text-pink-600">
                 ₹{sizeStock?.discounted_price_inr}
               </span>
             </div>
