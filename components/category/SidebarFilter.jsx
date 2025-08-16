@@ -105,7 +105,9 @@ export default function SidebarFilter({ filters }) {
           {({ open }) => (
             <div className="bg-white border-gray-100 overflow-hidden">
               <DisclosureButton className="flex justify-between w-full font-medium text-gray-800 text-sm py-3 hover:bg-gray-50 transition">
-                <span>{section}</span>
+               <span className="text-[#212121] uppercase text-[16px] font-[400] leading-6 tracking-[0.38px] font-sans">
+  {section}
+</span>
                 <ChevronDownIcon
                   className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${
                     open ? "rotate-180" : ""

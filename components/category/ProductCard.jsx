@@ -38,7 +38,7 @@ export default function ProductCard({ product, slug }) {
           {/* Title */}
           <h2
             id={`title-${product?.id}`}
-            className="text-sm font-medium text-[#001325]  leading-snug line-clamp-2  group-hover:text-pink-600 transition-colors"
+            className="text-sm font-medium text-[#212121]  tracking-[0.38px]  leading-snug line-clamp-2 "
           >
             {product?.title}
           </h2>
