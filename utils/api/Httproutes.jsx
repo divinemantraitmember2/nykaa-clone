@@ -102,7 +102,7 @@ export const UserAddressInCart= async(payload)=>{
 export const GetUserOrder = async (payload) => {
   const requestUrl = `/api/v1/orders`;
   return await api.get(requestUrl, payload);
-}
+} 
 
 // export async function GetAboutUsPage() {
 //   try { 

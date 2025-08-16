@@ -1,12 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import { CheckCircle, Clock } from "lucide-react";
 
 export default function OrderSuccess() {
-  // Dummy order details
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    // Simulate API fetch with dummy data
     const dummyOrder = {
       orderId: "ORD123456",
       customerName: "Ravi Kumar",
@@ -37,47 +36,63 @@ export default function OrderSuccess() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-5">
+    <div className="max-w-6xl mx-auto p-5">
       {/* Success Message */}
-      <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-5">
+      <div className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-6 py-4 rounded-lg shadow-md mb-8 text-start font-medium">
         ✅ Your order has been placed successfully!
       </div>
 
-      {/* Order Details */}
-      <div className="bg-white shadow rounded p-5 mb-5">
-        <h2 className="text-xl font-bold mb-3">Order Details</h2>
-        <p><b>Order ID:</b> {order.orderId}</p>
-        <p><b>Name:</b> {order.customerName}</p>
-        <p><b>Email:</b> {order.email}</p>
-        <p><b>Date:</b> {order.date}</p>
-        <p><b>Total Amount:</b> ₹{order.totalAmount}</p>
-        <p><b>Payment Status:</b> {order.paymentStatus}</p>
+      {/* Flex Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        {/* Left - Order Details */}
+        <div className="bg-white shadow-lg rounded-xl p-6">
+          <h2 className="text-xl font-bold mb-4 text-pink-600">Order Details</h2>
+          <div className="space-y-2 text-gray-700">
+            <p><b>Order ID:</b> {order.orderId}</p>
+            <p><b>Name:</b> {order.customerName}</p>
+            <p><b>Email:</b> {order.email}</p>
+            <p><b>Date:</b> {order.date}</p>
+            <p><b>Total Amount:</b> ₹{order.totalAmount}</p>
+            <p><b>Payment Status:</b> {order.paymentStatus}</p>
+          </div>
 
-        <h3 className="mt-4 font-semibold">Items:</h3>
-        <ul className="list-disc list-inside">
-          {order.items.map((item) => (
-            <li key={item.id}>
-              {item.name} - Qty: {item.qty} - ₹{item.price}
-            </li>
-          ))}
-        </ul>
-      </div>
+          <h3 className="mt-6 font-semibold text-gray-800">Items:</h3>
+          <ul className="list-disc list-inside text-gray-700">
+            {order.items.map((item) => (
+              <li key={item.id}>
+                {item.name} - Qty: {item.qty} - ₹{item.price}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      {/* Order Tracking */}
-      <div className="bg-white shadow rounded p-5">
-        <h2 className="text-xl font-bold mb-4">Order Tracking</h2>
-        <div className="relative border-l-2 border-gray-300 pl-6">
-          {order.tracking.map((step, index) => (
-            <div key={index} className="mb-6 relative">
-              <div
-                className={`w-4 h-4 rounded-full absolute -left-2 top-1.5 ${
-                  step.completed ? "bg-green-500" : "bg-gray-400"
-                }`}
-              ></div>
-              <p className="font-semibold">{step.status}</p>
-              <p className="text-sm text-gray-500">{step.date}</p>
-            </div>
-          ))}
+        {/* Right - Order Tracking */}
+        <div className="bg-white shadow-lg rounded-xl p-6">
+          <h2 className="text-xl font-bold mb-6 text-pink-600">Order Tracking</h2>
+          <div className="relative">
+            <div className="absolute top-0 left-2 h-full w-0.5 bg-gray-300"></div>
+            {order.tracking.map((step, index) => (
+              <div key={index} className="relative flex items-start mb-8 last:mb-0">
+                <div className="relative z-10">
+                  {step.completed ? (
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                  ) : (
+                    <Clock className="w-6 h-6 text-gray-400" />
+                  )}
+                </div>
+                <div className="ml-4">
+                  <p
+                    className={`font-semibold ${
+                      step.completed ? "text-green-600" : "text-gray-700"
+                    }`}
+                  >
+                    {step.status}
+                  </p>
+                  <p className="text-sm text-gray-500">{step.date}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
