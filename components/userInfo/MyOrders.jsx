@@ -136,31 +136,39 @@ const MyOrders = ({ orders }) => {
               </div>
             </div>
 
-            {/* Invoice Section */}
-            {order?.invoice &&
-              order?.invoice?.number !== "" &&
-              order?.invoice?.orderId !== "" && (
-                <div className="mt-8 bg-gradient-to-r from-pink-600 to-red-400 text-white rounded-xl shadow-lg p-6 flex flex-col md:flex-row items-center justify-between">
-                  <div>
-                    <h3 className="text-lg font-semibold">Invoice</h3>
-                    <p className="text-sm">Invoice #: {order.invoice.number}</p>
-                    <p className="text-sm">Order ID: {order.invoice.orderId}</p>
-                    <p className="text-sm">
-                      Created:{" "}
-                      {new Date(order.invoice.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                  <a
-                    href={order.invoice.s3Url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    download={order.invoice.fileName}
-                    className="mt-4 md:mt-0 flex items-center gap-2 bg-white text-pink-600 px-5 py-2 rounded-lg shadow hover:bg-gray-100 transition"
-                  >
-                    <Download className="w-5 h-5" /> Download Invoice
-                  </a>
-                </div>
-              )}
+           {/* Invoice Section */}
+{order?.invoice &&
+  order?.invoice?.number !== "" &&
+  order?.invoice?.orderId !== "" && (
+    <div className="mt-8 bg-white border border-pink-200 rounded-xl shadow-md p-6">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        {/* Invoice Details */}
+        <div>
+          <h3 className="text-lg font-semibold text-gray-800">Invoice</h3>
+          <p className="text-sm text-gray-600">Invoice #: <span className="font-medium text-gray-900">{order.invoice.number}</span></p>
+          <p className="text-sm text-gray-600">Order ID: <span className="font-medium text-gray-900">{order.invoice.orderId}</span></p>
+          <p className="text-sm text-gray-600">
+            Created:{" "}
+            <span className="font-medium text-gray-900">
+              {new Date(order.invoice.createdAt).toLocaleString()}
+            </span>
+          </p>
+        </div>
+
+        {/* Download Button */}
+        <a
+          href={order.invoice.s3Url}
+          target="_blank"
+          rel="noopener noreferrer"
+          download={order.invoice.fileName}
+          className="mt-4 md:mt-0 flex items-center gap-2 bg-pink-600 text-white px-5 py-2 rounded-lg shadow hover:bg-pink-700 transition"
+        >
+          <Download className="w-5 h-5" /> 
+          Download Invoice
+        </a>
+      </div>
+    </div>
+  )}
 
             {/* Payment Info */}
             <div className="mt-6 flex flex-col md:flex-row justify-between gap-4 border-t pt-4 text-sm text-gray-700">
