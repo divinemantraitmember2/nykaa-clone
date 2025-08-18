@@ -1,9 +1,13 @@
 "use client";
 
 import React from "react";
-import { Download } from "lucide-react";
+import { useState } from "react";
+import { Download, FileText, ChevronDown } from "lucide-react";
+import {GetUserOrderInvoice} from "../../utils/api/Httproutes"
 
 const MyOrders = ({ orders }) => {
+const [open, setOpen] = useState(false);
+
   if (!orders || orders.length === 0) {
     return (
       <div className="text-center p-6 text-gray-500 text-lg">
@@ -11,6 +15,25 @@ const MyOrders = ({ orders }) => {
       </div>
     );
   }
+
+  const handleDownload = async (userOrder) => {
+    try {
+      const pdfBlob = await GetUserOrderInvoice(userOrder.invoice.orderId);
+     if (!pdfBlob) return;
+      const link = document.createElement("a");
+      link.href = pdfBlob;
+      link.setAttribute(
+        "download",
+        userOrder.invoice.fileName || `invoice-${userOrder.invoice.orderId}.pdf`
+      );
+      link.setAttribute("target", "_blank");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Download failed", err);
+    }
+  };
 
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto">
@@ -137,38 +160,66 @@ const MyOrders = ({ orders }) => {
             </div>
 
            {/* Invoice Section */}
-{order?.invoice &&
-  order?.invoice?.number !== "" &&
-  order?.invoice?.orderId !== "" && (
-    <div className="mt-8 bg-white border border-pink-200 rounded-xl shadow-md p-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-        {/* Invoice Details */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">Invoice</h3>
-          <p className="text-sm text-gray-600">Invoice #: <span className="font-medium text-gray-900">{order.invoice.number}</span></p>
-          <p className="text-sm text-gray-600">Order ID: <span className="font-medium text-gray-900">{order.invoice.orderId}</span></p>
+<div className="mt-8">
+  <div className="bg-white border border-pink-200 rounded-xl shadow-md overflow-hidden">
+    {/* Header */}
+    <button
+      type="button"
+      onClick={() => setOpen(!open)}
+      className="w-full flex items-center justify-between px-6 py-4 text-left"
+    >
+      <div className="flex items-center gap-3">
+        <FileText className="w-6 h-6 text-pink-600" />
+        <h3 className="text-lg font-semibold text-gray-800">
+          Invoice Details
+        </h3>
+      </div>
+      <ChevronDown
+        className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${
+          open ? "rotate-180" : ""
+        }`}
+      />
+    </button>
+
+    {/* Collapsible Content */}
+    <div
+      className={`transition-all duration-500 ease-in-out ${
+        open ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+      } overflow-hidden`}
+    >
+      <div className="px-6 pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        {/* Left Side (Invoice Info) */}
+        <div className="space-y-2">
           <p className="text-sm text-gray-600">
-            Created:{" "}
-            <span className="font-medium text-gray-900">
-              {new Date(order.invoice.createdAt).toLocaleString()}
-            </span>
+            <span className="font-medium text-gray-900">Invoice #:</span>{" "}
+            {order.invoice.number}
+          </p>
+          <p className="text-sm text-gray-600">
+            <span className="font-medium text-gray-900">Order ID:</span>{" "}
+            {order.invoice.orderId}
+          </p>
+          <p className="text-sm text-gray-600">
+            <span className="font-medium text-gray-900">Created:</span>{" "}
+            {new Date(order.invoice.createdAt).toLocaleString()}
           </p>
         </div>
 
-        {/* Download Button */}
-        <a
-          href={order.invoice.s3Url}
-          target="_blank"
-          rel="noopener noreferrer"
-          download={order.invoice.fileName}
-          className="mt-4 md:mt-0 flex items-center gap-2 bg-pink-600 text-white px-5 py-2 rounded-lg shadow hover:bg-pink-700 transition"
-        >
-          <Download className="w-5 h-5" /> 
-          Download Invoice
-        </a>
+        {/* Right Side (Download Button) */}
+        <div className="pt-2 md:pt-0">
+          <button
+            onClick={() => handleDownload(order)}
+            className="flex items-center gap-2 bg-pink-600 text-white px-5 py-2 rounded-lg shadow hover:bg-pink-700 transition"
+          >
+            <Download className="w-5 h-5" />
+            Download Invoice
+          </button>
+        </div>
       </div>
     </div>
-  )}
+  </div>
+</div>
+
+
 
             {/* Payment Info */}
             <div className="mt-6 flex flex-col md:flex-row justify-between gap-4 border-t pt-4 text-sm text-gray-700">

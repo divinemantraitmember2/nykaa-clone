@@ -187,7 +187,7 @@ const handlePayNow = async () => {
           const verifyRes = await payment_verification(verifyPayload);
           console.log("verifyRes",verifyRes)
           if (verifyRes.status === 200) {
-            window.location.href = "/profile";
+           window.location.href =`/order-success?orderId=${orderDetails.orderID}`;
           } else {
             alert("Payment verification failed");
           }

@@ -103,6 +103,29 @@ export const GetUserOrder = async (payload) => {
   const requestUrl = `/api/v1/orders`;
   return await api.get(requestUrl, payload);
 } 
+export async function GetUserOrderSuccess(orderId) {
+  try { 
+    const response = await api.get(`/api/v1/orders?orderID=${orderId}`);
+    return response;
+  } catch (error) {
+    console.error(" API error:", error.message);
+    return null; 
+  }
+}
+
+export async function GetUserOrderInvoice(orderId) {
+  try { 
+    const response = await api.get(`/api/v1/downloan/invoice/order/${orderId}`);
+   if (response?.data?.code === 200) {
+      return response.data.data; 
+    }
+    return null;
+  } catch (error) {
+    console.error(" API error:", error.message);
+    return null; 
+  }
+}
+
 
 // export async function GetAboutUsPage() {
 //   try { 
