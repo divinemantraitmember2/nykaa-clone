@@ -22,11 +22,11 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[#faf4ec] text-[#cb3f61] mt-14">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+    <footer className="bg-[#faf4ec] text-[#cb3f61] mt-6">
+      <div className="max-w-7xl mx-auto px-6 py-5">
         {/* Mobile View: Accordion */}
         {isMobile ? (
-          <div className="space-y-4">
+          <div className="space-y-2">
             {footerData.map((section, i) => (
               <Disclosure key={i}>
                 {({ open }) => (
@@ -40,7 +40,7 @@ export default function Footer() {
                       />
                     </DisclosureButton>
                     <DisclosurePanel>
-                      <ul className="pl-2 text-md font-medium space-y-2 mt-2">
+                      <ul className="pl-2 text-md font-medium space-y-2 mt-1">
                         {section.links.map((link, j) => (
                           <li key={j}>
                             <Link
@@ -63,7 +63,7 @@ export default function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-sm font-medium">
             {footerData.map((section, i) => (
               <div key={i}>
-                <h3 className="font-extrabold mb-3">{section.title}</h3>
+                <h3 className="font-extrabold mb-1">{section.title}</h3>
                 <ul className="space-y-2">
                   {section.links.map((link, j) => (
                     <li key={j}>

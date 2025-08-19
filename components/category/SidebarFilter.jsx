@@ -12,14 +12,30 @@ import {
   ChevronDownIcon,
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import {toggleGetFitterComponent} from "../../slices/userSlice";
 
 export default function SidebarFilter({ filters }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const dispatch = useDispatch();
+   const getFilterByStatus = useSelector((state) => state.user.GetFitterComponent);
 
+
+     useEffect(()=>{
+      if(getFilterByStatus){
+        setIsMobileOpen(getFilterByStatus)
+      }
+     },[getFilterByStatus,dispatch])
+
+
+    function closeFilter(){
+    dispatch(toggleGetFitterComponent())
+    setIsMobileOpen(false)
+    } 
   const {
     colors = [],
     genders = [],
@@ -237,7 +253,7 @@ export default function SidebarFilter({ filters }) {
   return (
     <>
       {/* Mobile filter toggle */}
-      <div className="md:hidden mb-4 flex justify-end px-4">
+      {/* <div className="md:hidden mb-4 flex justify-end px-4">
         <button
           className="flex items-center gap-1 p-1 px-1 text-md text-gray-700 border rounded border-gray-400 hover:bg-gray-50 transition"
           onClick={() => setIsMobileOpen(true)}
@@ -245,7 +261,7 @@ export default function SidebarFilter({ filters }) {
           <FunnelIcon className="w-4 h-4" />
           Filters
         </button>
-      </div>
+      </div> */}
 
       {/* Desktop sidebar */}
       <aside className="hidden md:block">
@@ -288,7 +304,7 @@ export default function SidebarFilter({ filters }) {
                   <ArrowPathIcon className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => setIsMobileOpen(false)}
+                  onClick={() => closeFilter() }
                   className="hover:bg-gray-100 p-2 rounded-full"
                 >
                   <XMarkIcon className="w-8 h-6 text-gray-700" />

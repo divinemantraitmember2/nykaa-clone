@@ -10,12 +10,13 @@ import ScrollToTop from "../components/homecomponent/ScrollToTop";
 import ClientToastProvider from "../components/ClientToastProvider";
 
 export const metadata = {
-  title: "pondric",
-  description: "Description text yaha",
+  title: "Pondric - Elevate Your Style Online",
+  description:"Step into premium fashion with Pondric. Discover elegant clothing, curated collections, and timeless styles crafted for modern living.",
   icons: {
     icon: "/favicon.ico",
   },
 };
+
 
 export default async function RootLayout({ children }) {
   let categories = [];

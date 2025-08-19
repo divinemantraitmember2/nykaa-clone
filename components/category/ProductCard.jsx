@@ -21,17 +21,25 @@ export default function ProductCard({ product, slug }) {
         aria-labelledby={`title-${product?.id}`}
       >
         {/* Image Section */}
-        <div className="w-full aspect-[3/4] flex items-center justify-center overflow-hidden relative">
-          <img
-            src={`${product?.default_image}?auto=format&w=500`}
-            alt={product?.title}
-            className="object-contain w-full h-full transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
+<div className="w-full h-[290px] overflow-hidden rounded-md">
+  <picture className="w-full h-full block">
+    <source
+      srcSet={`${product?.default_image}?tr=w-221,h-290,q-100,f-webp`}
+      type="image/webp"
+    />
+    <img
+      src={`${product?.default_image}?tr=w-221,h-290,q-100`}
+      alt={product?.title}
+      title={product?.title}
+      className="w-full h-full object-cover block"
+      draggable="false"
+      loading="lazy"
+    />
+  </picture>
+</div>
 
-          {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
+
+
 
         {/* Content */}
         <div className="p-2 space-y-1">
