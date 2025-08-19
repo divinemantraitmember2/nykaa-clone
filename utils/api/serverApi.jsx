@@ -18,7 +18,7 @@ export async function GetProductofcategorylist(payload) {
    const finalQuery = payload.includes("&category_slug=")
       ? payload.replace("&category_slug=", ",")
       : payload;
-  //  console.log("payload...", finalQuery);
+   console.log("payload...", finalQuery);
     const response = await axios.get(`https://api.pondric.com/api/v1/products?${finalQuery}`);
     return response; 
   } catch (error) {
