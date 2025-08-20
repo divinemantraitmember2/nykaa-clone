@@ -2,6 +2,7 @@
 
 body{
   font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
 }
 
 @media screen and (max-width: 768px) {
@@ -84,6 +85,14 @@ h1,h2,h3,h4{
 }
 .shipping-policy ul{
   list-style-type: circle;
+}
+ .conditoinandPolicy{
+  color: #212121;
+ }
+.conditoinandPolicy h1{
+  font-size: large;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .conditoinandPolicy h2{

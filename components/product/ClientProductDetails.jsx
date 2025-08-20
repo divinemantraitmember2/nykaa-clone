@@ -157,10 +157,9 @@ function get_cart_details(){
     <section className="py-1 px-1 lg:px-0">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-1 relative">
-          {/* LEFT: Images */}
+         {/* LEFT: Images */}
 <div className="w-full lg:w-[45%] p-2 lg:sticky top-4 self-start h-fit">
   <div className="flex flex-col lg:flex-row gap-3 items-start">
-    
     {/* Thumbnails */}
     <div className="relative w-full lg:w-fit">
       {/* Thumbnails Container */}
@@ -218,45 +217,39 @@ function get_cart_details(){
         </div>
       )}
 
-      {/* Mobile Arrows - show only if > 1 image */}
+      {/* ✅ Mobile Pagination Dots (instead of arrows) */}
       {selectedVariant?.image_url?.length > 1 && (
-        <>
-          <button
-            className="lg:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow shadow-pink-600 p-1 rounded-full"
-            onClick={() => {
-              if (scrollRef.current) scrollRef.current.scrollBy({ left: -240, behavior: "smooth" });
-            }}
-          >
-            <ChevronLeft size={25} />
-          </button>
-          <button
-            className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow shadow-pink-600 p-1 rounded-full"
-            onClick={() => {
-              if (scrollRef.current) scrollRef.current.scrollBy({ left: 240, behavior: "smooth" });
-            }}
-          >
-            <ChevronRight size={25} />
-          </button>
-        </>
+        <div className="flex lg:hidden justify-center gap-2 mt-3">
+          {selectedVariant?.image_url?.map((img, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                setSelectedImg(img);
+                const el = document.getElementById(`thumb-${i}`);
+                if (el) el.scrollIntoView({ behavior: "smooth", inline: "center" });
+              }}
+              className={`w-2 h-2 rounded-full transition ${
+                selectedImg === img ? "bg-pink-600 scale-125" : "bg-gray-400"
+              }`}
+            />
+          ))}
+        </div>
       )}
     </div>
-
     {/* Main Image */}
     <div className="hidden lg:flex flex-1 justify-center items-center">
       <div className="w-full max-w-[500px] max-h-[600px] aspect-[3/4]">
         <img
           src={`${selectedImg}?tr=w-500`}
           alt="Main"
-          className="w-full h-full object-contain "
+          className="w-full h-full object-contain"
         />
       </div>
     </div>
   </div>
 </div>
-
-
           {/* RIGHT: Product Info */}
-          <div className="w-full lg:w-[55%] px-4 py-4">
+          <div className="w-full lg:w-[55%] px-2 lg:px-4 py-4">
             <div className="relative">
               <h1 className="text-2xl font-semibold text-gray-800 mb-2">
                 {product.title}
@@ -301,6 +294,7 @@ function get_cart_details(){
             
 
             {/* Color Selection */}
+            {product?.variants && product?.variants.length>1?(<>
             <div className="mb-6">
               <h2 className="text-base font-semibold text-gray-800 mb-3">
                 Select Color
@@ -335,6 +329,7 @@ function get_cart_details(){
                 ))}
               </div>
             </div>
+             </>):"" }
 
             {/* Size Selection */}
             {selectedVariant && (

@@ -25,6 +25,7 @@ export default function CartSummaryDrawer() {
   const [loading, setLoading] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [items, setItems] = useState([]);
+  const [Cartitems, setItemsCart] = useState([]);
   const [CartResponse, setCartResponse] = useState(null);
    const { data: session, status } = useSession();
 
@@ -47,6 +48,8 @@ export default function CartSummaryDrawer() {
       const cartItems = response?.data?.items || [];
       setCartResponse(response?.data || null);
 
+      setItemsCart(cartItems)
+
       const AppliedCoupons = response?.data?.appliedCoupons || [];
       setAppliedCoupon(AppliedCoupons.length > 0 ? AppliedCoupons[0] : null);
       dispatch(updateCartCount(cartItems.length));
@@ -57,6 +60,8 @@ export default function CartSummaryDrawer() {
         quantity: item?.quantity || 0,
         image: item?.variants?.image_url?.[0] || "/placeholder.png",
         price_inr: item?.price_inr || 0,
+        discount_inr: item?.discount_inr || 0,
+        is_free: item?.is_free,
         color: item?.variants?.color || "N/A",
         size: item?.size || "N/A",
       }));
@@ -140,50 +145,87 @@ export default function CartSummaryDrawer() {
         </button>
       </div>
 
-      {CartResponse && items.length > 0 ? (
+      {CartResponse && Cartitems.length > 0 ? (
         <>
           <div className="h-[calc(100%-140px)] overflow-y-auto px-4 py-2">
-            {items.map((item, index) => (
+            {Cartitems.map((item, index) => (
               <div key={index} className="flex gap-4 px-2 py-4 border-b border-gray-200 relative">
+                
                 <img
-                  src={item.image}
+                  src={item?.variants?.image_url?.[0]}
                   alt={item.title}
                   className="w-20 h-28 object-cover rounded-md border border-gray-200"
                 />
                 <div className="flex-1">
-                  <p className="font-medium text-base text-gray-900 line-clamp-2">{item.title}</p>
-                  <p className="text-sm text-gray-500">Color: {item.color} | Size: {item.size}</p>
-                  <p className="text-sm font-semibold text-gray-800 mt-1">
-                    ₹{item.price_inr} × {item.quantity} = ₹{item.price_inr * item.quantity}
-                  </p>
-                  <div className="flex items-center gap-2 mt-3">
+                  
+              
+                  <p className="font-medium text-base text-gray-900 line-clamp-2">{item?.productName}</p>
+                  <p className="text-sm text-gray-500">Color: {item?.variants?.color} | Size: {item.size}</p>
+
+            {item?.is_free?(
+        <p className="mt-3">
+    <span className="bg-green-100 p-2  px-10 text-black text-lg font-semibold ">
+      🎉 Free 
+    </span>
+    </p>
+  ):(<>    
+    <div className="">
+      <p className="text-sm text-gray-800 mt-1"> Price <span className="line-through text-gray-500 mr-2">
+    ₹{item.price_inr} 
+  </span>  <span className="text-green-600">
+   Discount ₹{item.discount_inr}
+  </span></p>
+<p className="text-sm font-semibold text-gray-800 mt-1">
+  <span className="text-green-600">
+    ₹{item.discount_inr}
+  </span>
+  × {item.quantity} = 
+  <span className="ml-1 text-black">
+    ₹{item.discount_inr * item.quantity} 
+  </span>
+</p>
+</div>
+</>)}   
+                 {item?.is_free?(<></>):(<>
+                 <div className="flex items-center gap-2 mt-3 ">
                     <button
-                      onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
+                    
+                      onClick={() => updateCartQuantity(item?.sku, item.quantity - 1)}
                       className="w-8 h-8 text-lg bg-gray-100 hover:bg-gray-200 rounded-md font-bold"
+                   
                     >
                       −
                     </button>
                     <span className="font-semibold text-gray-800">{item.quantity}</span>
                     <button
-                      onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
+                      onClick={() => updateCartQuantity(item?.sku, item.quantity + 1)}
                       className="w-8 h-8 text-lg bg-gray-100 hover:bg-gray-200 rounded-md font-bold"
-                    >
-                      +
+                  
+                   >
+                      + 
                     </button>
                   </div>
+
+                 </>)} 
+
                 </div>
+                {item?.is_free?"":(<>
                 <button
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item.sku)}
                   className="absolute top-3 right-3 text-red-600 hover:text-red-800"
+               
                 >
                   <FaTrash />
                 </button>
+                </>)}
+                
+
               </div>
             ))}
 
             {/* Price Summary */}
-            <div className="mt-6 space-y-3 bg-gray-50 p-4 rounded-lg shadow-inner">
-              <div className="flex justify-between text-sm text-gray-700">
+            <div className="mt-6 space-y-3 bg-gray-50 p-2 rounded-lg shadow-inner">
+              <div className="flex justify-between text-sm bg-pink-50 text-black ">
                 <span>Bag Total</span>
                 <span>₹{CartResponse?.totalBasePrice?.toFixed(2) || "0.00"}</span>
               </div>
@@ -192,7 +234,7 @@ export default function CartSummaryDrawer() {
                 <span className="text-green-600 font-medium">Free</span>
               </div>
               {appliedCoupon && (
-                <div className="flex justify-between text-sm text-gray-700">
+                <div className=" bg-green-100 text-green-700 text-sm  py-2 font-medium flex justify-between ">
                   <span>Coupon ({appliedCoupon.code})</span>
                   <span className="text-red-600">− ₹{discount.toFixed(2)}</span>
                 </div>

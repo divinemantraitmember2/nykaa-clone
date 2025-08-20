@@ -55,29 +55,35 @@ export default function MobileFilterSortBar() {
           </div>
         )}
       </div>
+<div className="flex">
+  
+  <button
+    onClick={() => setOpen(!open)}
+    className="flex items-center justify-center w-full py-3 space-x-2 text-gray-800 font-medium"
+  >
+    {/* Left Icon */}
+    <SlidersHorizontal size={18} className="text-pink-600" />
 
-      {/* Filter Button (Full Width) */}
+    {/* Label */}
+    <span>{options.find((o) => o.value === selected)?.label}</span>
 
-      <div className=" flex ">
-        <button
-          onClick={() => setOpen(!open)}
-          className="flex items-center justify-center w-full py-3 space-x-2 text-gray-800 font-medium"
-        >
-          <SlidersHorizontal size={18} className="text-pink-600" />
-          <span>{options.find((o) => o.value === selected)?.label}</span>
-          <ChevronDown
-            size={16}
-            className={`ml-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}
-          />
-        </button>
-        <button
-        onClick={() => GetFilter()}
-        className="flex items-center justify-center w-full py-3 space-x-2 text-gray-800 font-medium"
-      >
-        <Filter size={18} className="text-pink-600" />
-        <span>Filter</span>
-      </button>
-      </div>
+    {/* Dropdown Arrow */}
+    <ChevronDown
+      size={16}
+      className={`ml-1 transition-transform ${open ? "rotate-180" : "rotate-0"}`}
+    />
+  </button>
+
+  {/* Filter Button */}
+  <button
+    onClick={() => GetFilter()}
+    className="flex items-center justify-center w-full py-3 space-x-2 text-gray-800 font-medium"
+  >
+    <Filter size={18} className="text-pink-600" />
+    <span>Filter</span>
+  </button>
+</div>
+
       
     </div>
   );

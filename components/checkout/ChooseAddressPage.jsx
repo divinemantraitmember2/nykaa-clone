@@ -55,6 +55,7 @@ const AppliedCoupons = response?.data?.appliedCoupons || [];
         price_inr: item.price_inr || 0,
         color: item.variants?.color,
         size: item.size,
+        is_free:item.is_free,
         discount_inr: item.discount_inr,
       }));
 
@@ -335,17 +336,17 @@ const handlePayNow = async () => {
                     <span>Bag</span>
                     <div className="flex items-center gap-3 text-sm">
                       <span>{items.length} Items</span>
-                      <span className="text-pink-600 font-medium">Edit</span>
+                      
                     </div>
                   </summary>
-                  <div className="px-4 py-3 bg-gray-50 space-y-4">
+                  <div className="px-2 py-3 bg-gray-50 space-y-4">
   {items.length === 0 ? (
     <p className="text-gray-500">Your cart is empty.</p>
   ) : (
    items && items.map((item, i) => (
       <div
         key={i}
-        className="flex items-start gap-4 border rounded-lg p-3 bg-white shadow-sm"
+        className="flex items-start gap-4 border rounded-lg p-2 bg-white shadow-sm"
       >
         <img
           src={item.image}
@@ -355,11 +356,19 @@ const handlePayNow = async () => {
 
         <div className="flex-1 text-sm">
           <p className="font-semibold text-gray-800 line-clamp-2 mb-1">
-           {item.title}
+           {item.title} 
           </p>
-
-          <div className="flex justify-between items-center text-gray-700">
-            <div>
+          <p className="font-semibold"><span className=""> color : {item?.color}</span></p>
+         
+           {item?.is_free?(<>
+           <p className="flex justify-end">
+    <span className="bg-green-600 p-1 px-3 text-white text-xs font-semibold  rounded-full shadow-md">
+      🎉 Free 
+    </span>
+    </p>
+           </>):(<>
+           <div className="flex justify-between items-center text-gray-700">
+           <div>
               <div className="flex items-center gap-2 mb-1">
                 <span>Qty:</span>
                 <button
@@ -380,6 +389,8 @@ const handlePayNow = async () => {
                 Price: <span className="font-medium">₹{item.price_inr}</span>
               </p> */}
             </div>
+           
+           
 
             <div className="text-right">
               <p className="text-xs text-gray-400 line-through">
@@ -390,7 +401,12 @@ const handlePayNow = async () => {
               </p>
               <p className="text-xs text-gray-500 mt-1">Total</p>
             </div>
+
+
           </div>
+          </>)} 
+
+
         </div>
       </div>
     ))

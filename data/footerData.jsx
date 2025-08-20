@@ -7,7 +7,7 @@ export const footerData = [
       { label: "About Us", slug: "about-us" },
       { label: "Careers", slug: "careers" },
        { label: "Contact Us", slug: "contact-us" },
-      { label: "FAQs", slug: "faqs" },
+      // { label: "FAQs", slug: "faqs" },
 
     ],
   },

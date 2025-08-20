@@ -25,16 +25,18 @@ export default function ContactUs() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Top Banner with Background Image */}
-      {/* <section className="relative h-72  md:h-60 bg-pink-400 w-full flex items-center justify-center">
-        
-        <div className="absolute inset-0 "></div>
-        <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-3">Contact Us</h1>
-          <p className="text-lg opacity-90">
-            We’re here to help! Reach out and we’ll get back to you soon.
-          </p>
+     <section className="relative h-72 md:h-96 w-full">
+        <img
+          src="/images/about-banner.jpg" // replace with your image path
+          alt="About Us Banner"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+          {/* <h1 className="text-3xl md:text-5xl font-bold text-white drop-shadow-lg">
+            About Us
+          </h1> */}
         </div>
-      </section> */}
+      </section>
 
       {/* Content Section */}
       <div className="mx-auto px-2  lg:px-8 py-10">

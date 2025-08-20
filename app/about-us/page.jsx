@@ -50,7 +50,7 @@ let pageData = null;
       {/* Mission & Vision */}
       <section className="bg-gray-50 py-12 md:py-16">
         <div className="max-w-6xl mx-auto px-4 grid gap-10 md:grid-cols-2">
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <div className="bg-white p-4 transition">
             <h3 className="text-xl font-semibold mb-4 text-gray-800">Our Mission</h3>
             <p className="text-gray-600 leading-relaxed">
               To empower individuals and businesses with products and services 
@@ -58,7 +58,7 @@ let pageData = null;
               to quality, innovation, and sustainability.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+          <div className="bg-white p-4  transition">
             <h3 className="text-xl font-semibold mb-4 text-gray-800">Our Vision</h3>
             <p className="text-gray-600 leading-relaxed">
               To become a globally recognized brand known for our dedication to 
@@ -70,52 +70,37 @@ let pageData = null;
       </section>
 
       {/* Our Team */}
-      <section className="w-[80%] mx-auto px-4 py-12 md:py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
-          Meet Our Team
-        </h2>
-        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {[
-            { name: "Name", role: "Founder & CEO", img: "/team1.jpg" },
-            { name: "Name", role: "Marketing Head", img: "/team2.jpg" },
-            { name: "Name", role: "Lead Developer", img: "/team3.jpg" },
-          ].map((member, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
-            >
-              <img
-                src={`/images/no-profile.jpeg`}
-                 alt={member.name}
-                className="w-full h-56 object-cover"
-              />
-              <div className="p-4 text-center">
-                <h4 className="text-lg font-semibold text-gray-800">{member.name}</h4>
-                <p className="text-pink-600 text-sm">{member.role}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      
 
-      {/* Call to Action */}
-      <section className="bg-pink-600 text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Let’s Work Together
-          </h2>
-          <p className="mb-6 text-lg">
-            Have a project in mind or want to know more about our work? We’re 
-            always excited to collaborate.
-          </p>
-          <a
-            href="/contact-us"
-            className="bg-white text-pink-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition"
-          >
-            Contact Us
-          </a>
-        </div>
-      </section>
+     {/* Call to Action */}
+<section className="bg-gray-50 py-16">
+  <div className="max-w-4xl mx-auto px-6 text-center">
+    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+      Let’s Work Together
+    </h2>
+    <p className="mb-8 text-lg text-gray-600 leading-relaxed">
+      Have a project in mind or want to know more about our work?  
+      We’re always excited to collaborate and bring ideas to life.
+    </p>
+
+    <div className="flex justify-center gap-4">
+      <a
+        href="/contact-us"
+        className="inline-block bg-pink-600 text-white font-semibold px-8 py-3 rounded-lg shadow hover:bg-pink-700 transition"
+      >
+        Contact Us
+      </a>
+      <a
+        href="/about-us"
+        className="inline-block border border-gray-300 text-gray-700 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition"
+      >
+        Learn More
+      </a>
+    </div>
+  </div>
+</section>
+
+
     </main>
   );
 }

@@ -15,6 +15,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
   const { data: session } = useSession();
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
 
+  // console.log("categories",categories)
   return (
     <div className="w-full bg-[#fff] relative py-2">
       {/* Mobile Header */}

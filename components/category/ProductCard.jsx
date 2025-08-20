@@ -21,14 +21,16 @@ export default function ProductCard({ product, slug }) {
         aria-labelledby={`title-${product?.id}`}
       >
         {/* Image Section */}
+
+        
 <div className="w-full h-[290px] overflow-hidden rounded-md">
   <picture className="w-full h-full block">
     <source
-      srcSet={`${product?.default_image}?tr=w-221,h-290,q-100,f-webp`}
+      srcSet={`${product?.default_image}`}
       type="image/webp"
     />
     <img
-      src={`${product?.default_image}?tr=w-221,h-290,q-100`}
+      src={`${product?.default_image}`}
       alt={product?.title}
       title={product?.title}
       className="w-full h-full object-cover block"
@@ -37,6 +39,7 @@ export default function ProductCard({ product, slug }) {
     />
   </picture>
 </div>
+
 
 
 

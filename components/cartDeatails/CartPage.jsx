@@ -57,6 +57,8 @@ export default function CartPage() {
         quantity: item?.quantity || 1,
         image: item?.variants?.image_url?.[0] || "/placeholder.png",
         price_inr: item?.price_inr || 0,
+        discount_inr: item?.discount_inr || 0,
+         is_free: item?.is_free,
         color: item?.variants?.color || "N/A",
         size: item?.size || "N/A",
       }));
@@ -156,7 +158,7 @@ export default function CartPage() {
       {items.length === 0 ? (
         <p className="text-gray-500 text-center text-lg">Your cart is empty.</p>
       ) : (
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-4">
           {/* Items list */}
           <div className="flex-1">
             <ul className="space-y-6">
@@ -165,12 +167,15 @@ export default function CartPage() {
                   key={i}
                   className="relative flex items-center gap-5 p-4 rounded-xl bg-white shadow-lg border hover:shadow-xl transition-all duration-200"
                 >
-                  <button
+                   {item?.is_free?"":(<>
+                    <button
                     onClick={() => removeFromCart_cart(item.id)}
                     className="absolute top-3 right-3 text-red-500 hover:text-red-600"
                   >
                     <FaTrash size={18} />
                   </button>
+                   </>)}
+                 
                   <img
                     src={item.image}
                     alt={item.title}
@@ -182,10 +187,26 @@ export default function CartPage() {
                       Color: <span className="font-medium">{item.color}</span> | Size:{" "}
                       <span className="font-medium">{item.size}</span>
                     </p>
-                    <p className="text-md font-semibold text-gray-800 mt-1">
-                      ₹{item.price_inr} × {item.quantity} ={" "}
-                      <span className="text-pink-600">
-                        ₹{(item.price_inr * item.quantity).toFixed(2)}
+                    
+                    {item?.is_free?(
+        <p className="mt-3">
+    <span className="bg-green-100 p-2  px-10 text-black text-lg font-semibold ">
+      🎉 Free 
+    </span>
+    </p>
+  ):(<> 
+
+                    <div className="">
+                      <p className="text-sm text-gray-800 mt-1"> 
+                        Price : <span className="line-through text-gray-500 mr-2">
+    ₹{item?.price_inr} 
+  </span>  <span className="text-green-600">
+   Discount : ₹{item?.discount_inr}
+  </span></p>
+                    <p className="text-md font-semibold  mt-1">
+                      <span className="text-gray-800"> ₹{item.discount_inr} × {item.quantity} ={" "}</span>
+                      <span className="text-black">
+                        ₹{(item.discount_inr * item.quantity).toFixed(2)}
                       </span>
                     </p>
                     <div className="flex items-center gap-3 mt-3">
@@ -203,14 +224,18 @@ export default function CartPage() {
                         +
                       </button>
                     </div>
+                    </div>
+                     </>)}   
+
                   </div>
                 </li>
               ))}
             </ul>
             <div className="pt-6 text-right">
+             
               <button
                 onClick={Detele_cart}
-                className="border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-50"
+                className="border hidden border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-50"
               >
                 Clear Cart
               </button>
@@ -218,7 +243,7 @@ export default function CartPage() {
           </div>
 
           {/* Summary */}
-          <div className="w-full lg:w-1/3 bg-white rounded-xl p-6 shadow-lg border">
+          <div className="w-full lg:w-1/3 bg-white rounded-xl p-2 shadow-lg border">
             <h2 className="text-md  font-bold mb-6">Order Summary</h2>
             <div className="flex justify-between text-gray-700 mb-3 text-md">
               <span>Subtotal</span>
@@ -229,9 +254,9 @@ export default function CartPage() {
               <span className="text-green-600 font-medium">Free</span>
             </div>
             {appliedCoupon && (
-              <div className="flex justify-between text-gray-700 mb-3 text-lg">
+              <div className="flex justify-between bg-green-300 p-1 mb-3 text-md">
                 <span>Coupon ({appliedCoupon.code})</span>
-                <span className="text-red-600">
+                <span className="text-black">
                   − ₹
                   {appliedCoupon.type === "percentage"
                     ? ((totalPrice * appliedCoupon.discountValue) / 100).toFixed(2)
