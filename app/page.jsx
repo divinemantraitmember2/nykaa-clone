@@ -1,4 +1,4 @@
-import HeroSlider from "../components/HeroSlider";
+// import HeroSlider from "../components/HeroSlider";
 import BuyOneGetOne from "../components/homecomponent/BuyOneGetOne";
 import ShopTopCategories from "../components/homecomponent/ShopTopCategories";
 
@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
     <section>
-      <div className="w-full bg-gradient-to-r from-pink-200 via-pink-100 to-yellow-100 px-10 py-10 lg:py-15">
+      <div className="w-full bg-gradient-to-r from-pink-200 via-pink-100 to-yellow-100 px-4 lg:px-10 py-10 lg:py-15">
         <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <div className="text-pink-700 font-bold text-4xl">
           <p>PONDRIC FASHION</p>

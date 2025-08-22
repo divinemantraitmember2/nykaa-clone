@@ -10,8 +10,8 @@ import Link from "next/link";
 
 export default function ShopTopCategories() {
   return (
-    <div className="w-full bg-white px-4 sm:px-2 lg:px-10 py-10">
-      <h2 className="text-start text-3xl sm:text-4xl font-bold text-gray-800 mb-8">
+    <div className="w-full bg-white px-4 sm:px-2 lg:px-10 py-4 lg:py-10">
+      <h2 className="text-start lg:text-3xl text-lg font-bold text-gray-800 mb-5">
         SHOP TOP CATEGORIES
       </h2>
 

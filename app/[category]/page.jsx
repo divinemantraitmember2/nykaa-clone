@@ -72,12 +72,15 @@ export default async function CategoryPage(propsPromise) {
         <div className="px-2 sm:px-4 lg:px-6 lg:py-4">
          
 <div className=" bg-white flex flex-col lg:flex-row lg:items-center lg:justify-between lg:mb-8  ">
-  <h1 className=" text-lg font-semibold py-4 lg:py-2 leading-6 tracking-[0.38px] font-sans text-[#212121] uppercase">
+  <div className="">
+    <h1 className="text-sm lg:text-lg font-semibold py-2 lg:py-2 leading-6 tracking-[0.38px] font-sans text-[#212121] uppercase">
   Shop {category.split("-").join(" ")} Online{" "}
   <span className="">
     Best Prices & Deals
   </span>
 </h1>
+<p className="text-sm ">Showing {products.length} Products</p>
+  </div>
   <div className="hidden lg:block">
     <SortByDropdown />
   </div>

@@ -41,11 +41,11 @@ const BuyOneGetOne = () => {
   ];
 
   return (
-    <section className="py-20 px-2 lg:px-10 bg-gradient-to-b from-[#fff0f2] to-[#fff] mb-3">
-      <h2 className="text-3xl md:text-4xl font-bold text-start text-[#111] mb-10">
+    <section className="py-4 lg:py-10 px-2 lg:px-10 bg-gradient-to-b from-[#fff0f2] to-[#fff] mb-3">
+      <h2 className="lg:text-3xl text-lg font-bold text-start text-[#111] mb-5 uppercase">
         Buy One Get One Free
       </h2>
-
+      <div className="py-5 lg:py-10">
       <Swiper
         modules={[Autoplay]}
         autoplay={{ delay: 3500 }}
@@ -87,6 +87,7 @@ const BuyOneGetOne = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+      </div>
     </section>
   );
 };
