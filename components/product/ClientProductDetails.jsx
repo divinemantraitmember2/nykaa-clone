@@ -410,7 +410,8 @@ function get_cart_details(){
               <SearchLocation />
             </div>
             <div className="">
-              <InfoStrip />
+              
+              <InfoStrip shippingInfo={product?.shipping_info}/>
             </div>
 
 

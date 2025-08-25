@@ -7,7 +7,7 @@ import { GetUserOrderSuccess } from "../../utils/api/Httproutes";
 
 export default function OrderSuccessPage() {
   const searchParams = useSearchParams(); 
-  const orderId = searchParams.get("orderid"); 
+  const orderId = searchParams.get("orderId"); 
   const [orderData, setOrderData] = useState([]);
   const [error, setError] = useState(null);
 
