@@ -85,8 +85,6 @@ export default async function CategoryPage(propsPromise) {
     <SortByDropdown />
   </div>
 </div>
-
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {products.length !== 0 && !isFiltersEmpty && (
               <aside className="lg:col-span-3">
