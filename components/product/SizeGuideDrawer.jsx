@@ -72,7 +72,7 @@ export default function SizeGuideDrawer({ open, onClose, product }) {
         <div className="px-4 py-6 border-t">
           <h3 className="text-base font-semibold mb-3">How to Measure</h3>
           <img
-            src="/images/how-to-measure-shirt.png"
+           src="https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/how_to_measure_images/Shirts.jpg"
             alt="How to Measure"
             className="w-full rounded"
           />

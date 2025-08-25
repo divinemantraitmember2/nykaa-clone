@@ -163,6 +163,7 @@ const productSizeGuide = {
       { size: "L", chest: 42, shoulder: 18, length: 27.5 },
       { size: "XL", chest: 44, shoulder: 18.5, length: 28 },
     ],
+    measureImage:"https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/how_to_measure_images/Shirts.jpg"
   };
 
   const scrollRef = useRef(null);
