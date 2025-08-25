@@ -39,12 +39,7 @@ export default function ProductCard({ product, slug }) {
     />
   </picture>
 </div>
-
-
-
-
-
-        {/* Content */}
+ {/* Content */}
         <div className="p-2 space-y-1">
           {/* Title */}
           <h2

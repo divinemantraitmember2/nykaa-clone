@@ -1,34 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import OrderSuccess from "../../components/userInfo/OrderSuccessPage";
 import { GetUserOrderSuccess } from "../../utils/api/Httproutes";
 
-export default function OrderSuccessPage({ searchParams }) {
-  const orderId =  searchParams?.orderId;
+export default function OrderSuccessPage() {
+  const searchParams = useSearchParams(); 
+  const orderId = searchParams.get("orderid"); 
   const [orderData, setOrderData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!orderId) return;
+
     const GetOrderDetails = async () => {
       try {
         const response = await GetUserOrderSuccess(orderId);
-        
+     console.log("response", response.data.data.orders);
         if (response?.status === 200 && response?.data?.code === 200) {
-            if(response.data.data.orders !=null && response.data.data.orders.length>0){
-          console.log("response",response.data.data.orders)
-          setOrderData(response.data.data.orders);
-            }else{
-              setOrderData([]);  
-            }
-          
+          if (response.data.data.orders != null && response.data.data.orders.length > 0) {
+            console.log("response", response.data.data.orders);
+            setOrderData(response.data.data.orders);
+          } else {
+            setOrderData([]);
+          }
         } else {
-            setOrderData([]);  
+          setOrderData([]);
           setError("Failed to fetch order details");
         }
       } catch (err) {
-        setOrderData([]);  
+        setOrderData([]);
         console.error("OrderSuccessPage error:", err.message);
         setError("Something went wrong while fetching order details");
       }
@@ -36,7 +38,6 @@ export default function OrderSuccessPage({ searchParams }) {
 
     GetOrderDetails();
   }, [orderId]);
-
 
   if (error) {
     return (
@@ -48,17 +49,15 @@ export default function OrderSuccessPage({ searchParams }) {
     );
   }
 
-
   return (
     <>
-   { 
-   orderData && orderData.length>0?(
-   <OrderSuccess data={orderData} />
-   ):(<>
-       <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-600">⏳ Loading order details...</p>
-      </div>
-   </>)} 
+      {orderData && orderData.length > 0 ? (
+        <OrderSuccess data={orderData} />
+      ) : (
+        <div className="flex items-center justify-center h-screen">
+          <p className="text-gray-600">⏳ Loading order details...</p>
+        </div>
+      )}
     </>
   );
 }

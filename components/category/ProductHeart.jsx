@@ -17,9 +17,9 @@ export default function ProductHeart() {
     
   return (
     <>
-    <button
+        <button
             onClick={handleWishlistClick}
-            className="absolute top-2 right-2 z-10 bg-white p-1.5 rounded-full shadow hover:bg-pink-100 transition"
+            className="absolute top-2 right-2 z-10 bg-green-100 p-1.5 rounded-full shadow hover:bg-pink-100 transition"
           >
             <Heart className="w-4 h-4 text-gray-800 group-hover:text-pink-600" />
           </button>
