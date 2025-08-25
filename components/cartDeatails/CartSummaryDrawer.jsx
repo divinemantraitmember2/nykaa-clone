@@ -130,6 +130,15 @@ export default function CartSummaryDrawer() {
   };
 
   return (
+    <>
+    {showUserCartDrawar && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => dispatch(openUserCartDrawar())}
+        ></div>
+      )}
+    
+    
     <div
       className={`fixed top-0 right-0 h-full w-full sm:max-w-[400px] bg-white z-50 shadow-xl transition-transform duration-300 transform ${
         showUserCartDrawar ? "translate-x-0" : "translate-x-full"
@@ -280,5 +289,6 @@ export default function CartSummaryDrawer() {
         </div>
       )}
     </div>
+    </>
   );
 }

@@ -154,9 +154,9 @@ function get_cart_details(){
 }
 
 const productSizeGuide = {
-    brand: "Campus Sutra",
-    name: "Mens Crimson Red & Black Shirt",
-    image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/0/5/056f6d5SS24_CSMSSRT6078_1.jpg",
+    brand:"",
+    name: product.title,
+    image:selectedImg,
     sizeChart: [
       { size: "S", chest: 38, shoulder: 17, length: 26 },
       { size: "M", chest: 40, shoulder: 17.5, length: 27 },
@@ -353,7 +353,7 @@ const productSizeGuide = {
       <p className="text-base font-semibold text-gray-800">Select Size:</p>
       <button
         onClick={() => setOpenSizeGuide(true)} // <- Drawer ya Modal open hoga
-        className="text-sm font-medium text-pink-600 hover:underline"
+        className="text-md text-green-600 font-semibold hover:underline"
       >
         Size Guide
       </button>
@@ -481,7 +481,7 @@ const productSizeGuide = {
  <div className="overflow-hidden shadow-sm bg-white  hover:shadow-2xl mt-4">
       <button
         onClick={() => setShowDetails(!showDetails)}
-        className="flex justify-between items-center w-full p-4 text-left hover:bg-gray-50 transition"
+        className="flex justify-between items-center w-full p-2 text-left hover:bg-gray-50 transition"
       >
         <div className="flex flex-col">
           <h3 className="text-sm font-semibold text-gray-800 flex items-center gap-2">
@@ -536,7 +536,7 @@ const productSizeGuide = {
             <div className=" overflow-hidden shadow-sm  hover:shadow-2xl bg-white mt-4">
               <button
                 onClick={() => setOpenDetails(!openDetails)}
-                className="w-full flex justify-between items-center px-4 py-3 transition"
+                className="w-full flex justify-between items-center px-2 py-3 transition"
               >
                 <div className="flex items-center gap-2">
                   <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
