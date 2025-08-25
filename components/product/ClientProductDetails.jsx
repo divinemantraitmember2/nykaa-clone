@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { openLoginModal,openUserCartDrawar,toggleUserGetCart } from "../../slices/userSlice";
 import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
+import SizeGuideDrawer from "./SizeGuideDrawer";
 import  InfoStrip  from "../../components/product/InfoStrip";
 import { toast } from "react-toastify";
 import {ChevronDown,ChevronUp} from "lucide-react";
@@ -26,6 +27,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   const [showDetails, setShowDetails] = useState(false);
   const [openDetails, setOpenDetails] = useState(false);
   const [showGoToCart, setShowGoToCart] = useState(false);
+  const [openSizeGuide, setOpenSizeGuide] = useState(false);
 
 
   // Auto-select first color and size on load
@@ -150,6 +152,18 @@ function get_cart_details(){
   dispatch(openUserCartDrawar())
   dispatch(toggleUserGetCart())
 }
+
+const productSizeGuide = {
+    brand: "Campus Sutra",
+    name: "Mens Crimson Red & Black Shirt",
+    image: "https://adn-static1.nykaa.com/nykdesignstudio-images/pub/media/catalog/product/0/5/056f6d5SS24_CSMSSRT6078_1.jpg",
+    sizeChart: [
+      { size: "S", chest: 38, shoulder: 17, length: 26 },
+      { size: "M", chest: 40, shoulder: 17.5, length: 27 },
+      { size: "L", chest: 42, shoulder: 18, length: 27.5 },
+      { size: "XL", chest: 44, shoulder: 18.5, length: 28 },
+    ],
+  };
 
   const scrollRef = useRef(null);
 
@@ -334,9 +348,16 @@ function get_cart_details(){
             {/* Size Selection */}
             {selectedVariant && (
               <div className="mb-4">
-                <p className="text-base font-semibold text-gray-800 mb-2">
-                  Select Size:
-                </p>
+                <div className="flex items-center justify-between mb-2">
+      <p className="text-base font-semibold text-gray-800">Select Size:</p>
+      <button
+        onClick={() => setOpenSizeGuide(true)} // <- Drawer ya Modal open hoga
+        className="text-sm font-medium text-pink-600 hover:underline"
+      >
+        Size Guide
+      </button>
+    </div>
+               
                 <div className="flex flex-wrap gap-2">
                   {selectedVariant.size_stocks.map((stock, idx) => (
                     <label
@@ -410,7 +431,7 @@ function get_cart_details(){
               <SearchLocation />
             </div>
             <div className="">
-              
+
               <InfoStrip shippingInfo={product?.shipping_info}/>
             </div>
 
@@ -554,6 +575,12 @@ function get_cart_details(){
           </div>
         </div>
       </div>
+
+      <SizeGuideDrawer
+        open={openSizeGuide}
+        onClose={() => setOpenSizeGuide(false)}
+        product={productSizeGuide}
+      />
     </section>
   );
 }
