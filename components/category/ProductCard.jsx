@@ -12,7 +12,7 @@ export default function ProductCard({ product, slug }) {
     <div className="group relative mb-4 w-full  overflow-hidden  hover:shadow-lg hover:shadow-pink-200 transition-all duration-300 bg-white" title={product?.title}>
       {/* Wishlist Heart */}
       <div className="absolute top-1 right-1 z-10">
-        <ProductHeart />
+        <ProductHeart sku={product.sku} />
       </div>
 
       <Link

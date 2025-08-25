@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="font-sans antialiased font-light">
         <Providers>
-          <Header categories={categories} />
+          {/* <Header categories={categories} /> */}
           <UserAuthModal/>
           {children}
           <Footer />

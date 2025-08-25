@@ -59,6 +59,24 @@ export const AddToCart = async (actionPayload, payload) => {
   });
 };
 
+export const AddUserWhish = async (payload) => {
+  const requestUrl = `/api/v1/wishlist/add`;
+  return api.post(requestUrl, payload);
+};
+
+export const GetUserWhish = async () => {
+  const requestUrl = `/api/v1/wishlist/get`;
+  return api.get(requestUrl);
+};
+
+export const RemoveUserWhish = async (payload) => {
+   const requestUrl = `/api/v1/wishlist/remove`;
+  return await api.delete(requestUrl, {
+    data: payload,
+  });
+};
+
+
 export const AddCoupon = async (payload) => {
   const requestUrl = `/api/v1/apply-coupon`;
   return await api.post(requestUrl, payload);

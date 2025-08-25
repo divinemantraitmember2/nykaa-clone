@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import  InfoStrip  from "../../components/product/InfoStrip";
 import { toast } from "react-toastify";
-import { ChevronLeft, ChevronRight,ChevronDown,ChevronUp} from "lucide-react";
+import {ChevronDown,ChevronUp} from "lucide-react";
 
 
 export default function ClientProductDetails({ product, mainCate,selsectSlug }) {
