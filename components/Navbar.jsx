@@ -12,6 +12,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.countItems);
+  const whishItems = useSelector((state) => state.cart.whishItems);
   const { data: session } = useSession();
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
 
@@ -89,6 +90,12 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
   className="relative mx-5 hover:text-pink-600 transition-colors duration-200"
 >
   <Heart className="w-6 h-6 text-gray-800 group-hover:text-pink-600" />
+
+{whishItems > 0 && (
+        <span className="absolute -top-1 -right-1 bg-pink-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
+          {whishItems}
+        </span>
+      )}
 
 </Link>
 

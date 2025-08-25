@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import { AddUserWhish, GetUserWhish, RemoveUserWhish } from "../../utils/api/Httproutes";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import {updateWhishCount} from "../../slices/cartSlice"
 
 export default function ProductHeart({ sku }) {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ export default function ProductHeart({ sku }) {
       if (Response.status === 200) {
         toast.success("💖 Added to your wishlist!");
         setIsWished(true);
+        GetUserWhished()
       }
     } catch (error) {
       toast.error(`${error?.response?.data?.errors || "Something went wrong!"}`);
@@ -57,6 +59,7 @@ export default function ProductHeart({ sku }) {
       if (Response?.status === 200 && Response?.data?.code === 200) {
         if (Response?.data?.data != null && Response?.data?.data?.length > 0) {
           const wishedSkus = Response.data.data.map((item) => item.sku);
+          dispatch(updateWhishCount(Response.data.data.length))
           if (wishedSkus.includes(sku)) {
             setIsWished(true);
           }
@@ -69,6 +72,7 @@ export default function ProductHeart({ sku }) {
     try {
       const Response = await RemoveUserWhish(payload);
       if (Response.status === 200) {
+        GetUserWhished()
         toast.success("Removed from your wishlist!");
         setIsWished(false);
       }

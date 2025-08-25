@@ -4,6 +4,7 @@ const initialState = {
   items: [],
   total: 0,
   countItems:0,
+  whishItems:0,
 };
 
 const cartSlice = createSlice({
@@ -44,9 +45,13 @@ const cartSlice = createSlice({
   // Do nothing if quantity is already 1
 },
 
-updateCartCount(state, action) {
+    updateCartCount(state, action) {
       state.countItems = action.payload; // yaha sirf length rakhenge
     },
+ updateWhishCount(state, action) {
+      state.whishItems = action.payload; // yaha sirf length rakhenge
+    },
+    
 
   },
 });
@@ -58,6 +63,7 @@ export const {
   increaseQuantity,
   decreaseQuantity,
   updateCartCount,
+  updateWhishCount,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
