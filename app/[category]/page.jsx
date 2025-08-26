@@ -69,8 +69,7 @@ export default async function CategoryPage(propsPromise) {
 
     return (
       <main className="min-h-screen bg-white">
-        <div className="px-2 sm:px-4 lg:px-6 lg:py-4">
-         
+        <div className="px-2 sm:px-4 lg:px-6 lg:py-4">    
 <div className=" bg-white flex flex-col lg:flex-row lg:items-center lg:justify-between lg:mb-8  ">
   <div className="">
     <h1 className="text-sm lg:text-lg font-semibold py-2 lg:py-2 leading-6 tracking-[0.38px] font-sans text-[#212121] uppercase">

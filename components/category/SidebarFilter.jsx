@@ -25,6 +25,7 @@ export default function SidebarFilter({ filters }) {
    const getFilterByStatus = useSelector((state) => state.user.GetFitterComponent);
 
 
+   console.log("filters",filters)
      useEffect(()=>{
       if(getFilterByStatus){
         setIsMobileOpen(getFilterByStatus)
@@ -40,6 +41,7 @@ export default function SidebarFilter({ filters }) {
     colors = [],
     genders = [],
     price_range = [],
+    discount_range= [],
     sizes = [],
     attributes = [],
     categories,
@@ -55,35 +57,42 @@ export default function SidebarFilter({ filters }) {
 
   // ✅ Dynamic sections
   const dynamicSections = {
-    ...(categories && {
-      Category: categories.map((c) => ({
-        label: c._id,
-        name: c.name,
-        count: c.count,
-      })),
-    }),
-    ...(colors.length && {
-      Color: colors.map((c) => ({ label: c._id, count: c.count })),
-    }),
-    ...(sizes.length && {
-      Size: sizes.map((s) => ({ label: s._id, count: s.count })),
-    }),
-    ...(genders.length && {
-      Gender: genders.map((g) => ({ label: g._id, count: g.count })),
-    }),
-    ...(price_range.length && {
-      "Price Range": price_range.map((p) => ({
-        label: p.label,
-        count: p.count,
-      })),
-    }),
-    ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
-      if (values.length) {
-        acc[key.charAt(0).toUpperCase() + key.slice(1)] = values;
-      }
-      return acc;
-    }, {}),
-  };
+  ...(categories && {
+    Category: categories.map((c) => ({
+      label: c._id,
+      name: c.name,
+      count: c.count,
+    })),
+  }),
+  ...(colors.length && {
+    Color: colors.map((c) => ({ label: c._id, count: c.count })),
+  }),
+  ...(sizes.length && {
+    Size: sizes.map((s) => ({ label: s._id, count: s.count })),
+  }),
+  ...(genders.length && {
+    Gender: genders.map((g) => ({ label: g._id, count: g.count })),
+  }),
+  ...(price_range.length && {
+    "Price Range": price_range.map((p) => ({
+      label: p.label,
+      count: p.count,
+    })),
+  }),
+  ...(discount_range.length && {
+     "Discount Range": discount_range.map((d) => ({
+       label: d.label,
+       count: d.count,
+     })),
+   }),
+  ...Object.entries(attributeGroups).reduce((acc, [key, values]) => {
+    if (values.length) {
+      acc[key.charAt(0).toUpperCase() + key.slice(1)] = values;
+    }
+    return acc;
+  }, {}),
+};
+
 
   const isAttributeSection = (section) => {
     const standardSections = [
@@ -92,6 +101,7 @@ export default function SidebarFilter({ filters }) {
       "Size",
       "Gender",
       "Price Range",
+      "Discount Range",
     ];
     return !standardSections.includes(section);
   };

@@ -1,26 +1,37 @@
-// SortByDropdown.jsx
 "use client";
-import { useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const SortByDropdown = ({ onChange }) => {
-  const [selected, setSelected] = useState("new");
+const SortByDropdown = ({ selected = "newProduct" }) => {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const options = [
-    { value: "new", label: "What's New" },
-    { value: "popularity", label: "Popularity" },
-    { value: "discount", label: "Better Discount" },
-    { value: "price_desc", label: "Price: High to Low" },
-    { value: "price_asc", label: "Price: Low to High" },
-    { value: "customer_rating", label: "Customer Rating" },
+    { value: "newProduct", label: "What's New" },
+    { value: "priceHighToLow", label: "Price: High to Low" },
+    { value: "priceLowToHigh", label: "Price: Low to High" },
+    { value: "discountHighToLow", label: "Discount: High to Low" },
+    { value: "discountLowToHigh", label: "Discount: Low to High" },
   ];
 
+  const [current, setCurrent] = useState(selected);
+
+  useEffect(() => {
+    setCurrent(selected); // sync with server
+  }, [selected]);
+
   const handleChange = (value) => {
-    setSelected(value);
+    setCurrent(value);
     setOpen(false);
-    onChange?.(value); // 🔹 parent ko notify karo
+
+    // update URL with sortBy param
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("sortBy", value);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -38,7 +49,7 @@ const SortByDropdown = ({ onChange }) => {
         <span>
           Sort by:{" "}
           <span className="font-semibold text-gray-800">
-            {options.find((o) => o.value === selected)?.label}
+            {options.find((o) => o.value === current)?.label}
           </span>
         </span>
         <ChevronDown
@@ -65,7 +76,7 @@ const SortByDropdown = ({ onChange }) => {
                 key={option.value}
                 className={`px-5 py-3 cursor-pointer flex items-center transition-colors duration-150
                 ${
-                  selected === option.value
+                  current === option.value
                     ? "bg-pink-50 text-pink-600 font-semibold"
                     : "hover:bg-gray-50"
                 }`}
@@ -74,7 +85,7 @@ const SortByDropdown = ({ onChange }) => {
                 <input
                   type="radio"
                   name="sortBy"
-                  checked={selected === option.value}
+                  checked={current === option.value}
                   onChange={() => handleChange(option.value)}
                   className="mr-2 accent-pink-600"
                 />
