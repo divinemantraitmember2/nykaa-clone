@@ -16,7 +16,7 @@ export default function MobileFooter() {
 
   const navItems = [
     { label: "Home", href: "/", icon: <Home size={20} /> },
-    { label: "Cart", href: "/cart", icon: <ShoppingCart size={20} />, showBadge: true },
+    { label: "Cart", href: "/cart", icon: <ShoppingCart size={18} />, showBadge: true },
     {
       label: "Account",
       href: session?.user ? "/profile" : "#",
@@ -40,7 +40,7 @@ export default function MobileFooter() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl shadow-pink-300 overflow-hidden rounded-t-2xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#fff] md:hidden shadow-2xl shadow-pink-300 overflow-hidden border-t border-[#e2e8f0] rounded-t-2xl">
       <ul className="flex justify-around items-center h-15  text-black ">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
@@ -53,7 +53,7 @@ export default function MobileFooter() {
       className="flex flex-col items-center justify-center"
     >
       <div
-        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
+        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-[#e2e8f0] transition-all duration-300 ${
           isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
         }`}
       >
@@ -79,7 +79,7 @@ export default function MobileFooter() {
       className="flex flex-col items-center justify-center"
     >
       <div
-        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-pink-600 transition-all duration-300 ${
+        className={`relative w-8 h-8 flex items-center justify-center rounded-full border border-[#e2e8f0] transition-all duration-300 ${
           isActive ? "bg-pink-100 text-pink-600" : "text-gray-600 bg-white"
         }`}
       >

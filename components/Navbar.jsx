@@ -21,20 +21,22 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
     <div className="w-full bg-[#fff] relative py-2">
       {/* Mobile Header */}
       <div className="flex items-center justify-between mb-3 px-4 md:hidden">
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Menu className="text-xl" />
+        </button>
+        
         <Link href="/">
           <div className="">
               <img src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
             </div>
         </Link>
-        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <Menu className="text-xl" />
-        </button>
+        
       </div>
 
       <div className="px-4  md:hidden">
-        <div className="flex items-center bg-white px-4 py-2  border border-pink-700 rounded">
+        <div className="flex items-center bg-white px-4 py-2  border border-[#e2e8f0] rounded">
           <Search className="text-pink-600 mr-2 text-sm" />
-          <input type="text" placeholder="Explore our Beauty Collection" className="bg-transparent w-full text-sm outline-none text-gray-600" />
+          <input type="text" placeholder="Explore our Beauty Collection" className="bg-transparent w-full text-sm outline-none text-gray-600 " />
         </div>
       </div>
 
@@ -72,8 +74,8 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
          <input
   type="text"
   placeholder="Search on Pondric"
-  className="border border-pink-90 rounded px-2 py-2 mx-8 bg-white-100 text-sm w-80 
-             focus:border-pink-90 focus:outline-none"
+  className="border border-[#e2e8f0] rounded px-2 py-2 mx-8 bg-white-100 text-sm w-80 
+             focus:border-[#e2e8f0] focus:outline-none"
 />
           {session?.user ? (
             <Link href="/profile">

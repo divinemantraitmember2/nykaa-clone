@@ -26,7 +26,7 @@ export default function Footer() {
               <Disclosure key={i}>
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="flex justify-between text-pink-700 w-full py-2 text-md font-bold">
+                    <Disclosure.Button className="flex justify-between font-extrabold text-xl  w-full py-2 text-md font-bold">
                       {section.title}
                       <ChevronDownIcon
                         className={`w-5 h-5 transform transition-transform duration-200 ${
