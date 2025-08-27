@@ -70,4 +70,23 @@ export async function GetPagesDetails(payload) {
   }
 }
 
+export async function GetHomePagesDetails() {
+  try {
+    const response = await axios.get(`https://api.pondric.com/api/v1/home`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ll`
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("GetAboutUsPage error:", error);
+    return [];
+  }
+}
+
 
