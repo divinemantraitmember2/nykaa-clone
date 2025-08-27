@@ -59,7 +59,7 @@ export default function Footer() {
                 placeholder="Enter your email"
                 className="flex-1 rounded-xl border px-3 py-2"
               />
-              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
+              <button className="inline-flex items-center w-[50%] bg-[#0e1527] text-white shadow mx-auto justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
                 Subscribe
               </button>
             </div>
@@ -102,7 +102,7 @@ export default function Footer() {
                 placeholder="Enter your email"
                 className="flex-1 rounded-xl border px-3 py-2"
               />
-              <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
+              <button className="inline-flex items-center bg-[#0e1527] text-white shadow justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
                 Subscribe
               </button>
             </div>
