@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 
 // Swiper styles
 import "swiper/css";
@@ -13,17 +13,16 @@ export default function HeroSlider({ hero }) {
   if (!hero || hero.length === 0) return null;
 
   return (
-    <section className="relative max-w-7xl mx-auto px-3 mt-8">
+    <section className="relative max-w-7xl mx-auto">
       <Swiper
         modules={[Autoplay]}
         spaceBetween={16}
-        slidesPerView={1}
-        loop={true}
+        slidesPerView={1} 
+        loop
         autoplay={{ delay: 4000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
         breakpoints={{
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
+          768: { slidesPerView: 1.5 }, // Tablet: still 1.5
+          1024: { slidesPerView: 1 },  // Desktop: only 1 full slide
         }}
         className="!pb-10"
       >
@@ -31,19 +30,19 @@ export default function HeroSlider({ hero }) {
           <SwiperSlide key={item.id}>
             <Link
               href={item.href || "#"}
-              className="block relative h-64 md:h-80 rounded-2xl overflow-hidden group shadow-sm"
+              className="block relative h-64 md:h-90  overflow-hidden group"
             >
               {/* Background image */}
-              {/* <div
+              <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${item.image})` }}
-              /> */}
+              />
 
               {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+              <div className="absolute inset-0" />
 
               {/* Content */}
-              <div className="absolute bottom-4 left-4 right-4 text-white">
+              <div className="absolute bottom-4 left-4 right-4 text-black lg:px-4">
                 <h5 className="text-lg md:text-2xl font-bold drop-shadow">
                   {item.title}
                 </h5>

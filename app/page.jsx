@@ -1,4 +1,5 @@
 import HeroSlider from "../components/HeroSlider";
+import BannerSlider from "../components/BannerSlider";
 import TopCategory from "../components/homecomponent/TopCategory";
 import Offers from "../components/homecomponent/Offers";
 import CollectionsRenderer from "../components/homecomponent/CollectionsRenderer";
@@ -24,6 +25,7 @@ import  {GetHomePagesDetails}  from "../utils/api/serverApi";
   return (
     <>
     <HeroSlider hero={pageData.banner_slides}/>
+    {/* <BannerSlider banners={pageData.banner_slides}/> */}
     <TopCategory quickCategories={pageData.quickCategories}/>
     <Offers Offers={pageData.coupons}/>
     <CollectionsRenderer collections={pageData.collections}/>

@@ -5,7 +5,7 @@ import ProductCardHome from "./ProductCardHome";
 
 const CollectionsRenderer = ({ collections }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10 space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 my-10 space-y-12">
       {collections.map((collection) => (
         <div key={collection.id}>
           <div className="flex items-end justify-between mb-4">

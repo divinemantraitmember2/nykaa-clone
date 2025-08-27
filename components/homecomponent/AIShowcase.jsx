@@ -6,7 +6,7 @@ import ProductCardHome from "./ProductCardHome"; // your existing reusable Produ
 
 const AIShowcase = ({ showcase }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 my-4">
       <div className="flex items-end justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-extrabold">{showcase.title}</h2>
         <a href="#" className="text-sm font-medium hover:opacity-80">
