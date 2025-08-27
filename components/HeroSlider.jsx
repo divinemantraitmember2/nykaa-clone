@@ -3,41 +3,11 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const hero = [
-  {
-    id: "b1",
-    title: "Festive Edit",
-    subtitle: "Up to 40% Off • Kurtas, Lehengas, Sarees",
-    cta: "Shop Women",
-    href: "/c/women-ethnic",
-    image:
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1400&auto=format&fit=crop",
-  },
-  {
-    id: "b2",
-    title: "Men's Classics",
-    subtitle: "Solid Shirts, Denims & Blazers",
-    cta: "Shop Men",
-    href: "/c/men-classics",
-    image:
-      "https://images.unsplash.com/photo-1520974692515-8dfc31d46e86?q=80&w=1400&auto=format&fit=crop",
-  },
-  {
-    id: "b3",
-    title: "Back to School",
-    subtitle: "Smart picks for kids • Under ₹999",
-    cta: "Shop Kids",
-    href: "/c/kids",
-    image:
-      "https://images.unsplash.com/photo-1596464716121-e8c1ad6c193f?q=80&w=1400&auto=format&fit=crop",
-  },
-];
-
-export default function HeroSlider() {
+export default function HeroSlider({hero}) {
   return (
     <section className="relative">
       <div className="grid md:grid-cols-3 gap-3 p-3 max-w-7xl mx-auto">
-        {hero.map((item) => (
+        {hero && hero.map((item) => (
           <Link
             key={item.id}
             href={item.href}

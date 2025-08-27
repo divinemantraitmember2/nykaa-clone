@@ -2,26 +2,11 @@
 
 import { Sparkles } from "lucide-react";
 
-const offers = [
-  {
-    id: "o1",
-    title: "Flat 20% Off",
-    desc: "On cart above ₹999",
-    code: "PONDRIC20",
-  },
-  {
-    id: "o2",
-    title: "Up to 40% Off",
-    desc: "Festive styles",
-    code: "FEST40",
-  },
-];
-
-export default function Offers() {
+export default function Offers({Offers}) {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
       <div className="grid md:grid-cols-2 gap-4">
-        {offers.map((offer) => (
+        { Offers && Offers.map((offer) => (
           <div
             key={offer.id}
             className="text-card-foreground shadow-sm rounded-2xl  bg-gradient-to-br from-zinc-50 to-white"
