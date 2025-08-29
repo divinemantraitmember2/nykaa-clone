@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCardHome";
+import ProductCard from "./ProductCard";
 
 export default function TrendingProducts() {
   const products = [

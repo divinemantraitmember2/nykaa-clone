@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -6,20 +5,23 @@ import ProductCardHome from "./ProductCardHome"; // your existing reusable Produ
 
 const AIShowcase = ({ showcase }) => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 my-4">
+    <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-4 my-4">
       <div className="flex items-end justify-between mb-4">
         <h2 className="text-xl md:text-2xl font-extrabold">{showcase.title}</h2>
-        <a href="#" className="text-sm font-medium hover:opacity-80">
+        <a href="#" className="text-sm font-bold hover:opacity-80">
           View all →
         </a>
       </div>
 
-      <div className="">
-        {/* Carousel */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div>
+        {/* Grid layout */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {showcase.products.map((product) => (
+            <div
+              key={product.id}
+              className="w-full" // wrapper for responsiveness
+            >
               <ProductCardHome
-                key={product.id}
                 title={product.title}
                 image={product.image}
                 price={product.priceINR}
@@ -27,7 +29,10 @@ const AIShowcase = ({ showcase }) => {
                 onAddToCart={() => console.log("Add to Cart", product.title)}
                 onWishlist={() => console.log("Wishlist", product.title)}
                 href={product.href || "#"}
+                className="!text-xs sm:!text-sm" // ✅ font-size small on mobile
+                imgClassName="h-32 sm:h-40 md:h-48 object-cover" // ✅ small image height on mobile
               />
+            </div>
           ))}
         </div>
       </div>

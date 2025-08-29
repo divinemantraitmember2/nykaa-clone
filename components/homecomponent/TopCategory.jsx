@@ -1,7 +1,7 @@
 "use client";
 
 import "swiper/css";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -9,9 +9,40 @@ export default function TopCategory({ quickCategories }) {
   if (!quickCategories || quickCategories.length === 0) return null;
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
-      <motion.div 
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+    <section className="max-w-7xl mx-auto py-2 px-2 lg:px-4">
+      {/* --- Mobile Slider --- */}
+      <div className="md:hidden">
+        <Swiper
+          spaceBetween={12}
+          slidesPerView={1.2} // show ~2 cards at a time
+          className="pb-6"
+        >
+          {quickCategories.map((cat) => (
+            <SwiperSlide key={cat.id}>
+              <Link
+                href={`/${cat.slug}`}
+                className="group block rounded-2xl overflow-hidden shadow-sm bg-zinc-50"
+              >
+                {/* Image */}
+                <motion.div
+                  className="h-50 bg-center bg-cover"
+                  style={{ backgroundImage: `url(${cat.image})` }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                />
+                {/* Label */}
+                <div className="p-2 text-center font-semibold text-sm group-hover:opacity-80 transition">
+                  {cat.name}
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* --- Desktop Grid --- */}
+      <motion.div
+        className="hidden md:grid grid-cols-4 gap-4"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
@@ -30,15 +61,12 @@ export default function TopCategory({ quickCategories }) {
               href={`/${cat.slug}`}
               className="group block rounded-2xl overflow-hidden shadow-sm bg-zinc-50"
             >
-              {/* Image with hover animation */}
               <motion.div
-                className="h-36 bg-center bg-cover"
+                className="h-50 bg-center bg-cover"
                 style={{ backgroundImage: `url(${cat.image})` }}
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               />
-
-              {/* Label */}
               <div className="p-3 text-center font-semibold group-hover:opacity-80 transition">
                 {cat.name}
               </div>

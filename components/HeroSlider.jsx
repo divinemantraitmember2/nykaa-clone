@@ -17,12 +17,12 @@ export default function HeroSlider({ hero }) {
       <Swiper
         modules={[Autoplay]}
         spaceBetween={16}
-        slidesPerView={1} 
+        slidesPerView={1}
         loop
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         breakpoints={{
-          768: { slidesPerView: 1.5 }, // Tablet: still 1.5
-          1024: { slidesPerView: 1 },  // Desktop: only 1 full slide
+          768: { slidesPerView: 1.5 }, // Tablet
+          1024: { slidesPerView: 1 }, // Desktop
         }}
         className="!pb-10"
       >
@@ -30,12 +30,20 @@ export default function HeroSlider({ hero }) {
           <SwiperSlide key={item.id}>
             <Link
               href={item.href || "#"}
-              className="block relative h-64 md:h-90  overflow-hidden group"
+              className="block relative overflow-hidden group"
             >
-              {/* Background image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${item.image})` }}
+              {/* Desktop Image */}
+              <img
+                src={`${item?.image}?tr=w-1600,h-500`}
+                alt={item.title}
+                className="w-full hidden lg:block object-cover transition-transform duration-500 group-hover:scale-105 h-[400px]"
+              />
+
+              {/* Mobile Image */}
+              <img
+                src={`${item?.image}?tr=w-1600,h-500`}
+                alt={item.title}
+                className="w-full lg:hidden object-cover transition-transform duration-500 group-hover:scale-105 h-[230px] sm:h-[350px]"
               />
 
               {/* Overlay gradient */}

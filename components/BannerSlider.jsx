@@ -11,17 +11,18 @@ export default function BannerSlider({ banners }) {
         modules={[Autoplay]}
         slidesPerView={1}
         loop={true}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={{ delay: 7000, disableOnInteraction: false }}
         className="banner-swiper"
       >
         {banners.map((banner, i) => (
           <SwiperSlide key={i}>
-            <a href={banner.href} title={banner.title}>
-              <div className="relative w-full aspect-[16/9] md:aspect-[16/7] overflow-hidden rounded-2xl">
+            <a href={banner.href} title={banner.title} className="block w-full">
+              <div className="w-full aspect-[1200/400] relative">
                 <img
-                  src={banner.image}
+                  src={`${banner.image}?tr=w-1200,h-400`}
                   alt={banner.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
+                  loading="lazy"
                 />
               </div>
             </a>
