@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-// Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -20,10 +19,6 @@ export default function HeroSlider({ hero }) {
         slidesPerView={1}
         loop
         autoplay={{ delay: 4000, disableOnInteraction: false }}
-        breakpoints={{
-          768: { slidesPerView: 1.5 }, // Tablet
-          1024: { slidesPerView: 1 }, // Desktop
-        }}
         className="!pb-10"
       >
         {hero.map((item) => (
@@ -32,19 +27,23 @@ export default function HeroSlider({ hero }) {
               href={item.href || "#"}
               className="block relative overflow-hidden group"
             >
-              {/* Desktop Image */}
-              <img
-                src={`${item?.image}?tr=w-1600,h-500`}
-                alt={item.title}
-                className="w-full hidden lg:block object-cover transition-transform duration-500 group-hover:scale-105 h-[400px]"
-              />
+              {/* Desktop Image with Aspect Ratio */}
+              <div className="hidden lg:block relative w-full aspect-[16/6] overflow-hidden">
+                <img
+                  src={`${item?.image}?tr=w-1600,h-600`}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
 
-              {/* Mobile Image */}
-              <img
-                src={`${item?.image}?tr=w-1600,h-500`}
-                alt={item.title}
-                className="w-full lg:hidden object-cover transition-transform duration-500 group-hover:scale-105 h-[230px] sm:h-[350px]"
-              />
+              {/* Mobile Image with Aspect Ratio */}
+              <div className="lg:hidden relative w-full aspect-[16/9] overflow-hidden">
+                <img
+                  src={`${item?.image}?tr=w-800,h-500`}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
 
               {/* Overlay gradient */}
               <div className="absolute inset-0" />
