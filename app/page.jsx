@@ -15,8 +15,7 @@ import  {GetHomePagesDetails}  from "../utils/api/serverApi";
   try {
     const response = await GetHomePagesDetails();
     if (response?.status === 200 && response?.data?.code === 200) {
-      pageData=response?.data?.data
-      // console.log("pageData",pageData)
+      pageData=response?.data?.data;
     } 
   } catch (error) {
     console.error("Error fetching About Us page:", error);

@@ -3,67 +3,80 @@
 import React from "react";
 import ProductCardHome from "./ProductCardHome";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 
 // Swiper styles
 import "swiper/css";
 
 const CollectionsRenderer = ({ collections }) => {
+   
+  if (!collections || collections.length === 0) return null;
+
   return (
-    <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4 my-10 space-y-12">
-      {collections.map((collection) => (
-        <div key={collection.id}>
-          {/* Header */}
-          <div className="flex items-end justify-between mb-4">
-            <h2 className="text-xl md:text-2xl font-extrabold">
-              {collection.title}
-            </h2>
-            <a href="#" className="text-sm font-bold hover:opacity-80">
-              View all →
-            </a>
-          </div>
+    <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-6 my-10 space-y-12">
+      {collections.map((collection, indexId) => {
+        // Agar products null hai ya empty hai to skip kar do
+        if (!collection.products || collection.products.length === 0) {
+          return null;
+        }
 
-          {/* ✅ Mobile: Always slider */}
-          <div className="block md:hidden">
-            <Swiper
-            //   modules={[Autoplay]}
-              spaceBetween={12}
-              slidesPerView={1.5} // 👈 ek baar me 2 cards dikhayega, chaaho to 1.3 bhi kar sakte ho
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
-              className="!pb-6"
-            >
-              {collection.products.map((product) => (
-                <SwiperSlide key={product.id}>
-                  <ProductCardHome
-                    title={product.title}
-                    image={product.image}
-                    price={product.discountedINR || product.priceINR}
-                    originalPrice={
-                      product.discountedINR ? product.priceINR : null
-                    }
-                    discount={product.badge}
-                    rating={product.rating || 0}
-                    href={product.href || "#"}
-                    onAddToCart={() => console.log("Add to Cart", product.title)}
-                    onWishlist={() => console.log("Wishlist", product.title)}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+        return (
+          <div key={indexId + "col"}>
+            {/* Header */}
+            <div className="flex items-end justify-between mb-4">
+                <div className="">
+                     <h2 className="text-xl md:text-2xl font-extrabold">
+                       {collection?.title}
+                      </h2>
+                    <p>{collection?.desc}</p>
+                </div>
+             
 
-          {/* ✅ Desktop: Grid (same for grid & carousel layouts) */}
-          {collection.layout === "grid" || collection.layout === "carousel" ? (
+              <a href="#" className="text-sm font-bold hover:opacity-80">
+                View all →
+              </a>
+            </div>
+
+            {/* ✅ Mobile: Always slider */}
+            <div className="block md:hidden">
+              <Swiper
+                spaceBetween={12}
+                slidesPerView={1.5}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                className="!pb-6"
+              >
+                {collection.products.map((product, pIndex) => (
+                  <SwiperSlide key={pIndex + "p"}>
+                    <ProductCardHome
+                      title={product.title}
+                      image={product.image}
+                      price={product.discountedINR || product.priceINR}
+                      originalPrice={
+                        product.discountedINR ? product.priceINR : null
+                      }
+                      discount={product.badge}
+                      rating={product.rating || 0}
+                      href={product.href || "#"}
+                      onAddToCart={() =>
+                        console.log("Add to Cart", product.title)
+                      }
+                      onWishlist={() => console.log("Wishlist", product.title)}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* ✅ Desktop: Grid view (fallback if layout missing) */}
             <div
               className={`hidden md:grid gap-4 ${
-                collection.layout === "grid"
-                  ? "md:grid-cols-3 lg:grid-cols-6"
+                collection.layout === "carousel"
+                  ? "md:grid-cols-3 lg:grid-cols-5"
                   : "md:grid-cols-3 lg:grid-cols-5"
               }`}
             >
-              {collection.products.map((product) => (
+              {collection.products.map((product, pIndex) => (
                 <ProductCardHome
-                  key={product.id}
+                  key={pIndex + "grid"}
                   title={product.title}
                   image={product.image}
                   price={product.discountedINR || product.priceINR}
@@ -73,14 +86,16 @@ const CollectionsRenderer = ({ collections }) => {
                   discount={product.badge}
                   rating={product.rating || 0}
                   href={product.href || "#"}
-                  onAddToCart={() => console.log("Add to Cart", product.title)}
+                  onAddToCart={() =>
+                    console.log("Add to Cart", product.title)
+                  }
                   onWishlist={() => console.log("Wishlist", product.title)}
                 />
               ))}
             </div>
-          ) : null}
-        </div>
-      ))}
+          </div>
+        );
+      })}
     </div>
   );
 };

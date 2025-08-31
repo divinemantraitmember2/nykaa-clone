@@ -52,18 +52,30 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
-            <div className="font-semibold mb-2">Newsletter</div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <input
-                placeholder="Enter your email"
-                className="flex-1 rounded-xl border px-3 py-2"
-              />
-              <button className="inline-flex items-center w-[50%] bg-[#0e1527] text-white shadow mx-auto justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
-                Subscribe
-              </button>
-            </div>
-          </div>
+    <div className=" ">
+  {/* Title */}
+  <div className="text-lg font-bold mb-3 text-gray-900">
+    Subscribe to our Newsletter
+  </div>
+
+  {/* Input + Button */}
+  <div className="flex flex-col sm:flex-row gap-3 mb-3">
+    <input
+      type="email"
+      placeholder="Enter your email"
+      className="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+    />
+    <button className="inline-flex w-[70%] mx-auto items-center justify-center gap-2 rounded-xl bg-[#0e1527] text-white font-medium text-sm px-5 py-3 ">
+      Subscribe
+    </button>
+  </div>
+
+  {/* Small note */}
+  <p className="text-xs font-bold text-gray-500 py-3">
+    Get the latest updates, exclusive offers, and more.
+  </p>
+</div>
+
         </div>
 
         {/* Desktop Grid */}
@@ -95,18 +107,30 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
-            <div className="font-semibold mb-2">Newsletter</div>
-            <div className="flex gap-2">
-              <input
-                placeholder="Enter your email"
-                className="flex-1 rounded-xl border px-3 py-2"
-              />
-              <button className="inline-flex items-center bg-[#0e1527] text-white shadow justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-xl">
-                Subscribe
-              </button>
-            </div>
-          </div>
+          <div className="">
+  {/* Title */}
+  <div className="text-lg font-bold mb-3 text-gray-900">
+    Subscribe to our Newsletter
+  </div>
+
+  {/* Input + Button */}
+  <div className="flex gap-2 mb-3">
+    <input
+      type="email"
+      placeholder="Enter your email"
+      className="flex-1 rounded-xl bg-white px-4 py-2.5 text-sm shadow-sm focus:outline-none focus:ring-2 transition"
+    />
+    <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#0e1527] text-white font-medium text-sm px-5 py-2.5 shadow-md  transition-all duration-300">
+      Subscribe
+    </button>
+  </div>
+
+  {/* Small note */}
+  <p className="text-xs text-gray-500 mt-2">
+    Get the latest updates, exclusive offers, and more.
+  </p>
+</div>
+
         </div>
       </div>
 
