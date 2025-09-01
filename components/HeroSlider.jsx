@@ -30,7 +30,7 @@ export default function HeroSlider({ hero }) {
               {/* Desktop Image with Aspect Ratio */}
               <div className="hidden lg:block relative w-full overflow-hidden">
                 <img
-                  src={`${item?.image}?tr=w-1900,h-500`}
+                  src={`${item?.image}?tr=w-1900,h-600`}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -39,7 +39,7 @@ export default function HeroSlider({ hero }) {
               {/* Mobile Image with Aspect Ratio */}
               <div className="lg:hidden relative w-full  overflow-hidden">
                 <img
-                  src={`${item?.image}?tr=h-600,w-1080`}
+                  src={`${item?.mobileimage}?tr=w-1080,h-550`}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
