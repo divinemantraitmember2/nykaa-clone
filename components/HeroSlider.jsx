@@ -37,9 +37,9 @@ export default function HeroSlider({ hero }) {
               </div>
 
               {/* Mobile Image with Aspect Ratio */}
-              <div className="lg:hidden relative w-full aspect-[16/9] overflow-hidden">
+              <div className="lg:hidden relative w-full  overflow-hidden">
                 <img
-                  src={`${item?.image}?tr=h-600,w-1000`}
+                  src={`${item?.image}?tr=h-600,w-1080`}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
