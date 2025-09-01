@@ -20,8 +20,11 @@ export default function TopCategory({ quickCategories }) {
           {quickCategories.map((cat) => (
             <SwiperSlide key={cat.id}>
               <Link
-                href={`/${cat.slug}`}
+                 href={`/${cat.slug}`}
+                 target="_blank"
+                 rel="noopener noreferrer" 
                 className="group block rounded-2xl overflow-hidden shadow-sm bg-zinc-50"
+              
               >
                 {/* Image */}
                 <motion.div
@@ -60,6 +63,8 @@ export default function TopCategory({ quickCategories }) {
             <Link
               href={`/${cat.slug}`}
               className="group block rounded-2xl overflow-hidden shadow-sm bg-zinc-50"
+               target="_blank"
+              rel="noopener noreferrer" 
             >
               <motion.div
                 className="h-50 bg-center bg-cover"
