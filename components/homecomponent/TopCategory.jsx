@@ -9,13 +9,13 @@ export default function TopCategory({ quickCategories }) {
   if (!quickCategories || quickCategories.length === 0) return null;
 
   return (
-    <section className="max-w-7xl mx-auto py-2 px-2 lg:px-4">
+    <section className="max-w-7xl mx-auto  px-2 lg:px-4">
       {/* --- Mobile Slider --- */}
       <div className="md:hidden">
         <Swiper
           spaceBetween={12}
           slidesPerView={1.2} // show ~2 cards at a time
-          className="pb-6"
+          className="pb-8"
         >
           {quickCategories.map((cat) => (
             <SwiperSlide key={cat.id}>

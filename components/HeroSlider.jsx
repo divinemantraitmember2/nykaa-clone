@@ -19,7 +19,7 @@ export default function HeroSlider({ hero }) {
         slidesPerView={1}
         loop
         autoplay={{ delay: 4000, disableOnInteraction: false }}
-        className="!pb-10"
+        className="!pb-5"
       >
         {hero.map((item) => (
           <SwiperSlide key={item.id}>

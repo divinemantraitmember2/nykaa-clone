@@ -6,16 +6,16 @@ import Link from "next/link";
 export default function CategoryCards2({bannerblocks}) {
   return (
     <section className="relative">
-      <div className="grid md:grid-cols-3 gap-3 px-2 lg:px-4 max-w-7xl mx-auto mb-4 lg:mb-8">
+      <div className="grid md:grid-cols-3 gap-3 px-2 lg:px-4 max-w-7xl mx-auto mb-2 lg:mb-5">
         { bannerblocks && bannerblocks.map((cat) => (
           <Link
             key={cat.id}
             href={cat.href}
-            className="relative h-64 md:h-80 rounded-2xl overflow-hidden group shadow-sm"
+            className="relative h-90 lg:h-100 rounded-2xl overflow-hidden group shadow-sm"
           >
             {/* Background Image */}
             <img
-              src={cat.image}
+              src={`${cat.image}?tr=w-800,h-600`}
               alt={cat.title}
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
