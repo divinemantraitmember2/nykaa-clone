@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 import { useRef, useEffect } from "react";
 
 // Swiper CSS
 import "swiper/css";
-import "swiper/css/pagination";
 
 export default function ProductImage({ ProductImages }) {
   const firstVariant = ProductImages?.[0] || {};
@@ -43,19 +42,7 @@ export default function ProductImage({ ProductImages }) {
       {images.length > 0 ? (
         <Swiper
           ref={swiperRef}
-          modules={[Pagination, Autoplay]}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-            renderBullet: (index, className) => {
-              // Custom bullet design
-              return `<span class="${className} ${
-                className.includes("swiper-pagination-bullet-active")
-                  ? "bg-red-600 w-6 h-2 rounded-full"
-                  : "bg-gray-300 w-2 h-2 rounded-full"
-              }"></span>`;
-            },
-          }}
+          modules={[Autoplay]}
           autoplay={{
             delay: 1000,
             disableOnInteraction: false,
@@ -76,9 +63,6 @@ export default function ProductImage({ ProductImages }) {
               </div>
             </SwiperSlide>
           ))}
-
-          {/* Pagination container */}
-          {/* <div className="swiper-pagination absolute bottom-2 left-1/2 -translate-x-1/2"></div> */}
         </Swiper>
       ) : (
         <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
