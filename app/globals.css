@@ -101,3 +101,17 @@ h1,h2,h3,h4{
   font-weight: bold;
 
 }
+
+.custom-pagination .swiper-pagination-bullet {
+  background-color: #d56464; 
+  width: 8px;
+  height: 8px;
+  opacity: 1 !important; 
+  transition: all 0.3s;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background-color: #da5f5f;
+  width: 24px;
+  border-radius: 4px;
+}

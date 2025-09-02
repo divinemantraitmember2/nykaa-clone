@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 const CollectionsRenderer = ({ collections }) => {
+  console.log("collections",collections)
    
   if (!collections || collections.length === 0) return null;
 
@@ -54,6 +55,7 @@ const CollectionsRenderer = ({ collections }) => {
                         product.discountedINR ? product.priceINR : null
                       }
                       discount={product.badge}
+                      sku={product.id}
                       rating={product.rating || 0}
                       href={product.href || "#"}
                       onAddToCart={() =>
@@ -84,6 +86,7 @@ const CollectionsRenderer = ({ collections }) => {
                     product.discountedINR ? product.priceINR : null
                   }
                   discount={product.badge}
+                   sku={product.id}
                   rating={product.rating || 0}
                   href={product.href || "#"}
                   onAddToCart={() =>

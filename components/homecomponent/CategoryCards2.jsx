@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function CategoryCards2({ bannerblocks }) {
+
   return (
     <section className="relative">
       <div className="grid md:grid-cols-3 gap-3 px-2 lg:px-4 max-w-7xl mx-auto mb-2 lg:mb-5">

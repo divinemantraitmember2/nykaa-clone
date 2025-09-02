@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProductHeart from "./ProductHeart";
 import ProductColorSize from "./ProductColorSize";
+import ProductImage from "./ProductImage";
 
 export default function ProductCard({ product, slug }) {
   const variant =
@@ -22,8 +23,8 @@ export default function ProductCard({ product, slug }) {
       >
         {/* Image Section */}
 
-        
-<div className="w-full h-[290px] overflow-hidden rounded-md">
+       <ProductImage ProductImages={product?.variants} />
+{/* <div className="w-full h-[290px] overflow-hidden rounded-md">
   <picture className="w-full h-full block">
     <source
       srcSet={`${product?.default_image}`}
@@ -38,7 +39,7 @@ export default function ProductCard({ product, slug }) {
       loading="lazy"
     />
   </picture>
-</div>
+</div> */}
  {/* Content */}
         <div className="p-2 space-y-1">
           {/* Title */}

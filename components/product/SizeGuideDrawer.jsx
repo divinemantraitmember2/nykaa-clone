@@ -18,16 +18,22 @@ export default function SizeGuideDrawer({ open, onClose, product }) {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Header (sticky) */}
-        <div className="sticky top-0 z-40 flex items-center justify-between px-4 py-3 border-b bg-white">
-          <h2 className="text-lg font-semibold">Size Guide</h2>
-          <button onClick={onClose}>
-            <X className="w-6 h-6 text-gray-600" />
-          </button>
-        </div>
+       {/* Header (sticky) */}
+<div className="sticky top-10 lg:top-0 z-50 flex items-center justify-between px-4 py-3 border-b bg-white">
+  <h2 className="text-lg font-semibold">Size Guide</h2>
+
+  {/* Close Button */}
+  <button
+    onClick={onClose}
+    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-all absolute right-3 top-3 md:static"
+  >
+    <X className="w-6 h-6 text-gray-700" />
+  </button>
+</div>
+
 
         {/* Product Info */}
-        <div className="flex items-center gap-3 px-1 py-3 border-b">
+<div className="flex items-center gap-3 px-1 mt-10 lg:mt-0 py-3 border-b">
   <img
     src={product?.image}
     alt={product?.name}

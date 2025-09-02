@@ -5,13 +5,15 @@ import { FiHeart, FiLogOut } from "react-icons/fi";
 import { FaRegCreditCard, FaPen } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import { MdOutlineLocationOn, MdOutlineShoppingBag } from "react-icons/md";
-import { GetUserOrder, GetUser } from "../../utils/api/Httproutes";
+import { GetUserOrder, GetUser,GetUserWhish } from "../../utils/api/Httproutes";
 import MyOrders from "../../components/userInfo/MyOrders";
+import UserWishlist from "../../components/userInfo/UserWishlist";
 
 export default function ProfilePage() {
   const [addresses, setAddresses] = useState([]);
   const [selectedTab, setSelectedTab] = useState("My Orders");
   const [UserOrders, setUserOrders] = useState([]);
+  const [UserWishList, setUserWishList] = useState([]);
   const [UserInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState({ orders: false, profile: false });
   const [error, setError] = useState({ orders: null, profile: null });
@@ -59,17 +61,34 @@ export default function ProfilePage() {
     }
   }
 
+  async function UserWishedList(){
+    try{
+
+     const Respose=await GetUserWhish()
+
+     if(Respose.status===200 && Respose?.data?.code===200){
+      if(Respose?.data?.data && Respose?.data?.data.length>0){
+        setUserWishList(Respose?.data?.data)
+      }else{
+      setUserWishList([])
+      }
+      
+      console.log("Respose",Respose?.data?.data)
+     }
+    }catch(error){
+
+    }
+
+  }
+
+
   useEffect(() => {
     fetchOrders();
     GetUserProfile();
+    UserWishedList()
   }, []);
 
-  const MyWishlist = () => (
-    <div>
-      <h2 className="text-lg font-bold">My Wishlist</h2>
-      <p>No items in wishlist.</p>
-    </div>
-  );
+ 
 
   const MyPayment = () => (
     <div>
@@ -88,7 +107,7 @@ export default function ProfilePage() {
   const renderContent = () => {
     switch (selectedTab) {
       case "My Wishlist":
-        return <MyWishlist />;
+        return <UserWishlist wishlistData={UserWishList} />;
       case "My Saved Payment":
         return <MyPayment />;
       case "My Orders":

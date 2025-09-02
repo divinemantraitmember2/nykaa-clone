@@ -26,6 +26,7 @@ const AIShowcase = ({ showcase }) => {
                 image={product.image}
                 price={product.priceINR}
                 discount={product.badge}
+                sku=""
                 onAddToCart={() => console.log("Add to Cart", product.title)}
                 onWishlist={() => console.log("Wishlist", product.title)}
                 href={product.href || "#"}
