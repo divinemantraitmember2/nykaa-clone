@@ -3,7 +3,7 @@
 import React from "react";
 import { Star, Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import ProductHeart from "../category/ProductHeart";
+
 
 const ProductCardHome = ({
   title,
@@ -12,7 +12,6 @@ const ProductCardHome = ({
   price,
   originalPrice,
   discount,
-  sku,
   isNew = false,
   rating = 0,
   onAddToCart,
@@ -40,7 +39,6 @@ const ProductCardHome = ({
             transition={{ duration: 0.4 }}
           />
         </a>
-          <ProductHeart sku={sku} />
 
         {discount && (
           <span className="absolute left-3 top-3 text-xs bg-black text-white rounded-full px-3 py-1">
@@ -83,7 +81,14 @@ const ProductCardHome = ({
           >
             Veiw
           </motion.button>
-        
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-[#f1f5f9] text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 rounded-xl"
+            onClick={onWishlist}
+          >
+           <Heart className="h-4 w-4" />
+          </motion.button>
         </div>
       </div>
     </motion.div>
