@@ -144,6 +144,10 @@ export async function GetUserOrderInvoice(orderId) {
   }
 }
 
+export const GetSizeChart = async (category_slug) => {
+  const requestUrl = `/api/v1/sizechart/${category_slug}?unit=in`;
+  return api.get(requestUrl);
+};
 
 // export async function GetAboutUsPage() {
 //   try { 

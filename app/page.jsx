@@ -1,5 +1,4 @@
 import HeroSlider from "../components/HeroSlider";
-import BannerSlider from "../components/BannerSlider";
 import TopCategory from "../components/homecomponent/TopCategory";
 import Offers from "../components/homecomponent/Offers";
 import CollectionsRenderer from "../components/homecomponent/CollectionsRenderer";
@@ -26,14 +25,14 @@ import  {GetHomePagesDetails}  from "../utils/api/serverApi";
   return (
     <>
     <HeroSlider hero={pageData.banner_slides}/>
-    {/* <BannerSlider banners={pageData.banner_slides}/> */}
+    <main  className="relative lg:mt-10 mt-[55vh] z-10 bg-white rounded-t-2xl">
     <CategoryCards2 bannerblocks={pageData.banner_blocks}/>
     <TopCategory quickCategories={pageData.quickCategories}/>
     <Offers Offers={pageData.coupons}/>
     <CollectionsRenderer collections={pageData.collections}/>
     <AIShowcase showcase={pageData.aiShowcase}/>
     <TrustBadges badges={pageData.trustBadges}/>
-    {/* <BuyOneGetOne/> */}
+    </main>
     </>
   );
 }

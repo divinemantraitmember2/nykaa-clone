@@ -7,7 +7,7 @@ export default function CategoryCards2({ bannerblocks }) {
 
   return (
     <section className="relative">
-      <div className="grid md:grid-cols-3 gap-3 px-2 lg:px-4 max-w-7xl mx-auto mb-2 lg:mb-5">
+      <div className="grid md:grid-cols-3 gap-3 p-2 lg:px-4 max-w-7xl mx-auto mb-2 lg:mb-5">
         {bannerblocks &&
           bannerblocks.map((cat) => (
             <Link
@@ -15,7 +15,7 @@ export default function CategoryCards2({ bannerblocks }) {
               href={cat.href}
               target="_blank"
               rel="noopener noreferrer"   // ✅ Safe external link
-              className="relative h-85 lg:h-90 rounded-2xl overflow-hidden group shadow-sm"
+              className="relative h-85 lg:h-90 rounded-xl overflow-hidden group shadow-sm"
             >
               {/* Background Image */}
               <img

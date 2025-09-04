@@ -1,6 +1,7 @@
 import SidebarFilter from "../../components/category/SidebarFilter";
 import MobileFilterSortBar from "../../components/category/MobileFilterSortBar";
 import SortByDropdown from "../../components/category/SortByDropdown";
+import Pagination from "../../components/category/Pagination";
 import ProductGrid from "../../components/category/ProductGrid";
 import NotFound from "../not-found";
 import { GetProductofcategorylist ,GetProductFilters} from "../../utils/api/serverApi";
@@ -98,7 +99,10 @@ export default async function CategoryPage(propsPromise) {
                 <>
                   <ProductGrid productsData={products} catSlug={category} />
                   <div className="text-center text-sm text-gray-600 mt-10">
-                    No More Products to Show
+                    <Pagination
+                    total={20}
+                      limit={12}
+                     />
                   </div>
                 </>
               ) : (

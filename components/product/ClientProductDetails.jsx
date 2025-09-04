@@ -581,6 +581,7 @@ const productSizeGuide = {
         open={openSizeGuide}
         onClose={() => setOpenSizeGuide(false)}
         product={productSizeGuide}
+        category_slug={"shirts"}
       />
     </section>
   );
