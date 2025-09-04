@@ -11,8 +11,8 @@ import "swiper/css/pagination";
 
 export default function CategoryCards2({ bannerblocks }) {
   return (
-    <section className="relative mb-8 lg:mb-1">
-      <div className="block md:hidden px-2">
+    <section className="relative mb-8 lg:mb-1 mt-3">
+      <div className="block md:hidden p-2">
         <Swiper
           spaceBetween={12}
           pagination={{ clickable: true }}

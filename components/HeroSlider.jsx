@@ -52,7 +52,7 @@ export default function HeroSlider({ hero }) {
                 className="block relative overflow-hidden group h-full"
               >
                 <img
-                  src={`/images/New.jpg`}
+                  src={`${item.mobileimage}`}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
