@@ -4,39 +4,19 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { useEffect, useState } from "react";
-
 import "swiper/css";
 import "swiper/css/pagination";
 
 export default function HeroSlider({ hero }) {
   if (!hero || hero.length === 0) return null;
-
   // ✅ State for banner height (mobile shrink effect)
-  const [bannerHeight, setBannerHeight] = useState(56);
+  console.log("hero",hero)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 0) {
-        let newHeight = Math.max(30, 55 - scrollY / 20);
-        setBannerHeight(newHeight);
-      } else {
-        setBannerHeight(56);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  
   return (
-    <section className="relative max-w-7xl mx-auto">
+    <section className="relative w-full">
       {/* ✅ Banner fixed only for mobile */}
-      <div
-        className="lg:hidden fixed top-0 left-0 w-full z-0 transition-all duration-300 ease-in-out"
-        style={{ height: `${bannerHeight}vh` }}
-      >
+      <div className="lg:hidden  transition-all duration-300 ease-in-out">
         <Swiper
           modules={[Autoplay]}
           spaceBetween={16}
@@ -52,7 +32,7 @@ export default function HeroSlider({ hero }) {
                 className="block relative overflow-hidden group h-full"
               >
                 <img
-                  src={`${item.mobileimage}`}
+                  src={`${item.mobileimage}?tr=w-1080,h-1280`}
                   alt={item.title}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />

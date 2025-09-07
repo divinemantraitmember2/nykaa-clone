@@ -3,7 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 
 // Swiper CSS
 import "swiper/css";
@@ -11,12 +11,18 @@ import "swiper/css/pagination";
 
 export default function CategoryCards2({ bannerblocks }) {
   return (
-    <section className="relative mb-8 lg:mb-1 mt-3">
+    <section className="relative mb-8 lg:mb-1 mt-3 w-full">
+      {/* ✅ Mobile Swiper */}
       <div className="block md:hidden p-2">
         <Swiper
           spaceBetween={12}
           pagination={{ clickable: true }}
-          modules={[Pagination]}
+          autoplay={{
+            delay: 3000, // 3 sec me slide change
+            disableOnInteraction: false, // user swipe kare toh bhi auto chale
+          }}
+          loop={true} // infinite loop
+          modules={[Pagination, Autoplay]}
           className="mySwiper"
         >
           {bannerblocks &&
@@ -40,7 +46,9 @@ export default function CategoryCards2({ bannerblocks }) {
 
                   {/* Content */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <div className="text-lg font-bold drop-shadow">{cat.title}</div>
+                    <div className="text-lg font-bold drop-shadow">
+                      {cat.title}
+                    </div>
                     {cat.subtitle && (
                       <div className="opacity-90 text-xs">{cat.subtitle}</div>
                     )}
@@ -68,7 +76,7 @@ export default function CategoryCards2({ bannerblocks }) {
             >
               {/* Background Image */}
               <img
-                src={cat.image}
+                src={`${cat.image}?tr-1080,h-1080`}
                 alt={cat.title}
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
@@ -82,7 +90,9 @@ export default function CategoryCards2({ bannerblocks }) {
                   {cat.title}
                 </div>
                 {cat.subtitle && (
-                  <div className="opacity-90 text-xs md:text-sm">{cat.subtitle}</div>
+                  <div className="opacity-90 text-xs md:text-sm">
+                    {cat.subtitle}
+                  </div>
                 )}
                 <button className="inline-flex items-center justify-center gap-2 text-sm font-medium shadow h-9 px-4 py-2 mt-3 bg-white text-black hover:bg-white/90 rounded-xl">
                   {cat.cta}

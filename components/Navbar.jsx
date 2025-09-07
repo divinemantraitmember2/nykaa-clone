@@ -18,9 +18,9 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
 
   // console.log("categories",categories)
   return (
-    <div className="w-full bg-[#fff] relative lg:py-2">
+    <div className="w-full bg-[#fff] relative py-2">
       {/* Mobile Header */}
-      <div className="hidden">
+     
       <div className="flex items-center justify-between mb-3 px-4 md:hidden">
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
           <Menu className="text-xl" />
@@ -45,7 +45,6 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
         <MobileDrawer isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} links={categories} />
       )}
 
-</div>
       {/* Desktop Navbar */}
       <div className="hidden md:flex items-center justify-between px-6  ">
         <div className="flex items-center space-x-6">

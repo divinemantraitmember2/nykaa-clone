@@ -1,23 +1,25 @@
 // app/not-found.jsx
 
-import Link from "next/link";
-
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-white px-4">
-      <h1 className="text-9xl font-extrabold drop-shadow-lg mb-6">404</h1>
-      <h2 className="text-3xl sm:text-4xl font-semibold mb-4">
+    <div className="flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 text-center lg:py-30 py-10 ">
+      {/* 404 with top-to-bottom and bottom-to-top animation */}
+      <h4 className="text-[8rem] font-extrabold text-rose-500 leading-none animate-slideUpDownRepeat">
+        404
+      </h4>
+      <h1 className="text-3xl md:text-4xl font-bold mt-8 lg:mt-10 text-gray-800 dark:text-white">
         Oops! Page Not Found
-      </h2>
-      <p className="max-w-md text-center mb-8 text-lg">
-        The page you are looking for doesn’t exist or has been moved.
+      </h1>
+      <p className="text-gray-500 mt-2 max-w-lg">
+        Looks like you took a wrong turn. Don’t worry, even the best travelers
+        lose their way sometimes.
       </p>
-      <Link
+      <a
         href="/"
-        className="px-6 py-3 bg-white text-red-500 font-bold rounded-lg shadow-lg hover:bg-gray-100 transition"
+        className="mt-6 px-6 py-3 bg-rose-500 text-white rounded-lg shadow-lg hover:bg-rose-600 hover:shadow-red-400 transition-all duration-300"
       >
-        Go Back Home
-      </Link>
-    </main>
+        Back to Home
+      </a>
+    </div>
   );
 }

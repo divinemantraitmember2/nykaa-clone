@@ -24,14 +24,14 @@ import  {GetHomePagesDetails}  from "../utils/api/serverApi";
 
   return (
     <>
+    <main className="p-0 m-0">
     <HeroSlider hero={pageData.banner_slides}/>
-    <main  className="relative lg:mt-10 mt-[55vh] z-10 bg-white rounded-t-2xl">
     <CategoryCards2 bannerblocks={pageData.banner_blocks}/>
     <TopCategory quickCategories={pageData.quickCategories}/>
     <Offers Offers={pageData.coupons}/>
     <CollectionsRenderer collections={pageData.collections}/>
     <AIShowcase showcase={pageData.aiShowcase}/>
-    <TrustBadges badges={pageData.trustBadges}/>
+    <TrustBadges badges={pageData.trustBadges}/> 
     </main>
     </>
   );

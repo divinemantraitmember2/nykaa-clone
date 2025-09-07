@@ -49,7 +49,7 @@ export default function MobileFilterSortBar() {
 
   return (
     <div
-      className="lg:hidden fixed left-0 right-0 h-16 bg-white border-t border-gray-200 z-55 shadow-md flex flex-col"
+      className="lg:hidden fixed left-0 right-0 h-18 bg-white border-t border-gray-200 z-55 shadow-md flex flex-col"
       style={{ bottom: footerHeight }}
     >
       {/* Sort Dropdown */}

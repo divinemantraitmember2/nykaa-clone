@@ -12,7 +12,7 @@ import { useState } from "react";
 import MobileDrawer from "./MobileDrawer"; // <-- path adjust karna
 
 export default function MobileFooter({categories}) {
-  console.log("categories",categories)
+
   const pathname = usePathname();
   const dispatch = useDispatch();
   const cartCount = useSelector((state) => state.cart.items.length);
