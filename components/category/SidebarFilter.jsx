@@ -182,7 +182,7 @@ export default function SidebarFilter({ filters }) {
           {({ open }) => (
             <div className="bg-white border-gray-100 overflow-hidden">
               <DisclosureButton className="flex justify-between w-full font-medium text-gray-800 text-sm py-2 hover:bg-gray-50 transition">
-                <span className="text-[#212121] uppercase text-[16px] font-[400] leading-6 tracking-[0.38px] font-sans">
+                <span className="text-[#212121] capitalize text-[16px] font-[500] leading-6 tracking-[0.38px] font-sans">
                   {section}
                 </span>
                 <ChevronDownIcon

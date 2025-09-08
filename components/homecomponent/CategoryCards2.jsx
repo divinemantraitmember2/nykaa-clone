@@ -45,7 +45,7 @@ export default function CategoryCards2({ bannerblocks }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
                   {/* Content */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="absolute lg:bottom-4 bottom-6  left-4 right-4 text-white">
                     <div className="text-lg font-bold drop-shadow">
                       {cat.title}
                     </div>

@@ -69,12 +69,12 @@ export default function HeroSlider({ hero }) {
             <SwiperSlide key={item.id}>
               <Link
                 href={item.href || "#"}
-                className="block relative overflow-hidden group"
+                className="block relative overflow-hidden group h-full"
               >
                 <img
                   src={`${item?.image}?tr=w-1900,h-600`}
                   alt={item.title}
-                  className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* ✅ Overlay Content (Desktop) */}
