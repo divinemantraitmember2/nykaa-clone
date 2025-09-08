@@ -149,6 +149,15 @@ export const GetSizeChart = async (category_slug) => {
   return api.get(requestUrl);
 };
 
+export const GetCoupons = async () => {
+  const requestUrl = `/api/v1/coupons`;
+  return api.get(requestUrl);
+};
+export const GetCouponsDeatils = async (id) => {
+  const requestUrl = `/api/v1/coupons?id=${id}`;
+  return api.get(requestUrl);
+};
+
 // export async function GetAboutUsPage() {
 //   try { 
 //     const response = await api.get(`/api/v1/page/get/about-us`);

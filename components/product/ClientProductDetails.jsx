@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import SizeGuideDrawer from "./SizeGuideDrawer";
 import  InfoStrip  from "../../components/product/InfoStrip";
+import  Coupons  from "../../components/product/Coupons";
 import { toast } from "react-toastify";
 import {ChevronDown,ChevronUp} from "lucide-react";
 
@@ -121,16 +122,7 @@ export default function ClientProductDetails({ product, mainCate,selsectSlug }) 
   };
 
   const coupons = [
-    {
-      title: "Extra 20% off",
-      description: "Extra 20% off upto ₹220 on orders above ₹999",
-      code: "NFPINK20",
-    },
-    {
-      title: "Extra 15% off",
-      description: "Extra 15% off upto ₹200 on a minimum order of ₹799",
-      code: "NFNEW15",
-    },
+   
     {
       title: "Flat ₹100 off",
       description: "Flat ₹100 off on all prepaid orders above ₹499",
@@ -299,7 +291,7 @@ const productSizeGuide = {
                   </span>
                 )}
                 <p className="text-md mb-4 ">
-              MRP <span className="line-through text-gray-400 text-base">
+              MRP <span className="line-through text-[#bg-[#0e1527] ] text-base">
                   ₹{selectedStock.price_inr}
                 </span>  Inclusive of all taxes
             </p>
@@ -311,7 +303,7 @@ const productSizeGuide = {
             {/* Color Selection */}
             {product?.variants && product?.variants.length>1?(<>
             <div className="mb-6">
-              <h2 className="text-base font-semibold text-gray-800 mb-3">
+              <h2 className="text-base font-semibold text-[#0e1527] mb-3">
                 Select Color
               </h2>
               <div className="flex overflow-x-auto gap-4 pb-2">
@@ -409,7 +401,7 @@ const productSizeGuide = {
                 {showGoToCart ? (
   <button
      onClick={() => get_cart_details()}
-    className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-center text-md font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    className="w-1/2 bg-[#0e1527]  text-white text-center text-md font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
     View Your Bag
   </button>
@@ -417,7 +409,7 @@ const productSizeGuide = {
   <button
     onClick={handleAddToCart}
     disabled={!selectedColor || !selectedSize}
-    className="w-1/2 bg-pink-600 hover:bg-pink-700 text-white text-sm font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    className="w-1/2 bg-[#0e1527]  text-white text-sm font-semibold px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
   >
     Add to Bag
   </button>
@@ -432,48 +424,13 @@ const productSizeGuide = {
               <SearchLocation />
             </div>
             <div className="">
-
-              <InfoStrip shippingInfo={product?.shipping_info}/>
+              <InfoStrip shippingInfo={product?.shipping_info} shipptext={product?.shipping_text}/>
             </div>
 
 
             {/* Coupons */}
-            <div className=" px-2">
-
-            <h2 className="text-lg text-start font-semibold text-gray-800 mb-2">Coupons</h2>
-      
-           <div className="overflow-x-auto ">
-  <div className="flex gap-2 w-max">
-    {coupons.map((coupon, index) => (
-      <div
-        key={index}
-        className="min-w-[280px] max-w-[300px] flex gap-2 items-start bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
-      >
-        <img
-          src="/images/logo.jpeg"
-          alt="pondric"
-          className="w-10 h-6"
-        />
-        <div className="flex-1">
-          <h3 className="text-base font-semibold text-gray-800">
-            {coupon.title}
-          </h3>
-          <p className="text-sm text-gray-600 mt-1 mb-2 line-clamp-2">
-            {coupon.description}
-          </p>
-          <div className="flex items-center gap-2">
-            <div className="bg-gray-100 px-3 py-1 text-sm font-mono border border-gray-300 rounded cursor-pointer select-all">
-              {coupon.code}
-            </div>
-            <button className="text-pink-600 text-sm underline hover:text-pink-800 whitespace-nowrap">
-              See details
-            </button>
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-           </div>
+            <div className="">
+              <Coupons/>
             </div>
 
 

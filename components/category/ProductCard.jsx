@@ -4,6 +4,7 @@ import ProductColorSize from "./ProductColorSize";
 import ProductImage from "./ProductImage";
 
 export default function ProductCard({ product, slug }) {
+  console.log("product",product)
   const variant =
     product?.variants?.length > 0 ? product?.variants[0] : null;
   const sizeStock =
