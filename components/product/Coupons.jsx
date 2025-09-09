@@ -115,7 +115,7 @@ export default function Coupons() {
 
       {/* ✅ Drawer */}
       {drawerOpen && (
-        <div className="fixed inset-0 z-40 flex mt-10">
+        <div className="fixed inset-0 z-50 flex top-12">
           {/* Overlay */}
           <div
             className="fixed inset-0 "

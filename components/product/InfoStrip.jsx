@@ -93,7 +93,7 @@ export default function InfoStrip({ shippingInfo, shipptext }) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-10 right-0 h-full w-80 bg-white shadow-xl z-40 transform transition-transform duration-300 ${
+        className={`fixed top-12 right-0 h-full w-90 bg-white shadow-xl z-50 transform transition-transform duration-300 ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >

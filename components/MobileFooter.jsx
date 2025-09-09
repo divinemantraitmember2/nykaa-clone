@@ -3,7 +3,6 @@ import { usePathname } from "next/navigation";
 import { Home, ShoppingCart, User, Menu } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { openLoginModal, openUserCartDrawar } from "../slices/userSlice";
-import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -26,7 +25,7 @@ export default function MobileFooter({categories}) {
     { label: "Cart", href: "/cart", icon: <ShoppingCart size={18} />, showBadge: true },
     {
       label: "Account",
-      href: session?.user ? "/profile" : "#",
+      href: session?.user ? "/profile" : "/profile",
       icon: session?.user ? (
         <Image
           src={userImage || "/images/no-profile.jpeg"}

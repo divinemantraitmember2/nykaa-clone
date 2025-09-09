@@ -6,6 +6,7 @@ import ProductHeart from "../category/ProductHeart";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { GetUserWhish, AddToCart, RemoveUserWhish } from "../../utils/api/Httproutes";
 import { toggleUserGetCart } from "../../slices/userSlice";
+import { updateWhishCount } from "../../slices/cartSlice";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import "swiper/css";
@@ -17,20 +18,25 @@ export default function UserWishlist() {
   const [WishlistData, SetwishlistData] = useState([]);
 
   async function UserWishedList() {
-    try {
-      const Respose = await GetUserWhish();
+  try {
+    const Response = await GetUserWhish();
 
-      if (Respose.status === 200 && Respose?.data?.code === 200) {
-        if (Respose?.data?.data && Respose?.data?.data.length > 0) {
-          SetwishlistData(Respose?.data?.data);
-        } else {
-          SetwishlistData([]);
-        }
+    if (Response?.status === 200 && Response?.data?.code === 200) {
+        dispatch(updateWhishCount(Response?.data?.data?.length))
+      if (Response?.data?.data?.length > 0) {
+       
+        SetwishlistData(Response.data.data);
+      } else {
+        SetwishlistData([]);
       }
-    } catch (error) {
-    //   toast.error("Failed to fetch wishlist");
+    } else {
+      SetwishlistData([]);
     }
+  } catch (error) {
+    SetwishlistData([]); 
   }
+}
+
 
   useEffect(() => {
     UserWishedList();
@@ -38,19 +44,24 @@ export default function UserWishlist() {
 
   return (
     <section className="w-full mx-auto px-4 py-6">
-      <h2 className="text-2xl font-bold mb-6">My Wishlist</h2>
+    <h2 className="text-2xl font-bold mb-6">My Wishlist</h2>
 
+    {WishlistData.length === 0 ? (
+      <p className="text-gray-500">Your wishlist is empty 💔</p>
+    ) : (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {WishlistData.map((item) => (
           <ResponsiveSliderCard
             key={item.productID}
             item={item}
-            refreshWishlist={UserWishedList}
+            refreshWishlist={UserWishedList} // ✅ ab sahi hai
             dispatch={dispatch}
           />
         ))}
       </div>
-    </section>
+    )}
+  </section>
+
   );
 }
 
@@ -122,12 +133,11 @@ function ResponsiveSliderCard({ item, refreshWishlist, dispatch }) {
         await RemoveUserWhish({ sku: addcart.sku });
         toast.success(`${item.title} added to your cart!`);
         closeOverlay();
-        refreshWishlist();
         dispatch(toggleUserGetCart());
+         refreshWishlist();
       }
     } catch (error) {
       toast.error("Failed to add item");
-      console.error("Add to Cart Error:", error);
     } finally {
       setLoading(false);
     }
