@@ -15,7 +15,7 @@ export default function TopCategory({ quickCategories }) {
         <Swiper
           spaceBetween={12}
           slidesPerView={1.2} // show ~2 cards at a time
-          className="pb-8"
+          className="pb-2"
         >
           {quickCategories.map((cat) => (
             <SwiperSlide key={cat.id}>

@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 export default function CategoryCards2({ bannerblocks }) {
   return (
-    <section className="relative mb-8 lg:mb-1 mt-3 w-full">
+    <section className="relative lg:mb-1 mt-3 w-full">
       {/* ✅ Mobile Swiper */}
       <div className="block md:hidden p-2">
         <Swiper
@@ -32,7 +32,7 @@ export default function CategoryCards2({ bannerblocks }) {
                   href={cat.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative h-80 mb-12 rounded-xl overflow-hidden group shadow-sm block"
+                  className="relative h-80 mb-8 lg:mb-0 rounded-xl overflow-hidden group shadow-sm block"
                 >
                   {/* Background Image */}
                   <img
