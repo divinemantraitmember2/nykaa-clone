@@ -13,7 +13,6 @@ export default function ProfilePage() {
   const [addresses, setAddresses] = useState([]);
   const [selectedTab, setSelectedTab] = useState("My Orders");
   const [UserOrders, setUserOrders] = useState([]);
-  const [UserWishList, setUserWishList] = useState([]);
   const [UserInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState({ orders: false, profile: false });
   const [error, setError] = useState({ orders: null, profile: null });
@@ -61,31 +60,10 @@ export default function ProfilePage() {
     }
   }
 
-  async function UserWishedList(){
-    try{
-
-     const Respose=await GetUserWhish()
-
-     if(Respose.status===200 && Respose?.data?.code===200){
-      if(Respose?.data?.data && Respose?.data?.data.length>0){
-        setUserWishList(Respose?.data?.data)
-      }else{
-      setUserWishList([])
-      }
-      
-      console.log("Respose",Respose?.data?.data)
-     }
-    }catch(error){
-
-    }
-
-  }
-
 
   useEffect(() => {
     fetchOrders();
     GetUserProfile();
-    UserWishedList()
   }, []);
 
  
@@ -107,7 +85,7 @@ export default function ProfilePage() {
   const renderContent = () => {
     switch (selectedTab) {
       case "My Wishlist":
-        return <UserWishlist wishlistData={UserWishList} />;
+        return <UserWishlist/>;
       case "My Saved Payment":
         return <MyPayment />;
       case "My Orders":

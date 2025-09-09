@@ -4,33 +4,58 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import ProductHeart from "../category/ProductHeart";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { GetUserWhish, AddToCart, RemoveUserWhish } from "../../utils/api/Httproutes";
+import { toggleUserGetCart } from "../../slices/userSlice";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import "swiper/css";
-import "swiper/css/autoplay"; // important for autoplay
+import "swiper/css/autoplay";
 
-export default function UserWishlist({ wishlistData }) {
-  if (!wishlistData || wishlistData.length === 0)
-    return (
-      <p className="text-center text-gray-500 mt-10">
-        Your wishlist is empty.
-      </p>
-    );
+// 🔥 Wishlist Page
+export default function UserWishlist() {
+  const dispatch = useDispatch();
+  const [WishlistData, SetwishlistData] = useState([]);
+
+  async function UserWishedList() {
+    try {
+      const Respose = await GetUserWhish();
+
+      if (Respose.status === 200 && Respose?.data?.code === 200) {
+        if (Respose?.data?.data && Respose?.data?.data.length > 0) {
+          SetwishlistData(Respose?.data?.data);
+        } else {
+          SetwishlistData([]);
+        }
+      }
+    } catch (error) {
+    //   toast.error("Failed to fetch wishlist");
+    }
+  }
+
+  useEffect(() => {
+    UserWishedList();
+  }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-6">
+    <section className="w-full mx-auto px-4 py-6">
       <h2 className="text-2xl font-bold mb-6">My Wishlist</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {wishlistData.map((item) => (
-          <ResponsiveSliderCard key={item.productID} item={item} />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {WishlistData.map((item) => (
+          <ResponsiveSliderCard
+            key={item.productID}
+            item={item}
+            refreshWishlist={UserWishedList}
+            dispatch={dispatch}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function ResponsiveSliderCard({ item }) {
-  // images from first variant or fallback
+// 🔥 Wishlist Card
+function ResponsiveSliderCard({ item, refreshWishlist, dispatch }) {
   const images =
     item.variants?.[0]?.image_url?.length > 0
       ? item.variants[0].image_url
@@ -40,7 +65,11 @@ function ResponsiveSliderCard({ item }) {
   const [intervalId, setIntervalId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detect mobile device
+  // Overlay + state
+  const [isSizeOverlay, setIsSizeOverlay] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -63,6 +92,47 @@ function ResponsiveSliderCard({ item }) {
     setCurrentImage(0);
   };
 
+  const closeOverlay = () => {
+    setIsSizeOverlay(false);
+    setSelectedSize(null);
+  };
+
+  async function addCartProduct() {
+    if (!selectedSize) {
+      toast.error("Please select a size");
+      return;
+    }
+
+    const addcart = {
+      sku: item.sku,
+      size: selectedSize.size,
+      quantity: 1,
+      slug: item.slug,
+    };
+
+    try {
+      setLoading(true);
+      const res = await AddToCart("add", addcart);
+
+      if (
+        res?.status === 200 &&
+        res?.data?.code === 200 &&
+        res.data.message === "Item added to cart"
+      ) {
+        await RemoveUserWhish({ sku: addcart.sku });
+        toast.success(`${item.title} added to your cart!`);
+        closeOverlay();
+        refreshWishlist();
+        dispatch(toggleUserGetCart());
+      }
+    } catch (error) {
+      toast.error("Failed to add item");
+      console.error("Add to Cart Error:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div
       className="relative bg-white shadow-md rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 group"
@@ -70,20 +140,12 @@ function ResponsiveSliderCard({ item }) {
       onMouseLeave={handleMouseLeave}
     >
       {/* Image Section */}
-      <div className="relative w-full h-60">
+      <div className="relative w-full h-90">
         {isMobile ? (
-          // ✅ Mobile: Swiper Carousel (1.5 cards visible)
-          <Swiper
-            modules={[Autoplay]}
-            autoplay={{ delay: 2000, disableOnInteraction: false }}
-            loop
-            spaceBetween={10}
-            slidesPerView={1.5}
-            centeredSlides
-          >
+          <Swiper autoplay={{ delay: 2000, disableOnInteraction: false }} loop>
             {images.map((img, idx) => (
               <SwiperSlide key={idx}>
-                <div className="relative w-full h-60">
+                <div className="relative w-full h-90">
                   <Image
                     src={img}
                     alt={item.title}
@@ -95,9 +157,8 @@ function ResponsiveSliderCard({ item }) {
             ))}
           </Swiper>
         ) : (
-          // ✅ Desktop: Hover Slideshow
           <Image
-            src={images[currentImage]}
+            src={`${images[currentImage]}?tr=w-400,h-500`}
             alt={item.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -128,7 +189,7 @@ function ResponsiveSliderCard({ item }) {
           )}
         </div>
 
-        {/* Stock Status */}
+        {/* Stock */}
         <p
           className={`text-sm mt-1 ${
             item.stock > 0 ? "text-green-600" : "text-red-600"
@@ -137,20 +198,63 @@ function ResponsiveSliderCard({ item }) {
           {item.stock > 0 ? `${item.stock} in stock` : "Out of stock"}
         </p>
 
-        {/* Variants Colors */}
-        {item.variants && item.variants.length > 0 && (
-          <div className="flex gap-2 mt-2">
-            {item.variants.map((v, idx) => (
-              <div
+        {/* Move to Bag */}
+        <div className="p-2">
+          <button
+            onClick={() => setIsSizeOverlay(true)}
+            disabled={item.stock === 0}
+            className={`w-full py-2 rounded-md transition font-medium text-center ${
+              item.stock === 0
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-[#f8f9f9] border border-[#e3e7e7] text-black"
+            }`}
+          >
+            Move to Bag
+          </button>
+        </div>
+      </div>
+
+      {/* SIZE SELECTION OVERLAY */}
+      {isSizeOverlay && (
+        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-white shadow-lg rounded-t-2xl p-4 z-20 animate-slideUp">
+          {/* Close */}
+          <button
+            onClick={closeOverlay}
+            className="absolute top-3 right-3 text-gray-600 hover:text-black"
+          >
+            ✕
+          </button>
+
+          <h4 className="text-lg font-semibold mb-3">Select Size</h4>
+
+          <div className="flex flex-wrap gap-2 overflow-y-auto max-h-[150px]">
+            {item.variants?.[0]?.size_stocks?.map((s, idx) => (
+              <button
                 key={idx}
-                className="w-4 h-4 rounded-full border"
-                style={{ backgroundColor: v.color.toLowerCase() }}
-                title={v.color}
-              />
+                onClick={() => setSelectedSize(s)}
+                disabled={s.stock_quantity === 0}
+                className={`px-3 py-1 border rounded-md text-sm ${
+                  selectedSize?.size === s.size
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-700"
+                } ${
+                  s.stock_quantity === 0 ? "opacity-40 cursor-not-allowed" : ""
+                }`}
+              >
+                {s.size}
+              </button>
             ))}
           </div>
-        )}
-      </div>
+
+          <button
+            onClick={addCartProduct}
+            disabled={loading}
+            className="mt-4 w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 transition font-medium"
+          >
+            {loading ? "Adding..." : "Add to Bag"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

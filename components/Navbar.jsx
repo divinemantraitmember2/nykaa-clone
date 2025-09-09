@@ -89,7 +89,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
           )}
 
   <Link
-  href="/profile"
+  href="/wishlist"
   className="relative mx-5 hover:text-pink-600 transition-colors duration-200"
 >
   <Heart className="w-6 h-6 text-gray-800 group-hover:text-pink-600" />

@@ -32,7 +32,7 @@ export default function CategoryCards2({ bannerblocks }) {
                   href={cat.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative h-80 rounded-xl overflow-hidden group shadow-sm block"
+                  className="relative h-80 mb-12 rounded-xl overflow-hidden group shadow-sm block"
                 >
                   {/* Background Image */}
                   <img
