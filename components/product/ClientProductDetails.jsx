@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import  ReturnPolicy  from "../../components/product/ReturnPolicy";
 import SizeGuideDrawer from "./SizeGuideDrawer";
 import  InfoStrip  from "../../components/product/InfoStrip";
+import  ProductDetails  from "../../components/product/ProductDetails";
 import  Coupons  from "../../components/product/Coupons";
 import { toast } from "react-toastify";
 import {ChevronDown,ChevronUp} from "lucide-react";
@@ -433,61 +434,11 @@ const productSizeGuide = {
               <Coupons/>
             </div>
 
+            
 
            {/* Product Details Accordion */}
- <div className="overflow-hidden shadow-sm bg-white  hover:shadow-2xl mt-4">
-      <button
-        onClick={() => setShowDetails(!showDetails)}
-        className="flex justify-between items-center w-full p-2 text-left hover:bg-gray-50 transition"
-      >
-        <div className="flex flex-col">
-          <h3 className="text-sm font-semibold text-gray-800 flex items-center gap-2">
-            {/* Bookmark Icon */}
-            <svg
-              viewBox="0 0 24 24"
-              className="w-5 h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="#001325"
-              fillOpacity="0.92"
-            >
-              <path d="M19 4H5C4.73478 4 4.48043 4.10536 4.29289 4.29289C4.10536 4.48043 4 4.73478 4 5V19C4 19.2652 4.10536 19.5196 4.29289 19.7071C4.48043 19.8946 4.73478 20 5 20H19C19.2652 20 19.5196 19.8946 19.7071 19.7071C19.8946 19.5196 20 19.2652 20 19V5C20 4.73478 19.8946 4.48043 19.7071 4.29289C19.5196 4.10536 19.2652 4 19 4ZM13.9 5.5V10.33L12 9.24L10.1 10.33V5.5H13.9ZM18.5 18.5H5.5V5.5H8.6V11.2C8.6 11.4652 8.70536 11.7196 8.89289 11.9071C9.08043 12.0946 9.33478 12.2 9.6 12.2C9.77658 12.2017 9.95001 12.1532 10.1 12.06L12 11L13.9 12.1C14.0523 12.1879 14.2251 12.2342 14.401 12.234C14.5769 12.2338 14.7496 12.1873 14.9017 12.099C15.0539 12.0108 15.18 11.884 15.2675 11.7314C15.355 11.5788 15.4007 11.4059 15.4 11.23V5.5H18.5V18.5Z" />
-            </svg>
-            Product Details
-          </h3>
-          <p className="text-xs text-gray-500 mt-1">
-            Care instructions, Pack contains
-          </p>
-        </div>
-
-        {/* Chevron Icon */}
-        <ChevronDownIcon
-          className={`w-5 h-5 transition-transform duration-300 ${
-            showDetails ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      {/* Accordion Content */}
-      <div
-        className={`overflow-hidden transition-all duration-300 px-4 ${
-          showDetails ? "max-h-[800px] py-4" : "max-h-0"
-        }`}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-700">
-  {product?.attributes?.map((attr, idx) => (
-    <div
-      key={idx}
-      className="flex justify-between items-center border p-2 rounded hover:shadow-lg"
-    >
-      <span className="text-gray-900 font-medium capitalize">{attr.name}</span>
-      <span className="text-gray-500 text-right">{attr.value}</span>
-    </div>
-  ))}
-</div>
-
-      </div>
-    </div>
-
+ 
+          <ProductDetails product={product}/> 
 
             {/* Know Your Product Accordion */}
             <div className=" overflow-hidden shadow-sm  hover:shadow-2xl bg-white mt-4">
