@@ -13,6 +13,7 @@ import SizeGuideDrawer from "./SizeGuideDrawer";
 import  InfoStrip  from "../../components/product/InfoStrip";
 import  ProductDetails  from "../../components/product/ProductDetails";
 import  Coupons  from "../../components/product/Coupons";
+import  ProductHeartbutton  from "../../components/category/ProductHeartbutton";
 import { toast } from "react-toastify";
 import {ChevronDown,ChevronUp} from "lucide-react";
 
@@ -381,7 +382,8 @@ const productSizeGuide = {
             {/* Add to Cart & Wishlist */}
             <div className="border-b border-gray-200 pt-4 pb-6">
               <div className="flex gap-4">
-                <button className="w-1/2 bg-white text-black  border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition">
+                <ProductHeartbutton sku={product?.sku}/>
+                {/* <button className="w-1/2 bg-white text-black border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5 text-black"
@@ -397,7 +399,7 @@ const productSizeGuide = {
                     />
                   </svg>
                   <span>Add to Wishlist</span>
-                </button>
+                </button> */}
 
                 {showGoToCart ? (
   <button
