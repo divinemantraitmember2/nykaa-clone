@@ -43,8 +43,8 @@ const SortByDropdown = ({ selected = "newProduct" }) => {
       {/* Button */}
       <div
         className="cursor-pointer border border-gray-200 px-5 py-3 w-72 
-        rounded-xl flex items-center justify-between bg-white shadow-sm 
-        hover:shadow-md transition-all duration-200"
+        rounded flex items-center justify-between bg-white 
+        transition-all duration-200"
       >
         <span>
           Sort by:{" "}
