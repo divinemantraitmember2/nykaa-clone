@@ -421,27 +421,15 @@ const productSizeGuide = {
             </div>
 
             {/* Search Location */}
-            <div className="">
-              <SearchLocation />
-            </div>
-            <div className="">
-              <InfoStrip shippingInfo={product?.shipping_info} shipptext={product?.shipping_text}/>
-            </div>
-
-
+             <SearchLocation />
+            {/* InfoStrip */}
+            <InfoStrip shippingInfo={product?.shipping_info} shipptext={product?.shipping_text}/>
             {/* Coupons */}
-            <div className="">
-              <Coupons/>
-            </div>
-
-            
-
+             <Coupons/>
            {/* Product Details Accordion */}
- 
           <ProductDetails product={product}/> 
-
             {/* Know Your Product Accordion */}
-            <div className=" overflow-hidden shadow-sm  bg-white mt-4">
+            <div className="overflow-hidden bg-white mt-4">
               <button
                 onClick={() => setOpenDetails(!openDetails)}
                 className="w-full flex justify-between items-center px-2 py-3 hover:bg-gray-50 transition"
@@ -477,7 +465,6 @@ const productSizeGuide = {
                 </p>
               </div>
             </div>
-
             <div className="mt-4">
               <ReturnPolicy/>
             </div>

@@ -6,7 +6,7 @@ export default function ProductDetails({ product }) {
   const [showDetails, setShowDetails] = useState(true);
 
   return (
-    <div className="overflow-hidden shadow-sm mt-4">
+    <div className="overflow-hidden  mt-4">
       {/* Header */}
       <button
         onClick={() => setShowDetails(!showDetails)}

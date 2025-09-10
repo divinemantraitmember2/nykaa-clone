@@ -157,6 +157,13 @@ export const GetCouponsDeatils = async (id) => {
   const requestUrl = `/api/v1/coupons?id=${id}`;
   return api.get(requestUrl);
 };
+export const GetCourierPincodeCheck = async (pincode) => {
+  const requestUrl = `/api/v1/courier/pincode/check/${pincode}`;
+  return api.get(requestUrl);
+};
+
+
+
 
 // export async function GetAboutUsPage() {
 //   try { 
