@@ -441,10 +441,10 @@ const productSizeGuide = {
           <ProductDetails product={product}/> 
 
             {/* Know Your Product Accordion */}
-            <div className=" overflow-hidden shadow-sm  hover:shadow-2xl bg-white mt-4">
+            <div className=" overflow-hidden shadow-sm  bg-white mt-4">
               <button
                 onClick={() => setOpenDetails(!openDetails)}
-                className="w-full flex justify-between items-center px-2 py-3 transition"
+                className="w-full flex justify-between items-center px-2 py-3 hover:bg-gray-50 transition"
               >
                 <div className="flex items-center gap-2">
                   <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">

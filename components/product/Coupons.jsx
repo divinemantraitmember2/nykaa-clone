@@ -70,7 +70,7 @@ export default function Coupons() {
             coupons.map((coupon) => (
               <div
                 key={coupon.id}
-                className="relative w-[280px] min-h-[150px] bg-gradient-to-br from-pink-50 to-white border border-gray-200 rounded-xl shadow-md flex flex-col justify-between transition duration-300 overflow-hidden"
+                className="relative w-[300px] min-h-[150px] bg-gradient-to-br from-pink-50 to-white border border-gray-200 rounded-xl shadow-md flex flex-col justify-between transition duration-300 overflow-hidden"
               >
                 {/* Top Section */}
                 <div className="p-4">
