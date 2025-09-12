@@ -88,7 +88,7 @@ const CollectionsRenderer = ({ collections }) => {
                   discount={product.badge}
                    sku={product.id}
                   rating={product.rating || 0}
-                  href={product.href || "#"}
+                  href={`${product?.catSlug}/${product?.slug}`}
                   onAddToCart={() =>
                     console.log("Add to Cart", product.title)
                   }

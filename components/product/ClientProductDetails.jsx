@@ -382,25 +382,10 @@ const productSizeGuide = {
             {/* Add to Cart & Wishlist */}
             <div className="border-b border-gray-200 pt-4 pb-6">
               <div className="flex gap-4">
-                <ProductHeartbutton sku={product?.sku}/>
-                {/* <button className="w-1/2 bg-white text-black border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 text-black"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.8}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M16.5 3.75a5.25 5.25 0 00-4.355 2.333A5.25 5.25 0 007.5 3.75 5.25 5.25 0 002.25 9c0 7.143 9.75 11.25 9.75 11.25S21.75 16.143 21.75 9A5.25 5.25 0 0016.5 3.75z"
-                    />
-                  </svg>
-                  <span>Add to Wishlist</span>
-                </button> */}
-
+               <div className="w-1/2">
+                 <ProductHeartbutton sku={product?.sku}/>
+               </div>
+                
                 {showGoToCart ? (
   <button
      onClick={() => get_cart_details()}

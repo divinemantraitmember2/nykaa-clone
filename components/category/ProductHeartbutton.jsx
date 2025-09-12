@@ -85,7 +85,7 @@ export default function ProductHeartbutton({ sku }) {
       {isWished ? (
         <button
           onClick={handleRemoveWishlistClick}
-          className="w-1/2 bg-white text-black border border-gray-300 hover:border-red-500 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition"
+          className="w-full bg-white text-black border border-gray-200  text-sm font-semibold px-4 py-3 flex items-center justify-center gap-2 transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ export default function ProductHeartbutton({ sku }) {
       ) : (
         <button
           onClick={handleWishlistClick}
-          className="w-1/2 bg-white text-black border border-gray-300 hover:border-pink-700 text-sm font-semibold px-4 py-2 flex items-center justify-center gap-2 transition"
+          className="w-full bg-white text-black border border-gray-200  text-sm font-semibold px-4 py-3 flex items-center justify-center gap-2 transition"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

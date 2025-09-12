@@ -4,11 +4,10 @@ import ProductColorSize from "./ProductColorSize";
 import ProductImage from "./ProductImage";
 
 export default function ProductCard({ product, slug }) {
-  console.log("product",product)
-  const variant =
-    product?.variants?.length > 0 ? product?.variants[0] : null;
-  const sizeStock =
-    variant?.size_stocks?.length > 0 ? variant?.size_stocks[0] : null;
+  // console.log("product",product)
+  // const variant =
+  //   product?.variants?.length > 0 ? product?.variants[0] : null;
+  // const sizeStock =variant?.size_stocks?.length > 0 ? variant?.size_stocks[0] : null;
 
   return (
     <div className="group relative mb-4 w-full  overflow-hidden  hover:shadow-lg hover:shadow-pink-200 transition-all duration-300 bg-white" title={product?.title}>
@@ -23,7 +22,6 @@ export default function ProductCard({ product, slug }) {
         aria-labelledby={`title-${product?.id}`}
       >
         {/* Image Section */}
-
        <ProductImage ProductImages={product?.variants} />
 {/* <div className="w-full h-[290px] overflow-hidden rounded-md">
   <picture className="w-full h-full block">
@@ -50,18 +48,16 @@ export default function ProductCard({ product, slug }) {
           >
             {product?.title}
           </h2>
-
           {/* Color / Size */}
           <ProductColorSize product={product} />
-
           {/* Price Section */}
-          {sizeStock && (
+          {product?.basePrice && (
             <div className="flex items-center gap-2 pt-1">
               <span className="text-gray-400 text-sm line-through">
-                ₹{sizeStock?.price_inr}
+                ₹{product?.basePrice?.inr}
               </span>
               <span className="text-sm md:text-base font-medium text-[#001325]">
-                ₹{sizeStock?.discounted_price_inr}
+                ₹{product?.basePrice?.discountedINR>0?product?.basePrice?.discountedINR: product?.basePrice?.inr}
               </span>
             </div>
           )}

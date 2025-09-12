@@ -29,7 +29,7 @@ const AIShowcase = ({ showcase }) => {
                 sku=""
                 onAddToCart={() => console.log("Add to Cart", product.title)}
                 onWishlist={() => console.log("Wishlist", product.title)}
-                href={product.href || "#"}
+                href={`${product?.catSlug}/${product?.slug}`}
                 className="!text-xs sm:!text-sm" // ✅ font-size small on mobile
                 imgClassName="h-32 sm:h-40 md:h-48 object-cover" // ✅ small image height on mobile
               />
