@@ -140,7 +140,7 @@ const [open, setOpen] = useState(false);
               </div>
 
               {/* Shipping */}
-              <div className="w-full lg:w-80 bg-gray-50 rounded-xl p-5 shadow-sm">
+              <div className="w-full lg:w-80 bg-gray-50 p-2">
                 <p className="font-semibold text-gray-800 mb-3">
                   Shipping Address
                 </p>
@@ -168,7 +168,7 @@ const [open, setOpen] = useState(false);
 
            {/* Invoice Section */}
 <div className="mt-8">
-  <div className="bg-white border border-pink-200 rounded-xl shadow-md overflow-hidden">
+  <div className="bg-white  overflow-hidden">
     {/* Header */}
     <button
       type="button"
