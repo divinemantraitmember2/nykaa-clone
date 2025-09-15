@@ -15,10 +15,13 @@ export async function GetProductdetails(payload){
 export async function GetProductofcategorylist(payload) {
  
   try {
-   const finalQuery = payload.includes("&category_slug=")
-      ? payload.replace("&category_slug=", ",")
-      : payload;
-   console.log("payload...", finalQuery);
+   let finalQuery = payload;
+   console.log("finalQuery",finalQuery)
+
+    if (payload.includes("&category_slug=")) {
+      finalQuery = payload.replace(/&category_slug=/g, ",");
+    }
+   console.log("payload...ll", `https://api.pondric.com/api/v1/products?${finalQuery}`);
     const response = await axios.get(`https://api.pondric.com/api/v1/products?${finalQuery}`);
     return response; 
   } catch (error) {

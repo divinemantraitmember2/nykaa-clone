@@ -7,8 +7,8 @@ const AIShowcase = ({ showcase }) => {
   return (
     <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-4 my-4">
       <div className="flex items-end justify-between mb-4">
-        <h2 className="text-xl md:text-2xl font-extrabold">{showcase.title}</h2>
-        <a href="#" className="text-sm font-bold hover:opacity-80">
+        <h2 className="text-xl lg:text-4xl font-extrabold">{showcase.title}</h2>
+        <a href="#" className="text-sm  lg:text-xl font-bold hover:opacity-80">
           View all →
         </a>
       </div>
@@ -29,7 +29,7 @@ const AIShowcase = ({ showcase }) => {
                 sku=""
                 onAddToCart={() => console.log("Add to Cart", product.title)}
                 onWishlist={() => console.log("Wishlist", product.title)}
-                href={`${product?.catSlug}/${product?.slug}`}
+                href="#"
                 className="!text-xs sm:!text-sm" // ✅ font-size small on mobile
                 imgClassName="h-32 sm:h-40 md:h-48 object-cover" // ✅ small image height on mobile
               />

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ProductHeartbutton from "../category/ProductHeartbutton"
+// import ProductHeartbutton from "../category/ProductHeartbutton"
 import { motion } from "framer-motion";
 
 
@@ -53,9 +53,8 @@ const ProductCardHome = ({
           </span>
         )}
       </div>
-      
-
-      <div className="p-2">
+    
+      <div className="p-2 bg-white">
         <div className="text-sm font-semibold line-clamp-1">{title}</div>
         <div className="mt-1 flex items-center gap-2">
           <div className="text-base font-bold">₹{price}</div>
@@ -63,9 +62,9 @@ const ProductCardHome = ({
             <div className="text-sm line-through opacity-60">₹{originalPrice}</div>
           )}
         </div> 
-     <div className="flex justify-center mt-2">
+     {/* <div className="flex justify-center mt-2">
        <ProductHeartbutton sku={sku} />
-     </div>
+     </div> */}
         
       </div>
      

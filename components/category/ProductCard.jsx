@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ProductHeart from "./ProductHeart";
+// import ProductHeart from "./ProductHeart";
 import ProductColorSize from "./ProductColorSize";
 import ProductImage from "./ProductImage";
 
@@ -12,9 +12,9 @@ export default function ProductCard({ product, slug }) {
   return (
     <div className="group relative mb-4 w-full  overflow-hidden  hover:shadow-lg hover:shadow-pink-200 transition-all duration-300 bg-white" title={product?.title}>
       {/* Wishlist Heart */}
-      <div className="absolute top-1 right-1 z-10">
+      {/* <div className="absolute top-1 right-1 z-10">
         <ProductHeart sku={product.sku} />
-      </div>
+      </div> */}
 
       <Link
         href={`/${slug}/${product?.slug}`}
