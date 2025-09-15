@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openLoginModal,openUserCartDrawar } from "../slices/userSlice";
 import { Heart,Search, Menu} from "lucide-react";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import {ShoppingCart, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import MobileDrawer from "../components/MobileDrawer";
+import SearchModal from "./SearchModal";
 
 export default function Navbar({ categories, onHoverCategory, onLeaveCategory }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,6 +16,83 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
   const whishItems = useSelector((state) => state.cart.whishItems);
   const { data: session } = useSession();
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
+  const [openSearch, setOpenSearch] = useState(false);
+  const [placeholder, setPlaceholder] = useState("Search products...");
+  const Products = [
+  {
+    id: "68c4ed401f6d4c83203d8918",
+    title: "Kratos Gym Pant",
+    slug: "kratos-gym-pant",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mp05/blue/mp05-blue_main.jpg",
+    price: 2200
+  },
+  {
+    id: "68c4ed401f6d4c83203d8919",
+    title: "Black Slim Fit T-Shirt",
+    slug: "black-slim-fit-t-shirt",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mpt01/white/mpt01_white_01.avif",
+    price: 1500
+  },
+  {
+    id: "68c4ed401f6d4c83203d891a",
+    title: "Basic Round Neck T-Shirt",
+    slug: "basic-round-neck-t-shirt",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mpt02/red/mpt02_red_01.avif",
+    price: 799
+  },
+  {
+    id: "68c4ed401f6d4c83203d891b",
+    title: "Blue Washed Comfortable Casual Jeans",
+    slug: "blue-washed-comfortable-casual-jeans",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mp06/blue/mp06-blue-01.avif",
+    price: 999
+  },
+  {
+    id: "68c4ed401f6d4c83203d891c",
+    title: "Kratos Black Sports Jogger",
+    slug: "kratos-black-sports-jogger",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mp05/black/mp05-black_main.jpg",
+    price: 2500
+  },
+  {
+    id: "68c4ed401f6d4c83203d891d",
+    title: "Classic White Polo Shirt",
+    slug: "classic-white-polo-shirt",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mpt03/white/mpt03_white_01.avif",
+    price: 1299
+  },
+  {
+    id: "68c4ed401f6d4c83203d891e",
+    title: "Men’s Full Sleeve Hoodie",
+    slug: "mens-full-sleeve-hoodie",
+    image: "https://ik.imagekit.io/pondric/catalog/product/mh01/grey/mh01_grey_01.avif",
+    price: 1899
+  },
+  {
+    id: "68c4ed401f6d4c83203d891f",
+    title: "Slim Fit Formal Shirt",
+    slug: "slim-fit-formal-shirt",
+    image: "https://ik.imagekit.io/pondric/catalog/product/ms01/blue/ms01_blue_01.avif",
+    price: 1799
+  }
+];
+
+  const suggestions = [
+  "T-Shirts...",
+  "Jeans...",
+  ...Products.map((p) => p.title)
+];
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setPlaceholder(suggestions[index]);
+      index = (index + 1) % suggestions.length; // loop
+    }, 3000); // 5 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+
 
   // console.log("categories",categories)
   return (
@@ -37,7 +115,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
       <div className="px-4  md:hidden">
         <div className="flex items-center bg-white px-4 py-2  border border-[#e2e8f0] rounded">
           <Search className="text-pink-600 mr-2 text-sm" />
-          <input type="text" placeholder="Explore our Beauty Collection" className="bg-transparent w-full text-sm outline-none text-gray-600 " />
+          <input type="text" onClick={() =>setOpenSearch(true)} placeholder={`Search ${placeholder}`} className="bg-transparent w-full text-sm outline-none text-gray-600 " />
         </div>
       </div>
 
@@ -73,8 +151,9 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
 
         <div className="flex items-center space-x-4">
          <input
+         onClick={() =>setOpenSearch(true)}
   type="text"
-  placeholder="Search on Pondric"
+  placeholder={`Search ${placeholder}`}
   className="border border-[#e2e8f0] rounded px-2 py-2 mx-8 bg-white-100 text-sm w-80 
              focus:border-[#e2e8f0] focus:outline-none"
 />
@@ -114,6 +193,8 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
     </button>
         </div>
       </div>
+
+       <SearchModal isOpen={openSearch} onClose={() => setOpenSearch(false)} results={Products} />
     </div>
   );
 }

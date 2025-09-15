@@ -17,23 +17,30 @@ const [open, setOpen] = useState(false);
   }
 
   const handleDownload = async (userOrder) => {
-    try {
-      const pdfBlob = await GetUserOrderInvoice(userOrder.invoice.orderId);
-     if (!pdfBlob) return;
-      const link = document.createElement("a");
-      link.href = pdfBlob;
-      link.setAttribute(
-        "download",
-        userOrder.invoice.fileName || `invoice-${userOrder.invoice.orderId}.pdf`
-      );
-      link.setAttribute("target", "_blank");
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    } catch (err) {
-      console.error("Download failed", err);
-    }
-  };
+  try {
+    const response = await GetUserOrderInvoice(userOrder.invoice.orderId);
+
+    // Agar response Blob hai
+    const blob = new Blob([response], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute(
+      "download",
+      userOrder.invoice.fileName || `invoice-${userOrder.invoice.orderId}.pdf`
+    );
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url); // memory cleanup
+  } catch (err) {
+    console.error("Download failed", err);
+  }
+};
+
 
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto">
@@ -218,8 +225,6 @@ const [open, setOpen] = useState(false);
     </div>
   </div>
 </div>
-
-
 
             {/* Payment Info */}
             <div className="mt-6 flex flex-col md:flex-row justify-between gap-4 border-t pt-4 text-sm text-gray-700">
