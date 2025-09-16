@@ -7,7 +7,8 @@ import Link from "next/link";
 import {ShoppingCart, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import MobileDrawer from "../components/MobileDrawer";
-import SearchModal from "./SearchModal";
+import SearchDropdown from "./SearchDropdown";
+import LocationSelector from "./LocationSelector";
 
 export default function Navbar({ categories, onHoverCategory, onLeaveCategory }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,6 +19,8 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
   const userImage = session?.user?.image || "/images/no-profile.jpeg";
   const [openSearch, setOpenSearch] = useState(false);
   const [placeholder, setPlaceholder] = useState("Search products...");
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [query, setQuery] = useState("");
   const Products = [
   {
     id: "68c4ed401f6d4c83203d8918",
@@ -92,6 +95,17 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
     return () => clearInterval(interval);
   }, []);
 
+ useEffect(() => {
+  if (query.trim() === "") {
+    setFilteredResults([]);
+    return;
+  }
+  const results = Products.filter((p) =>
+    p.title.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredResults(results);
+}, [query]);
+
 
 
   // console.log("categories",categories)
@@ -150,26 +164,40 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
         </div>
 
         <div className="flex items-center space-x-4">
-         <input
-         onClick={() =>setOpenSearch(true)}
-  type="text"
-  placeholder={`Search ${placeholder}`}
-  className="border border-[#e2e8f0] rounded px-2 py-2 mx-8 bg-white-100 text-sm w-80 
-             focus:border-[#e2e8f0] focus:outline-none"
-/>
+         <div className="relative">
+        <input
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setOpenSearch(true);
+              }}
+              placeholder={`Search ${placeholder}`}
+              className="border border-[#e2e8f0] rounded px-2 py-2 mx-4 bg-white text-sm w-80 
+                       focus:border-[#e2e8f0] focus:outline-none"
+            />
+            <SearchDropdown
+              isOpen={openSearch && filteredResults.length > 0}
+              onClose={() => setOpenSearch(false)}
+              results={filteredResults}
+            />
+</div>
+
+             <LocationSelector/>
+
           {session?.user ? (
             <Link href="/profile">
-              <img src={userImage} alt="User" width={32} height={32} className="rounded-full mx-5 cursor-pointer" />
+              <img src={userImage} alt="User" width={32} height={32} className="rounded-full mx-3 cursor-pointer" />
             </Link>
           ) : (
             <button onClick={() => dispatch(openLoginModal())} className=" hover:text-pink-600 transition-colors duration-200">
              <User size={20} />
             </button>
           )}
-
+          
   <Link
   href="/wishlist"
-  className="relative mx-5 hover:text-pink-600 transition-colors duration-200"
+  className="relative mx-3 hover:text-pink-600 transition-colors duration-200"
 >
   <Heart className="w-6 h-6 text-gray-800 group-hover:text-pink-600" />
 
@@ -193,8 +221,6 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
     </button>
         </div>
       </div>
-
-       <SearchModal isOpen={openSearch} onClose={() => setOpenSearch(false)} results={Products} />
-    </div>
+</div>
   );
 }

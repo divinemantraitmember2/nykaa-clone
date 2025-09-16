@@ -30,11 +30,9 @@ const [open, setOpen] = useState(false);
       "download",
       userOrder.invoice.fileName || `invoice-${userOrder.invoice.orderId}.pdf`
     );
-
     document.body.appendChild(link);
     link.click();
     link.remove();
-
     window.URL.revokeObjectURL(url); // memory cleanup
   } catch (err) {
     console.error("Download failed", err);
@@ -168,7 +166,7 @@ const [open, setOpen] = useState(false);
 
            {/* Invoice Section */}
 <div className="mt-8">
-  <div className="bg-white  overflow-hidden">
+  <div className="bg-white overflow-hidden">
     {/* Header */}
     <button
       type="button"
