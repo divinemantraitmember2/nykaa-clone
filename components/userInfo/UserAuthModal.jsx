@@ -78,7 +78,7 @@ export default function UserAuthModal() {
           </div>
 
           {/* Mobile Offers Slider */}
-          <div className="block md:hidden bg-gray-50 p-4 ">
+          <div className="block md:hidden bg-gray-50 p-2 py-8 ">
             <Swiper
               modules={[Autoplay]}
               spaceBetween={12}
@@ -89,7 +89,7 @@ export default function UserAuthModal() {
               {offers.map((offer) => (
                 <SwiperSlide key={offer.id}>
                   <div
-                    className={`p-4 rounded-lg shadow ${offer.bg} ${offer.text} text-center`}
+                    className={`py-8 rounded-lg shadow ${offer.bg} ${offer.text} text-center`}
                   >
                     <h3 className="font-semibold text-sm">{offer.title}</h3>
                     <p className="text-xs text-gray-700">{offer.subtitle}</p>
@@ -100,7 +100,7 @@ export default function UserAuthModal() {
           </div>
 
           {/* Right Side Form */}
-          <div className="w-full md:w-1/2 p-6">
+          <div className="w-full md:w-1/2 p-4 py-4">
             <h2 className="text-2xl font-bold mb-4 text-center hidden lg:block">
               {isLogin ? "Login" : "Create an Account"}
             </h2>

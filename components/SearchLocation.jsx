@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 import { MdLocationOn } from "react-icons/md";
-import { GetCourierPincodeCheck } from "../utils/api/Httproutes";
+import { GetCourierPincodeServiceability } from "../utils/api/Httproutes";
 
-export default function SearchLocation() {
+export default function SearchLocation({sku}) {
   const [pincode, setPincode] = useState("");
   const [error, setError] = useState("");
   const [result, setResult] = useState(null); // ✅ API result
@@ -21,7 +21,7 @@ export default function SearchLocation() {
     setResult(null);
 
     try {
-      const res = await GetCourierPincodeCheck(pincode);
+      const res = await GetCourierPincodeServiceability(sku,pincode);
       console.log("API Response:", res);
 
       if (res?.status === 200) {

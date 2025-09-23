@@ -163,8 +163,19 @@ export const GetCourierPincodeCheck = async (pincode) => {
 };
 
 export const GetCourierPincodeServiceability = async (sku,pincode) => {
-  const requestUrl = `/api/v1/courier/serviceability/${sku}/${pincode}`;
+  const requestUrl =`/api/v1/courier/serviceability?sku=${sku}&deliveryPincode=${pincode}`;
   return api.get(requestUrl);
+};
+
+export const ChangeCourierPincodeServiceability = async (pincode) => {
+  const requestUrl = `/api/v1/courier/serviceability?deliveryPincode=${pincode}`;
+  return api.get(requestUrl);
+};
+
+
+ export const ChooseLocationByChangeAdress= async (cartID,userID,payload) => {
+  const requestUrl = `/api/v1/cart/set/shipping/${cartID}/${userID}`;
+  return await api.post(requestUrl, payload);
 };
 
 // export async function GetAboutUsPage() {

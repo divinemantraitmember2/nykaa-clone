@@ -15,6 +15,7 @@ import {
   increaseQuantity,
   decreaseQuantity,
   updateCartCount,
+  CartShippingAddress,
 } from "../../slices/cartSlice";
 import { openUserCartDrawar } from "../../slices/userSlice";
 import CouponForm from "./CouponForm";
@@ -33,7 +34,7 @@ export default function CartSummaryDrawer() {
   const ApplyCouponGetCart = useSelector((state) => state.user.ApplyCouponGetCart);
   const showUserCartDrawar = useSelector((state) => state.user.showUserCartDrawar);
   const cartUpdateStatus = useSelector((state) => state.user.GetUserCart);
-
+  
   const totalPrice = items.reduce((acc, item) => acc + (item.price_inr || 0) * (item.quantity || 1), 0);
 
   const discount =
@@ -47,12 +48,12 @@ export default function CartSummaryDrawer() {
 
       const cartItems = response?.data?.items || [];
       setCartResponse(response?.data || null);
-
       setItemsCart(cartItems)
 
       const AppliedCoupons = response?.data?.appliedCoupons || [];
       setAppliedCoupon(AppliedCoupons.length > 0 ? AppliedCoupons[0] : null);
       dispatch(updateCartCount(cartItems.length));
+      dispatch(CartShippingAddress(response.data));
       const formattedItems = cartItems.map((item) => ({
         id: item?.sku || item?.productName || "",
         title: item?.productName || "Unnamed Product",

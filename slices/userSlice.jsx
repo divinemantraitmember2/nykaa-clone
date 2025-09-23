@@ -11,6 +11,7 @@ const initialState = {
   ApplyCouponGetCart: false,
   StopRuningUseEffect: false,
   GetFitterComponent: false,
+  DefaultLocation:null
 };
 
 const userSlice = createSlice({
@@ -59,7 +60,11 @@ const userSlice = createSlice({
     }, 
      toggleGetFitterComponent(state) {
       state.GetFitterComponent = !state.GetFitterComponent;
-    }, 
+    },
+    
+     DefaultLocation(state, action) {
+      state.DefaultLocation = action.payload;
+    },
     
   },
 });
@@ -74,7 +79,8 @@ export const {
   toggleRefetchApplyCouponGetCart,
   openUserCartDrawar,
   toggleUserGetCart,
-  toggleGetFitterComponent
+  toggleGetFitterComponent,
+  DefaultLocation
 } = userSlice.actions;
 
 export default userSlice.reducer;

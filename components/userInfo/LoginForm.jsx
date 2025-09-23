@@ -39,8 +39,9 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleLogin}>
+      <div className="">
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Phone Number</label>
+        <label className="block text-sm font-medium mb-2">Phone Number</label>
         <PhoneInput
           country={"in"}
           value={phone}
@@ -48,16 +49,17 @@ export default function LoginForm() {
             setPhone(value);
             setCountryCode(`+${countryData.dialCode}`);
           }}
-          inputStyle={{ width: "100%" }}
+          inputStyle={{ width: "100%", height:"50px" }}
           inputProps={{ required: true }}
         />
       </div>
       <button
         type="submit"
-        className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700"
+        className="w-full bg-pink-600 text-white py-3 rounded hover:bg-pink-700"
       >
         Login
       </button>
+      </div>
     </form>
   );
 }

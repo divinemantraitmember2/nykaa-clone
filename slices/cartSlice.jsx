@@ -5,6 +5,7 @@ const initialState = {
   total: 0,
   countItems:0,
   whishItems:0,
+  shippingAddress:null
 };
 
 const cartSlice = createSlice({
@@ -45,6 +46,10 @@ const cartSlice = createSlice({
   // Do nothing if quantity is already 1
 },
 
+   CartShippingAddress(state,action) {
+      state.shippingAddress =action.payload;
+    },
+
     updateCartCount(state, action) {
       state.countItems = action.payload; // yaha sirf length rakhenge
     },
@@ -64,6 +69,7 @@ export const {
   decreaseQuantity,
   updateCartCount,
   updateWhishCount,
+  CartShippingAddress,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

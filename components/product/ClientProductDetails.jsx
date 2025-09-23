@@ -408,7 +408,7 @@ const productSizeGuide = {
             </div>
 
             {/* Search Location */}
-             <SearchLocation />
+             <SearchLocation sku={product.sku} />
             {/* InfoStrip */}
             <InfoStrip shippingInfo={product?.shipping_info} shipptext={product?.shipping_text}/>
             {/* Coupons */}
