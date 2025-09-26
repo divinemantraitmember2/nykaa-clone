@@ -1,13 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 import { GetCourierPincodeServiceability } from "../utils/api/Httproutes";
+import {SeachPineSet } from "../slices/cartSlice";
+import {useSelector ,useDispatch } from "react-redux";
 
 export default function SearchLocation({sku}) {
   const [pincode, setPincode] = useState("");
   const [error, setError] = useState("");
   const [result, setResult] = useState(null); // ✅ API result
   const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+     const SearchPine = useSelector((state) => state.cart.SearchPine);
 
   const handleCheck = async () => {
     if (!/^\d{6}$/.test(pincode)) {
@@ -21,10 +25,10 @@ export default function SearchLocation({sku}) {
     setResult(null);
 
     try {
-      const res = await GetCourierPincodeServiceability(sku,pincode);
+      const res = await GetCourierPincodeServiceability(sku,pincode,"");
       console.log("API Response:", res);
-
       if (res?.status === 200) {
+        dispatch(SeachPineSet(pincode))
         setResult({
           deliverable: true,
           ...res.data,
@@ -48,6 +52,30 @@ export default function SearchLocation({sku}) {
     setError("");
   };
 
+  async function GetLocation(getbypine){
+    try{
+       const res = await GetCourierPincodeServiceability(sku,getbypine,"set");
+      console.log("API Response///:", res.data.data);
+      if (res?.status === 200) {
+        setResult({
+          deliverable: true,
+          ...res.data.data,
+        });
+      } else {
+        setResult({
+          deliverable: false,
+          message: res?.message || "Not Deliverable",
+        });
+      }
+
+    }catch(error){
+
+    }
+  }
+
+  useEffect(()=>{
+    GetLocation(SearchPine)
+  },[])
   return (
     <div className="max-w-7xl mx-auto px-2 py-6">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">
@@ -101,18 +129,37 @@ export default function SearchLocation({sku}) {
             >
               {result.deliverable ? (
                 <>
-                  <p className="font-medium">
-                    ✅ Delivery available at <strong>{result.pincode}</strong>
-                  </p>
-                  {result.cod && <p>💳 COD Available</p>}
-                  {result.prepaid && <p>📦 Prepaid Available</p>}
-                  {result.shipping_charge !== undefined && (
-                    <p>💰 Shipping: ₹{result.shipping_charge}</p>
-                  )}
-                </>
+                  <div className="mt-1 p-2 bg-white  border-gray-200">
+  <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+    ✅ Delivery Available
+    <span className="text-sm font-medium text-pink-600">
+      {result.city} - {result.zipCode}
+    </span>
+  </h3>
+
+  <div className="space-y-2 text-gray-700 text-sm">
+    
+    <div className="flex items-center justify-between">
+      <span className="font-medium">Estimated Delivery</span>
+      <span className="text-gray-900">{result.estimated_delivery}</span>
+    </div>
+
+    <div className="flex items-center justify-between">
+      <span className="font-medium"> City</span>
+      <span className="text-gray-900">{result.city}</span>
+    </div>
+
+    {result.cod_available && (
+      <div className="flex items-center justify-between bg-green-50 border border-green-200 px-3 py-2 rounded-md">
+        <span className="font-medium text-green-700">COD Available</span>
+      </div>
+    )}
+  </div>
+</div>
+</>
               ) : (
                 <p className="font-medium">
-                  ❌ Sorry, delivery not available at{" "}
+                 Sorry, delivery not available at{" "}
                   <strong>{pincode}</strong>
                 </p>
               )}

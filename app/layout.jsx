@@ -29,7 +29,7 @@ export default async function RootLayout({ children }) {
   }
 
   return (
-    <html lang="en">
+    <html lang="en" className="light" style={{colorScheme: "light"}}>
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"/>
       </head>

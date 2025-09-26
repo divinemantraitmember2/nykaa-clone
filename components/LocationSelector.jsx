@@ -33,8 +33,9 @@ export default function LocationSelector() {
         if (addresses.length > 0) {
           const defaultAddr =
             addresses.find((a) => a.isDefault) || addresses[0];
+            shippingAddress
 
-          setSelectedAddress(defaultAddr); // pura object store
+          // setSelectedAddress(defaultAddr); // pura object store
           setLocation({
             city: defaultAddr.city,
             pincode: defaultAddr.zipCode,
@@ -48,9 +49,16 @@ export default function LocationSelector() {
   };
 
   useEffect(() => {
-    console.log("shippingAddress",shippingAddress)
+    console.log("shippingAddress",shippingAddress?.shipping_address)
     if (status === "authenticated") {
       GetUserAdress();
+      let defaultAddr ={
+        city: shippingAddress?.shipping_address?.city,
+        pincode: shippingAddress?.shipping_address?.zipCode,
+      }
+      console.log("defaultAddr",defaultAddr)
+
+      setSelectedAddress(defaultAddr);
     }
   }, [status]);
 
@@ -71,6 +79,12 @@ export default function LocationSelector() {
           city: postOffice.city,
           pincode: postOffice.zipCode,
         });
+
+        let selectLocation ={
+        city: postOffice.city,
+        pincode: postOffice.zipCode,
+      }
+        setSelectedAddress(selectLocation)
 
         setOpen(false);
       } else {
@@ -115,7 +129,9 @@ export default function LocationSelector() {
   async function ChangeAddress(CartId,UserId,address){
     try{
       const response= await ChooseLocationByChangeAdress(CartId,UserId,address)
-      console.log("response",response)
+      if(response.status===200){
+       console.log("response",response)
+      }  
     }catch(error){
       console.log("response error",error)
     }
@@ -131,26 +147,30 @@ export default function LocationSelector() {
       >
         <MapPin size={18} />
         <div>
-          <p className="text-xs text-gray-500">Deliver to</p>
-          <p className="font-semibold text-sm">
-            {location.city || "Select Location"} {location.pincode}
-          </p>
-        </div>
-      </div>
+  <p className="text-xs text-gray-500">Deliver to</p>
+  <p className="font-semibold text-sm">
+    {selectedAddress
+      ? `${selectedAddress.city} - ${selectedAddress.pincode}`
+      : location.city
+      ? `${location.city} - ${location.pincode}`
+      : "Select Location"}
+  </p>
+</div>
+  </div>
 
       {/* Modal */}
       {open && (
         <div className="fixed inset-0 flex items-center justify-center bg-[#f0f2f2]/20 z-50">
-          <div className="bg-white w-[430px] rounded-lg shadow-lg relative">
+          <div className="bg-white w-[420px] rounded-lg shadow-lg relative">
             {/* Header */}
-            <div className="bg-[#f0f2f2] p-2 flex justify-between items-center border-b pb-2">
+            <div className="bg-[#f0f2f2] p-3 flex justify-between items-center border-b pb-2">
               <h2 className="text-lg font-semibold">Choose your location</h2>
               <button onClick={() => setOpen(false)}>
                 <X className="w-5 h-5 text-gray-600 hover:text-black" />
               </button>
             </div>
 
-            <div className="p-2">
+            <div className="p-3">
               <p className="text-sm text-gray-500 mt-3">
                 Select a delivery location to see product availability and
                 delivery options

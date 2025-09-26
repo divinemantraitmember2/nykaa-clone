@@ -266,10 +266,10 @@ const handlePayNow = async () => {
 </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Left Column */}
-        <div className="  p-2 lg:p-4  lg:w-[100%]">
+        <div className="p-2 lg:p-4 lg:w-[100%]">
              <div className="w-full bg-white rounded-lg mb-2 p-2">
               <div
-                className="border-2 border-dashed border-pink-500 rounded-lg p-6 text-center text-pink-600 font-medium mb-4 cursor-pointer hover:bg-pink-50"
+                className="border-2 border-dashed border-pink-500 rounded-lg p-3 text-center text-pink-600 font-medium mb-4 cursor-pointer hover:bg-pink-50"
                 onClick={() => setShowForm(!showForm)}
               >
                 <span className="text-3xl">+</span>
@@ -289,7 +289,7 @@ const handlePayNow = async () => {
                  
                  
  {address && address.map((itemAddres, index) => (
-  <div key={index} className="border rounded-lg p-4 shadow-sm mb-4">
+  <div key={index} className=" p-4  mb-4 bg-[#fff]">
     <div className="flex justify-between items-center mb-2">
       <div className="text-base font-semibold">
         {itemAddres.isDefault && (
@@ -329,8 +329,8 @@ const handlePayNow = async () => {
         {/* Right Sidebar */}
         <div className="relative lg:w-[100%]">
           <div className="sticky top-6">
-            <div className="space-y-4 bg-white p-2 lg:p-4 max-h-[90vh] overflow-y-auto rounded shadow-sm">
-              <div className=" rounded-lg overflow-hidden ">
+            <div className="space-y-4 bg-white p-2 lg:p-4 max-h-[90vh] overflow-y-auto ">
+              <div className="  overflow-hidden ">
                 <details className="group" open>
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Bag</span>
@@ -346,7 +346,7 @@ const handlePayNow = async () => {
    items && items.map((item, i) => (
       <div
         key={i}
-        className="flex items-start gap-4 border rounded-lg p-2 bg-white shadow-sm"
+        className="flex items-start gap-4  p-2 bg-white shadow-sm"
       >
         <img
           src={item.image}
@@ -416,8 +416,8 @@ const handlePayNow = async () => {
                 </details>
               </div>
 
-              <div className="border rounded-lg overflow-hidden shadow-sm">
-                <details className="group " >
+              <div className="overflow-hidden ">
+                <details className="group " open >
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>
                    
@@ -467,8 +467,8 @@ const handlePayNow = async () => {
 
    <div className="relative lg:w-[100%]">
           <div className="sticky top-6">
-            <div className="space-y-4 bg-white p-2 lg:p-2  rounded shadow-sm">
-              <div className="border rounded-lg overflow-hidden shadow-sm">
+            <div className="space-y-4 bg-white p-2 lg:p-2">
+              <div className=" overflow-hidden ">
                 <details className="group" open>
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Bag</span>
@@ -525,7 +525,7 @@ const handlePayNow = async () => {
                 </details>
               </div>
 
-               <div className="border rounded-lg overflow-hidden shadow-sm">
+               <div className=" overflow-hidden">
                 <details className="group" open >
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
                     <span>Price Details</span>

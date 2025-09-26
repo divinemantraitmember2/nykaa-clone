@@ -56,7 +56,6 @@ export default function HeroSlider({ hero }) {
           ))}
         </Swiper>
       </div>
-
       {/* ✅ Desktop Banner */}
       <div className="hidden lg:block relative w-full overflow-hidden">
         <Swiper

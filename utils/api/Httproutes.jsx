@@ -162,9 +162,13 @@ export const GetCourierPincodeCheck = async (pincode) => {
   return api.get(requestUrl);
 };
 
-export const GetCourierPincodeServiceability = async (sku,pincode) => {
-  const requestUrl =`/api/v1/courier/serviceability?sku=${sku}&deliveryPincode=${pincode}`;
-  return api.get(requestUrl);
+export const GetCourierPincodeServiceability = async (sku, pincode, actionPayload) => {
+  const requestUrl = `/api/v1/courier/serviceability?sku=${sku}&deliveryPincode=${pincode}`;
+  return api.get(requestUrl, {
+    headers: {
+      action: actionPayload,
+    },
+  });
 };
 
 export const ChangeCourierPincodeServiceability = async (pincode) => {

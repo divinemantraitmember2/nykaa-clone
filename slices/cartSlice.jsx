@@ -5,7 +5,8 @@ const initialState = {
   total: 0,
   countItems:0,
   whishItems:0,
-  shippingAddress:null
+  shippingAddress:null,
+  SearchPine:""
 };
 
 const cartSlice = createSlice({
@@ -50,6 +51,11 @@ const cartSlice = createSlice({
       state.shippingAddress =action.payload;
     },
 
+    SeachPineSet(state,action) {
+      state.SearchPine =action.payload;
+    },
+    
+
     updateCartCount(state, action) {
       state.countItems = action.payload; // yaha sirf length rakhenge
     },
@@ -70,6 +76,7 @@ export const {
   updateCartCount,
   updateWhishCount,
   CartShippingAddress,
+  SeachPineSet,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
