@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 import { GetCourierPincodeServiceability } from "../utils/api/Httproutes";
-import {SeachPineSet } from "../slices/cartSlice";
+import {SeachPineSet} from "../slices/cartSlice";
 import {useSelector ,useDispatch } from "react-redux";
 
 export default function SearchLocation({sku}) {
@@ -75,7 +75,7 @@ export default function SearchLocation({sku}) {
 
   useEffect(()=>{
     GetLocation(SearchPine)
-  },[])
+  },[SearchPine])
   return (
     <div className="max-w-7xl mx-auto px-2 py-6">
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6">

@@ -10,6 +10,7 @@ import {
   ChooseLocationByChangeAdress
 } from "../utils/api/Httproutes";
 import { useSession } from "next-auth/react";
+import {SeachPineSet} from "../slices/cartSlice";
 
 export default function LocationSelector() {
   const { status } = useSession();
@@ -21,6 +22,7 @@ export default function LocationSelector() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [inputPin, setInputPin] = useState("");
     const shippingAddress = useSelector((state) => state.cart.shippingAddress);
+    const SearchPine = useSelector((state) => state.cart.SearchPine);
 
   // 📌 Fetch User Address
   const GetUserAdress = async () => {
@@ -49,7 +51,8 @@ export default function LocationSelector() {
   };
 
   useEffect(() => {
-    console.log("shippingAddress",shippingAddress?.shipping_address)
+    console.log("shippingAddress",SearchPine)
+    setInputPin(SearchPine)
     if (status === "authenticated") {
       GetUserAdress();
       let defaultAddr ={
@@ -59,6 +62,7 @@ export default function LocationSelector() {
       console.log("defaultAddr",defaultAddr)
 
       setSelectedAddress(defaultAddr);
+      
     }
   }, [status]);
 
@@ -79,6 +83,7 @@ export default function LocationSelector() {
           city: postOffice.city,
           pincode: postOffice.zipCode,
         });
+         dispatch(SeachPineSet(inputPin));
 
         let selectLocation ={
         city: postOffice.city,
@@ -105,6 +110,7 @@ export default function LocationSelector() {
       pincode: addr.zipCode,
     });
     setInputPin(addr.zipCode);
+    dispatch(SeachPineSet(addr.zipCode));
     setOpen(false);
     let shipping_address = {
   addressID: addr.addressID,
@@ -150,7 +156,7 @@ export default function LocationSelector() {
   <p className="text-xs text-gray-500">Deliver to</p>
   <p className="font-semibold text-sm">
     {selectedAddress
-      ? `${selectedAddress.city} - ${selectedAddress.pincode}`
+      ? `${selectedAddress?.city} - ${selectedAddress?.pincode ==undefined?selectedAddress?.zipCode:selectedAddress?.pincode}`
       : location.city
       ? `${location.city} - ${location.pincode}`
       : "Select Location"}
