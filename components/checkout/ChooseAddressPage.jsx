@@ -228,7 +228,7 @@ const handlePayNow = async () => {
     <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-8">
       {/* Stepper */}
       <div className="flex items-center justify-center mb-8 gap-2">
-        {["bag","address", "payment"].map((step, i) => (
+        {["address", "payment"].map((step, i) => (
           <div
   key={i}
   className="flex items-center gap-1 cursor-pointer"
@@ -248,7 +248,7 @@ const handlePayNow = async () => {
             >
               {step.charAt(0) + step.slice(1)}
             </span>
-            {i < 2 && <div className="border-t border-1 border-dashed border-gray-400 w-8 sm:w-20" />}
+            {i < 1 && <div className="border-t border-1 border-dashed border-gray-400 w-8 sm:w-20" />}
           </div>
         ))}
       </div>
@@ -311,26 +311,9 @@ const handlePayNow = async () => {
 
     <div className="flex gap-3 lg:w-[80%] mx-auto justify-center items-center">
   {/* Radio button */}
-  <label className="flex items-center gap-2 cursor-pointer border border-gray-300 rounded px-4 py-2 w-full hover:bg-gray-50">
-    <input
-      type="radio"
-      name="selectedAddress"
-      value={itemAddres.addressID}
-      checked={
-        selectedAddress
-          ? selectedAddress === itemAddres.addressID
-          : itemAddres.isDefault // agar koi select nahi to default wala selected ho
-      }
-      onChange={() => setSelectedAddress(itemAddres.addressID)}
-      className="accent-pink-600 cursor-pointer"
-    />
-    <span className="text-sm font-medium">Deliver Here</span>
-  </label>
-
-  {/* Edit button */}
-  <button className="border border-gray-300 text-sm font-medium px-4 py-2 rounded hover:bg-gray-100">
-    Edit
-  </button>
+ <div className="flex gap-3 lg:w-[80%] mx-auto justify-center"> 
+  <button className="border lg:w-[40%] border-gray-300 text-bold px-4 py-1 lg:py-2 rounded hover:bg-gray-50"> Edit </button> <button className="bg-[#0e1527] text-white lg:w-[60%] lg:py-2 text-bold px-4 py-1 rounded" onClick={() => AddUserAdressInCart(itemAddres.addressID,"address")} > Deliver here </button> </div>
+  
 </div>
 
 
@@ -414,6 +397,7 @@ const handlePayNow = async () => {
               <p className="text-xs text-gray-500 mt-1">Total</p>
             </div>
 
+            
 
           </div>
           </>)} 
@@ -464,6 +448,7 @@ const handlePayNow = async () => {
 
                 </details>
               </div>
+
               
             </div>
           </div>
