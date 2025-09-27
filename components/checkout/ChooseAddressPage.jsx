@@ -6,6 +6,7 @@ import { increaseQuantity,decreaseQuantity} from "../../slices/cartSlice";
 import { FaTrash } from "react-icons/fa";
 import { GetUserCart,UserAddressDelete,AddToCart,GetUser,UserAddressInCart,CreateUserOrder,payment_verification,payment_fails} from "../../utils/api/Httproutes";
 import { useSession } from "next-auth/react";
+import CheckoutCart from "./CheckoutCart"
 
 export default function ChooseAddressPage() {
    const [items, setItems] = useState([]);
@@ -14,6 +15,7 @@ export default function ChooseAddressPage() {
    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
  const [appliedCoupon, setAppliedCoupon] = useState(null);
+ const [selectedAddress, setSelectedAddress] = useState(null);
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("address");
   const [showForm, setShowForm] = useState(false);
@@ -223,13 +225,13 @@ const handlePayNow = async () => {
 
  
   return (
-    <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-10">
+    <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-8">
       {/* Stepper */}
-      <div className="flex items-center justify-center mb-8 gap-6">
-        {["address", "payment"].map((step, i) => (
+      <div className="flex items-center justify-center mb-8 gap-2">
+        {["bag","address", "payment"].map((step, i) => (
           <div
   key={i}
-  className="flex items-center gap-2 cursor-pointer"
+  className="flex items-center gap-1 cursor-pointer"
   onClick={step === "payment" ? undefined : () => setActiveTab(step)}
 >
             <div
@@ -240,36 +242,32 @@ const handlePayNow = async () => {
               {i + 1}
             </div>
             <span
-              className={`text-sm font-medium ${
+              className={`text-sm font-bold uppercase ${
                 activeTab === step ? "text-pink-600" : "text-gray-600"
               }`}
             >
-              {step.charAt(0).toUpperCase() + step.slice(1)}
+              {step.charAt(0) + step.slice(1)}
             </span>
-            {i < 1 && <div className="border-t border-gray-300 w-8 sm:w-16" />}
+            {i < 2 && <div className="border-t border-1 border-dashed border-gray-400 w-8 sm:w-20" />}
           </div>
         ))}
       </div>
 
+        {activeTab === "bag"&&(<>
+        <CheckoutCart/>
+        
+        </>)}
 
       {/* Layout */}
      {activeTab === "address" && (  
-<>
-<div className="w-full flex justify-start px-4">
-  <div className="py-1">
-     <h1 className="text-2xl font-bold text-gray-900 mb-1"> Choose Address</h1>
-              <p className="text-gray-500 text-sm mb-6">
-                Detailed address will help our delivery partner reach your
-                doorstep quickly
-              </p>
-  </div>
-</div>
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Left Column */}
-        <div className="p-2 lg:p-4 lg:w-[100%]">
+        <div className="lg:w-[100%]">
+             <p className="m-0 p-0">Select Delivery Address</p>
              <div className="w-full bg-white rounded-lg mb-2 p-2">
               <div
-                className="border-2 border-dashed border-pink-500 rounded-lg p-3 text-center text-pink-600 font-medium mb-4 cursor-pointer hover:bg-pink-50"
+                className="border-2 border-dashed border-pink-500 rounded-lg p-2 text-center text-pink-600 font-medium  cursor-pointer hover:bg-pink-50"
                 onClick={() => setShowForm(!showForm)}
               >
                 <span className="text-3xl">+</span>
@@ -300,28 +298,42 @@ const handlePayNow = async () => {
         <p className="">{itemAddres.firstName} {itemAddres.lastName}</p>
       </div>
       
-      <span className=" text-red-500 hover:text-red-700" onClick={()=>UserAddressDeleteBtn(itemAddres.addressID)}><FaTrash size={20} /></span>
+      <span className=" text-red-500 hover:text-red-700" onClick={()=>UserAddressDeleteBtn(itemAddres.addressID)}><FaTrash size={15} /></span>
     </div>
 
     <div className="text-sm text-gray-600 whitespace-pre-line mb-1">
       {itemAddres.addressLine1}, {itemAddres.addressLine2}, {itemAddres.city}, {itemAddres.state} - {itemAddres.zipCode}
     </div>
 
-    <div className="text-sm text-gray-600 mb-4">
+    <div className="text-sm text-gray-600 mb-2">
       Phone: {itemAddres.phoneNumber}
     </div>
 
-    <div className="flex gap-3 lg:w-[80%] mx-auto justify-center">
-      <button className="border lg:w-[40%] border-gray-300 text-bold px-4 py-1 lg:py-2 rounded hover:bg-gray-50">
-        Edit
-      </button>
-      <button
-        className="bg-pink-600 text-white lg:w-[60%] lg:py-2 text-bold px-4 py-1 rounded hover:bg-pink-700"
-        onClick={() => AddUserAdressInCart(itemAddres.addressID,"address")}
-      >
-        Deliver here
-      </button>
-    </div>
+    <div className="flex gap-3 lg:w-[80%] mx-auto justify-center items-center">
+  {/* Radio button */}
+  <label className="flex items-center gap-2 cursor-pointer border border-gray-300 rounded px-4 py-2 w-full hover:bg-gray-50">
+    <input
+      type="radio"
+      name="selectedAddress"
+      value={itemAddres.addressID}
+      checked={
+        selectedAddress
+          ? selectedAddress === itemAddres.addressID
+          : itemAddres.isDefault // agar koi select nahi to default wala selected ho
+      }
+      onChange={() => setSelectedAddress(itemAddres.addressID)}
+      className="accent-pink-600 cursor-pointer"
+    />
+    <span className="text-sm font-medium">Deliver Here</span>
+  </label>
+
+  {/* Edit button */}
+  <button className="border border-gray-300 text-sm font-medium px-4 py-2 rounded hover:bg-gray-100">
+    Edit
+  </button>
+</div>
+
+
   </div>
 ))}
      </div>
@@ -458,7 +470,6 @@ const handlePayNow = async () => {
         </div>
       </div>
       </>
-
      )}
 
 {activeTab === "payment" && (
