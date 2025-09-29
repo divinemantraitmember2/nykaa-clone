@@ -8,6 +8,7 @@ import MobileFooter from "../components/MobileFooter";
 import CartSummaryDrawer from "../components/cartDeatails/CartSummaryDrawer";
 import ScrollToTop from "../components/homecomponent/ScrollToTop";
 import ClientToastProvider from "../components/ClientToastProvider";
+import LayoutWrapper from "../components/LayoutWrapper";
 
 export const metadata = {
   title: "Pondric - Elevate Your Style Online",
@@ -35,12 +36,17 @@ export default async function RootLayout({ children }) {
       </head>
       <body className="font-sans antialiased font-light">
         <Providers>
-          <Header categories={categories} />
+         <LayoutWrapper
+            header={<Header categories={categories} />}
+            footer={<Footer />}
+            mobileFooter={<MobileFooter categories={categories}/>}
+          >
           <UserAuthModal/>
           {children}
-          <Footer />
-          <MobileFooter categories={categories}/>
+          {/* <Footer />
+          <MobileFooter categories={categories}/> */}
           <CartSummaryDrawer/>
+          </LayoutWrapper>
         </Providers>
         <ScrollToTop/>
         <ClientToastProvider/>

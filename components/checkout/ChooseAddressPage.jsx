@@ -6,13 +6,14 @@ import { increaseQuantity,decreaseQuantity} from "../../slices/cartSlice";
 import { FaTrash } from "react-icons/fa";
 import { GetUserCart,UserAddressDelete,AddToCart,GetUser,UserAddressInCart,CreateUserOrder,payment_verification,payment_fails} from "../../utils/api/Httproutes";
 import { useSession } from "next-auth/react";
-import CheckoutCart from "./CheckoutCart"
+import Link from "next/link";
 
 export default function ChooseAddressPage() {
    const [items, setItems] = useState([]);
    const [CartDetails, setCartDetails] = useState(null);
    const [address, setAddress] = useState([]);
    const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+   const [isPaymentSelected, setIsPaymentSelected] = useState(false);
 const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
  const [appliedCoupon, setAppliedCoupon] = useState(null);
  const [selectedAddress, setSelectedAddress] = useState(null);
@@ -111,6 +112,7 @@ const AppliedCoupons = response?.data?.appliedCoupons || [];
          setActiveTab("payment")
          setIsPaymentModalOpen(true)
          if(typeFor=="payment_method"){
+           setIsPaymentSelected(true)
           setIsPaymentModalOpen(false)
          }
          
@@ -124,7 +126,11 @@ const AppliedCoupons = response?.data?.appliedCoupons || [];
    
   }
 
-  console.log("shouldRefetchUserAddress")
+  function setSelectedPaymentMethodGetValue(methodValue){
+    setSelectedPaymentMethod(methodValue)
+    setIsPaymentSelected(false)
+  }
+
   useEffect(() => {
     GetUserAdress()
   }, [shouldRefetchUserAddress, dispatch]);
@@ -222,8 +228,6 @@ const handlePayNow = async () => {
   }
 };
 
-
- 
   return (
     <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-8">
       {/* Stepper */}
@@ -252,14 +256,10 @@ const handlePayNow = async () => {
           </div>
         ))}
       </div>
-
-        {activeTab === "bag"&&(<>
-        <CheckoutCart/>
-        
-        </>)}
-
+   {items && items.length>0?(<>
+   <div className="">
       {/* Layout */}
-     {activeTab === "address" && (  
+{activeTab === "address" && (  
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Left Column */}
@@ -455,12 +455,63 @@ const handlePayNow = async () => {
         </div>
       </div>
       </>
-     )}
-
+)}
 {activeTab === "payment" && (
-<div className="grid grid-cols-1 md:grid-cols-1 lg:w-[70%] mx-auto">
-<div className="px-2">
+<div className="grid grid-cols-1 md:grid-cols-2 ">
+  <div className="px-4 md:px-6 lg:px-8">
+  <h4 className="text-lg font-semibold text-gray-800 mb-4">Choose Payment Mode</h4>
+  <div className="bg-white p-4">
+    <div className="flex flex-col gap-4">
+      {["COD", "Razorpay", "UPI"].map((method) => (
+        <label
+          key={method}
+          className={`flex items-center gap-3 px-4 py-3 rounded-lg border transition-all cursor-pointer
+            ${selectedPaymentMethod === method 
+              ? "border-pink-600 bg-pink-50 shadow-inner" 
+              : "border-gray-200 hover:border-pink-400 hover:bg-pink-50"}`
+          }
+        >
+          <input
+            type="radio"
+            name="payment"
+            value={method}
+            className="accent-pink-600 w-5 h-5"
+            checked={selectedPaymentMethod === method}
+            onChange={(e) => setSelectedPaymentMethodGetValue(e.target.value)}
+          />
+          <span className="font-medium text-gray-700">{method}</span>
+        </label>
+      ))}
+    </div>
 
+    <div className="mt-6 flex justify-end gap-4">
+      <button
+        className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition"
+        onClick={() => setIsPaymentModalOpen(false)}
+      >
+        Cancel
+      </button>
+
+      {selectedPaymentMethod !== "" && isPaymentSelected ===false ? (
+        <button
+          className="px-6 py-2 bg-pink-600 text-white rounded-lg font-medium hover:bg-pink-700 transition shadow-md"
+          onClick={Continue}
+        >
+          Continue
+        </button>
+      ) : (
+        <button
+          className="px-6 py-2 bg-pink-200 text-white rounded-lg font-medium cursor-not-allowed"
+          disabled
+        >
+          Continue
+        </button>
+      )}
+    </div>
+  </div>
+</div>
+
+<div className="px-2">
    <div className="relative lg:w-[100%]">
           <div className="sticky top-6">
             <div className="space-y-4 bg-white p-2 lg:p-2">
@@ -558,8 +609,7 @@ const handlePayNow = async () => {
                 </details>
               </div>
                
-               {items && items.length>0?(<>
-               
+               { isPaymentSelected?(<>
                <div className="bg-gray-100 rounded-lg p-3 text-sm text-gray-700 flex items-start gap-3">
                 <button className="bg-pink-600 text-white lg:w-[40%] mx-auto lg:py-4 text-bold px-4 py-1 rounded hover:bg-pink-700"
                     onClick={() => handlePayNow()}
@@ -571,13 +621,24 @@ const handlePayNow = async () => {
               
             </div>
           </div>
-        </div>
-  
+    </div> 
 </div>
 </div>
  )}
+</div>
+   </>):(<>
 
- {isPaymentModalOpen && (
+  <div className="flex justify-center mt-6">
+ 
+    <Link href="/men" className="px-6 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 transition transform hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+      Continue to Shopping
+    </Link>
+  
+</div>
+
+   
+   </>)}
+ {/* {isPaymentModalOpen && (
   <div className="fixed inset-0 z-50 flex items-center justify-center  bg-opacity-40">
     <div className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md">
       <h2 className="text-lg font-semibold mb-4">Select Payment Method</h2>
@@ -613,7 +674,7 @@ const handlePayNow = async () => {
       </div>
     </div>
   </div>
-)}
+)} */}
     </div>
   );
 }
