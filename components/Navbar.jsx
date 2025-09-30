@@ -49,7 +49,7 @@ export default function Navbar({ categories, onHoverCategory, onLeaveCategory })
         <div className="flex items-center space-x-6">
           <Link href="/">
             <div className="">
-              {/* <img src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" /> */}
+              <img src="https://ik.imagekit.io/pondric/logo/pondric-logo.png?tr=w-108,h-30,dpr-2,q-100,f-webp" alt="Logo" width={108} height={30} className="object-contain" />
             </div>
           </Link>
 
