@@ -2,11 +2,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AddNewAddressForm from "../userInfo/AddNewAddressForm"
+import CheckoutHeader from "./CheckoutHeader"
 import { increaseQuantity,decreaseQuantity} from "../../slices/cartSlice";
 import { FaTrash } from "react-icons/fa";
 import { GetUserCart,UserAddressDelete,AddToCart,GetUser,UserAddressInCart,CreateUserOrder,payment_verification,payment_fails} from "../../utils/api/Httproutes";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { ShieldCheck } from "lucide-react"; // for secure icon
+import Image from "next/image";
 
 export default function ChooseAddressPage() {
    const [items, setItems] = useState([]);
@@ -227,35 +230,18 @@ const handlePayNow = async () => {
     alert("Something went wrong during payment. Please try again.");
   }
 };
+const steps = ["address", "payment"];
 
   return (
-    <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-8">
+    <div className="bg-[#f3f3f3] min-h-screen px-2 md:px-12 py-4 lg:py-6">
       {/* Stepper */}
-      <div className="flex items-center justify-center mb-8 gap-2">
-        {["address", "payment"].map((step, i) => (
-          <div
-  key={i}
-  className="flex items-center gap-1 cursor-pointer"
-  onClick={step === "payment" ? undefined : () => setActiveTab(step)}
->
-            <div
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-white text-sm font-semibold ${
-                activeTab === step ? "bg-pink-600" : "bg-gray-300"
-              }`}
-            >
-              {i + 1}
-            </div>
-            <span
-              className={`text-sm font-bold uppercase ${
-                activeTab === step ? "text-pink-600" : "text-gray-600"
-              }`}
-            >
-              {step.charAt(0) + step.slice(1)}
-            </span>
-            {i < 1 && <div className="border-t border-1 border-dashed border-gray-400 w-8 sm:w-20" />}
-          </div>
-        ))}
-      </div>
+
+       <CheckoutHeader
+        steps={steps}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+     
    {items && items.length>0?(<>
    <div className="">
       {/* Layout */}
@@ -458,9 +444,9 @@ const handlePayNow = async () => {
 )}
 {activeTab === "payment" && (
 <div className="grid grid-cols-1 md:grid-cols-2 ">
-  <div className="px-4 md:px-6 lg:px-8">
-  <h4 className="text-lg font-semibold text-gray-800 mb-4">Choose Payment Mode</h4>
-  <div className="bg-white p-4">
+  <div className="px-1 md:px-6 lg:px-8 mb-2">
+  <h4 className="text-md font-semibold text-gray-800 mb-4 py-2">Choose Payment Mode</h4>
+  <div className="bg-white p-2 lg:p-4">
     <div className="flex flex-col gap-4">
       {["COD", "Razorpay", "UPI"].map((method) => (
         <label
@@ -514,7 +500,7 @@ const handlePayNow = async () => {
 <div className="px-2">
    <div className="relative lg:w-[100%]">
           <div className="sticky top-6">
-            <div className="space-y-4 bg-white p-2 lg:p-2">
+            <div className="space-y-4 bg-white p-1 lg:p-2">
               <div className=" overflow-hidden ">
                 <details className="group" open>
                   <summary className="flex justify-between items-center cursor-pointer px-4 py-3 bg-white font-semibold text-gray-800">
